@@ -1,0 +1,165 @@
+
+
+
+<section class="section-content padding-y bg">
+<div class="container">
+
+<!-- ============================ COMPONENT 1 ================================= -->
+
+<div class="row">
+	
+		{{#if products}}
+		<div style="background-color: white;" class="col-md-12 col-lg-12 col-xl=9">
+<div class="card1">
+<table class="table table-borderless table-shopping-cart">
+<thead style="font-size: x-large; text-align: center; color: black;" class="text-muted">
+<tr class="small text-uppercase">
+  <th scope="col">Product</th>
+  <th scope="col">Name</th>
+  <th scope="col">Discription</th>
+  
+  <th scope="col" width="120">Quantity</th>
+  <th scope="col" width="120">Price</th>
+  <th scope="col" class="text-right" width="200"> </th>
+</tr>
+</thead>
+<tbody>
+
+{{#each products}}
+
+<tr>
+	
+	<td>
+		
+			
+			<div class="aside"><img style="width: 80px; height: 70px;" src="/product-image/{{this.product._id}}__1.jpg" class="img-sm"></div>
+	</td>	
+	<td>
+		<a href="#" class="title text-dark">{{this.product.productName}}</a>
+	</td>
+	
+	<td>	
+			<figcaption class="info">
+				
+				<p class="text-muted small">  </p>
+				<p class="text-muted small">Matrix: 25 Mpx <br> Brand: Canon</p>
+			</figcaption>
+	</td>	
+	
+	<td> 
+		<!-- col.// -->
+					<div class="col"> 
+						<div class="input-group input-spinner">
+							
+							
+							<button  class="btn btn-outline-success" onclick="changeQuantity('{{this._id}}','{{this.product._id}}',-1)" type="button" id="button-plus"> <i class="fa fa-minus"></i> </button>
+							
+							 <button id="{{this.product._id}}" class="btn btn-outline-success">{{this.quantity}}</button>
+							
+							<button class="btn btn-outline-success" onclick="changeQuantity('{{this._id}}','{{this.product._id}}',1)" type="button" id="button-minus"> <i class="fa fa-plus"></i> </button>
+							
+						</div> <!-- input-group.// -->
+					</div> <!-- col.// -->
+	</td>
+	<td> 
+		<div class="price-wrap"> 
+			<var class="price">{{this.newprice}}</var> 
+			<small class="text-muted"> $315.20 each </small> 
+		</div> <!-- price-wrap .// -->
+	</td>
+	<td class="text-right"> 
+	<a href="" class="btn btn-outline-danger"> Remove</a>
+	</td>
+</tr>
+{{/each}}
+
+
+
+</tbody>
+
+</table>
+
+
+
+</div> 
+</div><!-- card.// -->
+
+
+	 <!-- col.// -->
+	<div class="col-md-12 col-lg-12 col-xl-3">
+
+		<div class="card">
+		<div class="card-body">
+			<dl class="dlist-align">
+			  <dt>Total price:</dt>
+			  <dd class="text-right">$69.97</dd>
+			</dl>
+			<dl class="dlist-align">
+			  <dt>Tax:</dt>
+			  <dd class="text-right"> $10.00</dd>
+			</dl>
+			<dl class="dlist-align">
+			  <dt>Total:</dt>
+			  <dd class="text-right text-dark b"><strong>$59.97</strong></dd>
+			</dl>
+			<hr>
+			<p class="text-center mb-3">
+				<img src="./images/misc/payments.png" height="26">
+			</p>
+			<a href="./place-order.html" class="btn btn-primary btn-block"> Checkout </a>
+			<a href="./store.html" class="btn btn-light btn-block">Continue Shopping</a>
+		</div> <!-- card-body.// -->
+		</div> <!-- card.// -->
+
+</div> <!-- col.// -->
+
+
+</div> <!-- row.// -->
+<!-- ============================ COMPONENT 1 END .// ================================= -->
+{{/if}}
+
+
+
+
+</div> <!-- container .//  -->
+</section>
+
+{{#if emty}}
+<h2 style="font-weight: bold; text-align: center; color: black;">your cart is empty</h2>
+{{/if}}
+
+<!-- ========================= SECTION CONTENT END// ========================= -->
+</body>
+</html>
+
+
+<script>
+
+	function changeQuantity(cartId,proId,count){
+		let quantity=parseInt(document.getElementById(proId).innerHTML)
+		count=parseInt(count)
+
+
+		$.ajax({
+			url:'/change-product-quantity',
+			data:{
+				cart:cartId,
+				product:proId,
+				count:count,
+				quantity:quantity
+			},
+			method:'post',
+			
+			success:(response)=>{
+				if(response.removeProduct){
+					alert("product removed from cart")
+					location.reload()
+				}else{
+					document.getElementById(proId).innerHTML=quantity+count
+				}
+			}
+			
+		})
+	}
+
+</script>

@@ -1,0 +1,291 @@
+
+
+
+
+
+
+
+<body class="dark-edition">
+    
+
+     <div class="container">
+    <div class="row">
+
+      <div style="margin-top: 150px;">
+          <p style="font-size: 40px; font-family: 'Acme', sans-serif;">EDIT PRODUCT</p>
+
+          <div style="width: 60%;">
+
+        <form action="/admin/edit-product/{{productdetail._id}}" method="POST" enctype="multipart/form-data" >
+          <div class="mt-5">
+            <label for="exampleInput2" class="form-label1">Product Name</label>
+            <input
+              type="text"
+              class="form-control"
+              name="productName"
+              id="exampleInputEmail1"
+                  value="{{productdetail.productName}}"
+              aria-describedby="emailHelp"
+              aria-describedby="emailHelp"
+            />
+
+          <div class="mt-5">
+            <select style="color: white; font-size: larger;"   class="form-select dark-edition" name="category">
+              <option value={{productdetail.category}} selected="true" disabled>{{productdetail.category}}</option>
+              <option value="travelling bag">Travelling Bag</option>
+              <option value="school bag">School Bag</option>
+              <option value="college bag">College Bag</option>
+              <option value="hand bag">Hand Bag</option>
+              <option value="laptop bag">Laptop Bag</option>
+            </select>
+          </div>
+
+           
+          <div class="mt-5">
+            <label
+              for="exampleInput2"
+              class="form-label1"
+            >Discription</label>
+            <input
+              type="text"
+                name="discription"
+                    value="{{productdetail.discription}}"
+              class="form-control"
+              id="exampleInputPassword1"
+            />
+          </div>
+
+
+          <div class="mt-5">
+            <label
+              for="exampleInput2"
+              class="form-label1"
+            >Old Price</label>
+            <input
+              type="number"
+                name="oldprice"
+                    value="{{productdetail.oldprice}}"
+              class="form-control"
+              id="exampleInputPassword1"
+            />
+          </div>
+
+
+          <div class="mt-5">
+            <label
+              for="exampleInput2"
+              class="form-label1"
+            >New Price</label>
+            <input
+              type="number"
+                name="newprice"
+                    value="{{productdetail.newprice}}"
+              class="form-control"
+              id="exampleInputPassword1"
+            />
+          </div>
+
+
+          <div class="mt-5">
+            <label
+              for="exampleInput2"
+              class="form-label1"
+            >Date</label>
+            <input
+              type="date"
+                name="date"
+                    value="{{productdetail.date}}"
+              class="form-control"
+              id="exampleInputPassword1"
+            />
+          </div>
+
+
+          <div class="mt-5">
+            <label
+              for="exampleInput2"
+              class="form-label1"
+            >Stock QTY</label>
+            <input
+              type="number"
+                name="qty"
+                    value="{{productdetail.qty}}"
+              class="form-control"
+              id="exampleInputPassword1"
+            />
+          </div>
+
+          <div class="mt-5">
+            <img id="imagePreview1" style="width: 70px; height: 60px;" src="/product-image/{{productdetail._id}}__1.jpg" alt="">
+            <div id="errmssg1"></div>
+            <label
+              for="exampleInput2"
+              class="form-label1"
+            >IMAGE-1</label>
+            
+            <input
+              type="file"
+                name="image1"
+                    onchange="fileValidation1(event)"
+                    
+              class="form-control"    
+              id="file1"
+            />
+          </div>
+
+          <div class="mt-5">
+            <img id="imagePreview2" style="width: 70px; height: 60px;" src="/product-image/{{productdetail._id}}__2.jpg" alt="">
+            <div id="errmssg2"></div>
+            <label
+              for="exampleInput2"
+              class="form-label1"
+            >IMAGE-2</label>
+            
+            <input
+              type="file"
+                name="image2"
+                    onchange="fileValidation2(event)"
+              class="form-control"    
+              id="file2"
+            />
+          </div>
+
+          <div class="mt-5">
+            <img id="imagePreview3"  style="width: 70px; height: 60px;" src="/product-image/{{productdetail._id}}__3.jpg"  alt="">
+            <label
+              for="exampleInput2"
+              class="form-label1"
+            >IMAGE-3</label>
+            <div id="errmssg3"></div>
+            <input
+              type="file"
+                name="image3"
+                   onchange="fileValidation3(event)"
+              class="form-control"    
+              id="file3"
+            />
+          </div>
+
+         
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+        </div> <br><br><br><br>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+
+
+
+
+
+
+
+</body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <script>
+        function fileValidation3(event) {
+            var fileInput = 
+                document.getElementById('file3');
+              
+            var filePath = fileInput.value;
+          
+            // Allowing file type
+            var allowedExtensions = 
+                    /(\.jpg|\.jpeg|\.png|\.gif)$/i;
+              
+            if (!allowedExtensions.exec(filePath)) {
+                document.getElementById('errmssg3').innerHTML='<p  style="color: red; font-weight: bolder; font-size: large; " >Invalid file type<p>'
+                fileInput.value = '';
+                return false;
+            } 
+            else 
+            {
+               document.getElementById('errmssg3').innerHTML=''
+                // Image preview
+
+               document.getElementById(
+                            'imagePreview3').src=URL.createObjectURL(event.target.files[0])
+
+               
+            }
+        }
+    </script>
+
+
+
+    <script>
+        function fileValidation1(event) {
+            var fileInput = 
+                document.getElementById('file1')
+              
+            var filePath = fileInput.value;
+          
+            // Allowing file type
+            var allowedExtensions = 
+                    /(\.jpg|\.jpeg|\.png|\.gif)$/i;
+              
+            if (!allowedExtensions.exec(filePath)) {
+                document.getElementById('errmssg1').innerHTML='<p id="err1" style="color: red; font-weight: bolder; font-size: large; " >Invalid file type<p>'
+                fileInput.value = '';
+                return false;
+            } 
+            else 
+            {
+              document.getElementById('errmssg1').innerHTML=''
+
+              document.getElementById(
+                            'imagePreview1').src=URL.createObjectURL(event.target.files[0])
+                // Image preview
+                
+            }
+        }
+    </script>
+
+
+
+    <script>
+        function fileValidation2(event) {
+            var fileInput = 
+                document.getElementById('file2');
+              
+            var filePath = fileInput.value;
+          
+            // Allowing file type
+            var allowedExtensions = 
+                    /(\.jpg|\.jpeg|\.png|\.gif)$/i;
+              
+            if (!allowedExtensions.exec(filePath)) {
+                document.getElementById('errmssg2').innerHTML='<p id="err2" style="color: red; font-weight: bolder; font-size: large; " >Invalid file type<p>'
+                fileInput.value = '';
+                return false;
+            } 
+            else 
+            {
+               document.getElementById('errmssg2').innerHTML=''
+                // Image preview
+
+               document.getElementById(
+                            'imagePreview2').src=URL.createObjectURL(event.target.files[0])
+
+               
+            }
+        }
+    </script>
+

@@ -1,0 +1,327 @@
+
+
+
+
+
+
+
+
+<!-- ========================= SECTION MAIN ========================= -->
+<section class="section-intro ">
+<div class="">
+
+<div class="intro-banner-wrap">
+	<img src="http://cdn.shopify.com/s/files/1/0068/8481/9003/files/travel-bag-slider-3_2000x.jpg?v=1534585027" class="img-fluid rounded">
+</div>
+
+</div><br><br>
+
+
+
+<div class="container">
+	<div class="row">
+
+		<div class="divpic col-sm-12 col-md-6 col-lg-3">
+			<img style="width: 100%; height: 250px ;" src="http://cdn.shopify.com/s/files/1/0068/8481/9003/files/img-1_1920X.jpg?v=1533894605" alt="">
+
+		</div>
+		<div class="divpic col-sm-12 col-md-6 col-lg-3">
+				<h2 style="color: white; margin-top: 30%;">BackPack</h2>
+
+		</div>
+		<div class="divpic col-sm-12 col-md-6 col-lg-3">
+			<img style="width: 100%; height: 250px ;"  src="http://cdn.shopify.com/s/files/1/0068/8481/9003/files/img-2_1920X.jpg?v=1533894620" alt="">
+
+		</div>
+		<div class="divpic col-sm-12 col-md-6 col-lg-3">
+			<h2 style="color: white; margin-top: 30%;">Sport Style</h2>
+
+		</div>
+
+
+	</div>
+
+
+	<div class="row">
+
+		<div class="divpic col-sm-12 col-md-6 col-lg-3">
+			<img style="width: 100%; height: 250px ;" src="http://cdn.shopify.com/s/files/1/0068/8481/9003/files/img-3_1920X.jpg?v=1533894631" alt="">
+
+		</div>
+		<div class="divpic col-sm-12 col-md-6 col-lg-3">
+			<h2 style="color: white; margin-top: 30%;">Travelling Bag</h2>
+
+		</div>
+		<div class="divpic col-sm-12 col-md-6 col-lg-3">
+			<img style="width: 100%; height: 250px ;" src="http://cdn.shopify.com/s/files/1/0068/8481/9003/files/img-4_1920X.jpg?v=1533894645" alt="">
+
+		</div>
+		<div class="divpic col-sm-12 col-md-6 col-lg-3">
+			<h2 style="color: white; margin-top: 30%;">Trekking Bag</h2>
+
+		</div>
+
+
+	</div>
+
+
+</div>
+	
+
+
+
+
+
+
+
+
+
+ <!-- container //  -->
+</section>
+<!-- ========================= SECTION MAIN END// ========================= -->
+
+<!-- ========================= SECTION  ========================= -->
+<section class="section-name padding-y-sm">
+<div class="container">
+
+<header class="section-heading">
+	<a href="/userAllProduct" class="btn btn-outline-primary float-right">See all</a>
+	<h3 class="section-title">New arrival</h3>
+</header><!-- sect-heading -->
+
+	
+<div class="row">
+  {{#each arrival}}
+	<div class="col-sm-12 col-md-6 col-lg-3">
+
+		<div class="card card-product-grid">
+			<a href="/product-detail?id={{this._id}}" class="img-wrap"> <img src="/product-image/{{this._id}}__1.jpg"> </a>
+			<figcaption class="info-wrap">
+				<a style="font-weight: bolder;" href="./product-detail.html" class="title">{{this.productName}}</a>
+				<a href="./product-detail.html" class="title">{{this.discription}}</a>
+				<div class="price mt-1">₹ {{this.newprice}} <span style="padding-left: 10px; color: darkgray;">₹ <s>{{this.oldprice}}</s></span></div> <!-- price-wrap.// -->
+				<div>
+					<a style="margin-top: 10px;" class="btn btn-success" href="">Buy Now</a>
+					<a style="margin-top: 10px;" class="btn btn-primary" href="">Add to Cart <i class="fas fa-shopping-cart"></i></a>
+				</div>
+			</figcaption>
+		</div>
+
+	</div> 
+  {{/each }}
+  
+ 
+	
+</div> <!-- row.// -->
+
+</div><!-- container // -->
+</section>
+<!-- ========================= SECTION  END// ========================= -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Footer -->
+<footer style="background-color: #961010;" class=" text-center text-white">
+  <!-- Grid container -->
+  <div class="container p-4">
+    <!-- Section: Social media -->
+    <section class="mb-4">
+      <!-- Facebook -->
+      <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"
+        ><i class="fab fa-facebook-f"></i
+      ></a>
+
+      <!-- Twitter -->
+      <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"
+        ><i class="fab fa-twitter"></i
+      ></a>
+
+      <!-- Google -->
+      <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"
+        ><i class="fab fa-google"></i
+      ></a>
+
+      <!-- Instagram -->
+      <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"
+        ><i class="fab fa-instagram"></i
+      ></a>
+
+      <!-- Linkedin -->
+      <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"
+        ><i class="fab fa-linkedin-in"></i
+      ></a>
+
+      <!-- Github -->
+      <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"
+        ><i class="fab fa-github"></i
+      ></a>
+    </section>
+    <!-- Section: Social media -->
+
+    <!-- Section: Form -->
+    <section class="">
+      <form action="">
+        <!--Grid row-->
+        <div class="row d-flex justify-content-center">
+          <!--Grid column-->
+          <div class="col-auto">
+            <p class="pt-2">
+              <strong>Sign up for our newsletter</strong>
+            </p>
+          </div>
+          <!--Grid column-->
+
+          <!--Grid column-->
+          <div class="col-md-5 col-12">
+            <!-- Email input -->
+            <div class="form-outline form-white mb-4">
+              <input type="email" id="form5Example2" class="form-control" />
+              <label class="form-label" for="form5Example2">Email address</label>
+            </div>
+          </div>
+          <!--Grid column-->
+
+          <!--Grid column-->
+          <div class="col-auto">
+            <!-- Submit button -->
+            <button type="submit" class="btn btn-outline-light mb-4">
+              Subscribe
+            </button>
+          </div>
+          <!--Grid column-->
+        </div>
+        <!--Grid row-->
+      </form>
+    </section>
+    <!-- Section: Form -->
+
+    <!-- Section: Text -->
+    <section class="mb-4">
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt distinctio earum
+        repellat quaerat voluptatibus placeat nam, commodi optio pariatur est quia magnam
+        eum harum corrupti dicta, aliquam sequi voluptate quas.
+      </p>
+    </section>
+    <!-- Section: Text -->
+
+    <!-- Section: Links -->
+    <section class="">
+      <!--Grid row-->
+      <div class="row">
+        <!--Grid column-->
+        <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+          <h5 class="text-uppercase">Links</h5>
+
+          <ul class="list-unstyled mb-0">
+            <li>
+              <a href="#!" class="text-white">Link 1</a>
+            </li>
+            <li>
+              <a href="#!" class="text-white">Link 2</a>
+            </li>
+            <li>
+              <a href="#!" class="text-white">Link 3</a>
+            </li>
+            <li>
+              <a href="#!" class="text-white">Link 4</a>
+            </li>
+          </ul>
+        </div>
+        <!--Grid column-->
+
+        <!--Grid column-->
+        <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+          <h5 class="text-uppercase">Links</h5>
+
+          <ul class="list-unstyled mb-0">
+            <li>
+              <a href="#!" class="text-white">Link 1</a>
+            </li>
+            <li>
+              <a href="#!" class="text-white">Link 2</a>
+            </li>
+            <li>
+              <a href="#!" class="text-white">Link 3</a>
+            </li>
+            <li>
+              <a href="#!" class="text-white">Link 4</a>
+            </li>
+          </ul>
+        </div>
+        <!--Grid column-->
+
+        <!--Grid column-->
+        <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+          <h5 class="text-uppercase">Links</h5>
+
+          <ul class="list-unstyled mb-0">
+            <li>
+              <a href="#!" class="text-white">Link 1</a>
+            </li>
+            <li>
+              <a href="#!" class="text-white">Link 2</a>
+            </li>
+            <li>
+              <a href="#!" class="text-white">Link 3</a>
+            </li>
+            <li>
+              <a href="#!" class="text-white">Link 4</a>
+            </li>
+          </ul>
+        </div>
+        <!--Grid column-->
+
+        <!--Grid column-->
+        <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+          <h5 class="text-uppercase">Links</h5>
+
+          <ul class="list-unstyled mb-0">
+            <li>
+              <a href="#!" class="text-white">Link 1</a>
+            </li>
+            <li>
+              <a href="#!" class="text-white">Link 2</a>
+            </li>
+            <li>
+              <a href="#!" class="text-white">Link 3</a>
+            </li>
+            <li>
+              <a href="#!" class="text-white">Link 4</a>
+            </li>
+          </ul>
+        </div>
+        <!--Grid column-->
+      </div>
+      <!--Grid row-->
+    </section>
+    <!-- Section: Links -->
+  </div>
+  <!-- Grid container -->
+
+  <!-- Copyright -->
+  <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+    © 2021 Copyright:
+    <a class="text-white" href="">ADARSH</a>
+  </div>
+  <!-- Copyright -->
+</footer>
+<!-- Footer -->
+
+</body>
+</html> 

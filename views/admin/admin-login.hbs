@@ -1,0 +1,59 @@
+
+
+
+<div class="row  col-12">
+
+      <div class="wrapper">
+        <div class="card">
+          <form style="border:solid 5px #961010;" action="/userloginsubmit" id="valid" method="POST" class="d-flex flex-column">
+            <div class="h3 text-center " style="color: #961010;">Login</div>
+            <div style="color: #961010;" class="d-flex align-items-center input-field my-3 mb-4">
+              <span class="far fa-user p-2"></span>
+              <input
+                type="email"
+                placeholder="Email"
+                    name="email"
+
+                
+                class="form-control"
+              />
+            </div>
+            <div style="color: #961010;" class="d-flex align-items-center input-field mb-4">
+              <span class="fas fa-lock p-2"></span>
+              <input
+                type="password"
+                placeholder="Password"
+                    name="password"
+                required
+                class="form-control"
+                id="pwd"
+              />
+              <button class="btn" onclick="showPassword()">
+                <span class="fas fa-eye-slash"></span>
+              </button>
+            </div>
+            <div
+              class="d-sm-flex align-items-sm-center justify-content-sm-between"
+            >
+              
+            </div>
+            <div class="my-3">
+              <input type="submit" value="Login" class="btn btn-primary" />
+            </div>
+            <div class="mb-3">
+              <span class="text-light-white">Don't have an account?</span>
+              <button style="background-color: rgb(1, 7, 8);"><a href="/usersignup">Sign Up</a></button>
+            </div>
+          </form>
+          
+          {{#if loginError}}
+          <p style="color: rgb(73, 7, 7); font-size: 20px; font-weight: bolder;">Invalid Username or Passsword</p>
+          {{/if}}
+
+        </div>
+      </div>
+
+    </div>
+
+
+

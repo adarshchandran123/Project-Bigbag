@@ -1,0 +1,50 @@
+
+
+<div class="container">
+    <div class="row">
+
+        <center>
+        <div >
+            <a  href="./" class="brand-wrap">
+			<img  class="logo1"   src="../images/logo.svg">
+		</a>
+        </div>
+        </center>
+
+    </div>
+</div>
+
+
+
+
+
+<div class="row  col-12">
+    <div class="h3 text-center mt-5 " style="color: #961010;">Verify OTP</div>
+
+      <div style="padding-top: 10px;" class="wrapper">
+        <div class="card">
+          <form style="" action="/otpverify" id="valid" method="POST" class="d-flex flex-column">
+            
+            <div style="color: #961010;" class="d-flex align-items-center input-field my-3 mb-5">
+              <span class="far fa-user p-2"></span>
+              <input type="number" placeholder="Please Enter OTP " name="otp" class="form-control"/>
+              <input type="hidden" name="mobile" value="{{mobileNum}}">
+            </div>
+            
+            
+            
+            <div class="m-auto">
+              <input type="submit" value="Submit" class="btn btn-primary" />
+            </div>
+           
+          </form>
+          
+          
+
+        </div>
+      </div>
+
+    </div>
+
+
+
