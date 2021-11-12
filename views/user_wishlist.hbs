@@ -1,0 +1,149 @@
+
+
+<div class="container">
+    <div class="row">
+		
+		<p style="font-size: 40px; margin-top: 50px; font-weight: bolder; text-align: center; font-family: 'Acme', sans-serif;">WISHLIST</p>
+
+  {{#if showwishlist}}
+        {{#each showwishlist}}
+		
+
+        <div class="col-sm-12 col-md-6 col-lg-3">
+
+		<div style="margin-top: 50px;" class="card card-product-grid">
+			<a href="/product-detail?id={{this.wishlist._id}}" class="img-wrap"> <img src="/product-image/{{this.wishlist._id}}__1.jpg"> </a>
+			<figcaption class="info-wrap">
+				<a style=" font-weight: bolder; font-size: x-large;" href="/product-detail?id={{this.wishlist._id}}" class="title">{{this.wishlist.productName}}</a>
+        <a href="/product-detail?id={{this.wishlist._id}}" style="color: black; font-weight: bolder;" class="title">{{this.wishlist.category}}</a>
+				<a href="/product-detail?id={{this.wishlist._id}}" class="title">{{this.wishlist.discription}}</a>
+				
+        <div class="price mt-1">₹ {{this.wishlist.newprice}} 
+          
+          {{#eq this.wishlist.newprice this.wishlist.MRP}}
+          
+          {{else}}
+          <span style="padding-left: 10px; color: darkgray;">MRP : ₹ <s>{{this.wishlist.MRP}}</s></span> 
+          {{/eq}}
+        </div> <!-- price-wrap.// -->
+
+
+
+
+				{{!-- <div>
+					<a style="margin-top: 10px;" class="btn btn-success" href="/buyNow/{{this.wishlist._id}}">Buy Now</a>
+					    {{#hello ../cart this.wishlist._id this.wishlist.newprice}}
+
+          					{{/hello}}
+				</div> --}}
+
+
+
+				{{#if ../user}}
+    {{#gt this.wishlist.qty '0'}}
+      <p>Stock : <span style="color: green;">In Stock</span> </p>
+				<div>
+					<a style="margin-top: 10px;" class="btn btn-success" href="/buyNow/{{this.wishlist._id}}">Buy Now</a>
+          {{#hello ../cart this.wishlist._id this.wishlist.newprice}}
+
+          					{{/hello}}
+					{{!-- <button style="margin-top: 10px; " onclick="addToCart('{{this._id}}',{{this.newprice}})" class="btn btn-primary" >Add to Cart <i class="fas fa-shopping-cart"></i></button> --}}
+				</div>
+        {{else}}
+        <p>Stock : <span style="color: red;">Out of Stock</span> </p>
+        
+
+        <!-- Button trigger modal -->
+<button style="margin-top: 10px;" type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+ Buy Now
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Product Out of Stock</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Check Later
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Close</button>
+       
+      </div>
+    </div>
+  </div>
+</div>
+        
+
+        <!-- Button trigger modal -->
+<button style="margin-top: 10px;" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+  Add To Cart<i class="fas fa-shopping-cart"></i>
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Product Out of Stock</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Check Later
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Close</button>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+        {{/gt}}
+        {{else}}
+        <div>
+        <a class="btn btn-success" href="/userlogin">Buy Now</a>
+        <a class="btn btn-primary" href="/userlogin">Add To Cart<i class="fas fa-shopping-cart"></i></a>
+        </div>
+        {{/if}}
+
+
+
+			</figcaption>
+							
+					<a style="width: 100%; font-weight: bolder;" class="btn btn-outline-danger" href="/deleteWishlist/{{this.wishlist._id}}">Delete</a>
+
+
+
+    
+
+
+				
+		</div>
+
+	</div>
+	{{/each}}
+
+  {{else}}
+  <a style="width: auto;" class="btn btn-outline-danger" href="/userAllProduct">Add To WishList</a>
+<div style="display: flex; justify-content: center;">
+  
+  <img style="width: 60%; height: 500px;" src="https://dial2decor.com/images/no_wish_list.png" alt="">
+</div>
+
+
+  {{/if}}
+
+
+
+    </div>
+</div>
+
+
+
+
+
+

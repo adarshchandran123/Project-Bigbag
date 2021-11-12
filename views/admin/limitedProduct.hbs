@@ -1,0 +1,38 @@
+
+
+<body class="dark-edition">
+
+
+<div class="container">
+    <div class="row">
+
+        <p style="font-size: 40px; color: white;  font-family: 'Acme', sans-serif; margin-top: 100px; margin-bottom: 50px; ">Limited Stock</p>
+        <div style="color: white; width: 60%; ">
+
+            <table style="color: white; background-color:#0a1229; border: solid; 1px ;" class="table table-hover">
+  <thead>
+    <tr>
+      <th style="color: white; font-weight: bolder;" scope="col">No</th>
+      <th style="color: white; font-weight: bolder;" scope="col">Name</th>
+      <th style="color: white; font-weight: bolder;" scope="col">Category</th>
+      <th style="color: white; font-weight: bolder;" scope="col">Quantity</th>
+    </tr>
+  </thead>
+  <tbody>
+      {{#each limitedStock}}
+    <tr>
+      <th style="color: white;" scope="row">{{add @index '1'}}</th>
+      <td style="color: white;">{{this.productName}}</td>
+      <td style="color: white;">{{this.category}}</td>
+      <td style="color: white;">{{this.qty}}</td>
+    </tr>
+   {{/each}}
+  </tbody>
+</table>
+
+        </div>
+
+    </div>
+</div>
+
+</body>

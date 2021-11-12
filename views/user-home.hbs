@@ -10,9 +10,36 @@
 <section class="section-intro ">
 <div class="">
 
-<div class="intro-banner-wrap">
+{{!-- <div class="intro-banner-wrap">
 	<img src="http://cdn.shopify.com/s/files/1/0068/8481/9003/files/travel-bag-slider-3_2000x.jpg?v=1534585027" class="img-fluid rounded">
+</div> --}}
+
+
+<div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
+  <div class="carousel-inner">
+    <div class="carousel-item active" data-bs-interval="10000">
+      <img style="height: 590px;" src="http://cdn.shopify.com/s/files/1/0068/8481/9003/files/travel-bag-slider-3_2000x.jpg?v=1534585027" class="d-block w-100" alt="...">
+    </div>
+
+    {{#each ADSCategory}}
+    <div class="carousel-item" data-bs-interval="2000">
+      <a href="/categoryDisplay/{{this.category}}"><img style="height: 600px;" src="/ADS_IMAGES/{{this.category}}__1.jpg" class="d-block w-100" alt="..."></a>
+    </div>
+    {{/each}}
+    {{!-- <div class="carousel-item">
+      <img style="height: 620px;" src="../images/bag4.jpeg" class="d-block w-100" alt="...">
+    </div> --}}
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
 </div>
+
 
 </div><br><br>
 
@@ -92,22 +119,124 @@
 	
 <div class="row">
   {{#each arrival}}
+  
 	<div class="col-sm-12 col-md-6 col-lg-3">
 
-		<div class="card card-product-grid">
+    
+
+		<div style="height: 500px;" class="card card-product-grid">
+
 			<a href="/product-detail?id={{this._id}}" class="img-wrap"> <img src="/product-image/{{this._id}}__1.jpg"> </a>
 			<figcaption class="info-wrap">
-				<a style="font-weight: bolder;" href="./product-detail.html" class="title">{{this.productName}}</a>
-				<a href="./product-detail.html" class="title">{{this.discription}}</a>
-				<div class="price mt-1">₹ {{this.newprice}} <span style="padding-left: 10px; color: darkgray;">₹ <s>{{this.oldprice}}</s></span></div> <!-- price-wrap.// -->
+				<a style=" font-weight: bolder; font-size: x-large; " href="/product-detail?id={{this._id}}" class="title">{{this.productName}}</a>
+        <a href="/product-detail?id={{this._id}}" style="color: black; font-weight: bolder;" class="title">{{this.category}}</a>
+				<a href="/product-detail?id={{this._id}}" class="title">{{this.discription}}</a>
+				
+        <div class="price mt-1">₹ {{this.newprice}} 
+          
+          {{#eq this.newprice this.MRP}}
+          
+          {{else}}
+          <span style="padding-left: 10px; color: darkgray;">MRP : ₹ <s>{{this.MRP}}</s></span> 
+          {{/eq}}
+        </div> <!-- price-wrap.// -->
+        
+        {{#if this.offer}}
+        <div><span style="color: rgb(15, 167, 15); font-weight: bolder;">{{this.offer}}%</span> off</div>
+        {{else}}
+        <div style="opacity: 0%;"><span style="color: rgb(15, 167, 15); opacity: 0%; font-weight: bolder;">{{this.offer}}</span>% off</div>
+        {{/if}}
+  
+
+{{#if ../user}}
+ <button id="{{this._id}}" style="color: red;"  class="btn btn-link " onclick="addtoWishlist('{{this._id}}')" ><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-suit-heart-fill" viewBox="0 0 16 16">
+  <path d="M4 1c2.21 0 4 1.755 4 3.92C8 2.755 9.79 1 12 1s4 1.755 4 3.92c0 3.263-3.234 4.414-7.608 9.608a.513.513 0 0 1-.784 0C3.234 9.334 0 8.183 0 4.92 0 2.755 1.79 1 4 1z"/>
+</svg></button>
+{{else}}
+
+ <a  style="color: red;"  class="btn btn-link " href="/userlogin" ><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-suit-heart-fill" viewBox="0 0 16 16">
+  <path d="M4 1c2.21 0 4 1.755 4 3.92C8 2.755 9.79 1 12 1s4 1.755 4 3.92c0 3.263-3.234 4.414-7.608 9.608a.513.513 0 0 1-.784 0C3.234 9.334 0 8.183 0 4.92 0 2.755 1.79 1 4 1z"/>
+</svg></a>
+
+{{/if}}
+
+
+
+{{#if ../user}}
+    {{#gt this.qty '0'}}
+      <p>Stock : <span style="color: green;">In Stock</span> </p>
 				<div>
-					<a style="margin-top: 10px;" class="btn btn-success" href="">Buy Now</a>
-					<a style="margin-top: 10px;" class="btn btn-primary" href="">Add to Cart <i class="fas fa-shopping-cart"></i></a>
+					<a style="margin-top: 10px;" class="btn btn-success" href="/buyNow/{{this._id}}">Buy Now</a>
+          {{#hello ../cart this._id this.newprice}}
+          {{/hello}}
+					{{!-- <button style="margin-top: 10px; " onclick="addToCart('{{this._id}}',{{this.newprice}})" class="btn btn-primary" >Add to Cart <i class="fas fa-shopping-cart"></i></button> --}}
 				</div>
+        {{else}}
+        <p>Stock : <span style="color: red;">Out of Stock</span> </p>
+        
+
+        <!-- Button trigger modal -->
+<button style="margin-top: 10px;" type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+ Buy Now
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Product Out of Stock</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Check Later
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Close</button>
+       
+      </div>
+    </div>
+  </div>
+</div>
+        
+
+        <!-- Button trigger modal -->
+<button style="margin-top: 10px;" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+  Add To Cart<i class="fas fa-shopping-cart"></i>
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Product Out of Stock</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Check Later
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Close</button>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+        {{/gt}}
+        {{else}}
+        <div>
+        <a class="btn btn-success" href="/userlogin">Buy Now</a>
+        <a class="btn btn-primary" href="/userlogin">Add To Cart<i class="fas fa-shopping-cart"></i></a>
+        </div>
+        {{/if}}
+
 			</figcaption>
 		</div>
 
 	</div> 
+  
   {{/each }}
   
  
@@ -117,6 +246,10 @@
 </div><!-- container // -->
 </section>
 <!-- ========================= SECTION  END// ========================= -->
+
+
+
+
 
 
 
@@ -223,7 +356,7 @@
     <!-- Section: Links -->
     <section class="">
       <!--Grid row-->
-      <div class="row">
+      {{!-- <div class="row">
         <!--Grid column-->
         <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
           <h5 class="text-uppercase">Links</h5>
@@ -311,7 +444,7 @@
       <!--Grid row-->
     </section>
     <!-- Section: Links -->
-  </div>
+  </div> --}}
   <!-- Grid container -->
 
   <!-- Copyright -->

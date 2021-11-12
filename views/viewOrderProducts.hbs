@@ -1,0 +1,115 @@
+
+
+
+
+<div class="container" style="margin-top: 100px;">
+	<h2 style="text-align: center; margin-bottom: 50px;">My Orders</h2>
+    <div class="row">
+		{{#if carts}}
+
+		{{#each orderproducts}}
+        <div class=" col-sm-12 col-md-6 col-lg-3">
+			
+				
+		<div style="box-shadow: black; height: 500px;" class="card card-product-grid">
+			<a href="" class="img-wrap"> <img src="/product-image/{{this.item}}__1.jpg"> </a>
+			<figcaption class="info-wrap">
+				<a style="font-weight: bolder;" href="" class="title">{{this.product.productName}}</a>
+				<a style="font-weight: bolder;" href="" class="title"><span>Category :</span>{{this.product.category}}</a>
+				<a style="font-weight: bolder;" href="" class="title"><span>Quantity :  </span>{{this.quantity}}</a>
+				<a style="font-weight: bolder;" href="" class="title">{{this.product.discription}}</a>
+				<div class="price mt-1"><span>Price : </span> ₹ {{this.price}} </div> <!-- price-wrap.// -->
+				<div class="price mt-1"><span>Total Price : </span> ₹ {{this.totalprice}} </div>
+				<div style="font-weight: bolder; font-size: larger;" class="price mt-1"><span>Status : </span>  {{this.status}} </div>
+
+
+				{{#eq this.status 'Cancelled'}}
+
+				{{else}}
+
+				{{#eq this.status 'Delivered'}}
+
+				
+
+				{{else}}
+				<a style="width: 100%;" class="btn btn-outline-danger" href="/userCancellProduct/{{this.item}}/{{this._id}}/{{this.quantity}}">Cancell</a>
+				{{/eq}}
+			
+				
+
+				{{/eq}}
+
+
+				
+				
+
+				
+				
+			</figcaption>
+		</div>
+		
+
+	</div>
+	{{/each}}
+
+	{{/if}}
+
+	{{#if buyNowpro}}
+
+	
+
+	<div class=" col-sm-12 col-md-6 col-lg-3">
+
+		
+				
+		<div style="box-shadow: black; height: 500px;" class="card card-product-grid">
+			<a href="" class="img-wrap"> <img src="/product-image/{{buyproduct.proId}}__1.jpg"> </a>
+			<figcaption class="info-wrap">
+				<a style="font-weight: bolder;" href="" class="title">{{buyproduct.productName}}</a>
+				<a style="font-weight: bolder;" href="" class="title"><span>Category :</span>{{buyproduct.category}}</a>
+				<a style="font-weight: bolder;" href="" class="title"><span>Quantity :  </span>1</a>
+				<a style="font-weight: bolder;" href="" class="title">{{buyproduct.discription}}</a>
+				<div class="price mt-1"><span>Price : </span> ₹ {{buyproduct.newprice}} </div> <!-- price-wrap.// -->
+				
+				<div style="font-weight: bolder; font-size: larger;" class="price mt-1"><span>Status : </span>  {{buyproduct.status}} </div>
+				
+				{{#eq buyproduct.status 'Cancelled'}}
+
+				{{else}}
+				
+				{{#eq buyproduct.status 'Delivered'}}
+				
+				
+				{{else}}
+				<a style="width: 100%;" class="btn btn-outline-danger" href="/userCancellProduct/{{buyproduct.proId}}/{{buyproduct._id}}">Cancell</a>
+				{{/eq}}
+				
+				{{/eq}}
+
+				
+			</figcaption>
+		</div>
+		
+
+	</div>
+
+
+	{{/if}}
+	
+
+
+
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+

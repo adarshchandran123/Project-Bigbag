@@ -49,9 +49,20 @@
 <br><br>
 <p style="font-weight: bolder;">{{productdetail.category}}</p>
 
-<div class="mb-3"> 
-	<div class="price mt-1">₹ {{productdetail.newprice}} <span style="padding-left: 10px; color: darkgray;">₹ <s>{{productdetail.oldprice}}</s></span></div> 
-</div> 
+<div class="price mt-1">₹ {{productdetail.newprice}} 
+          
+          {{#eq productdetail.newprice productdetail.MRP}}
+          
+          {{else}}
+          <span style="padding-left: 10px; color: darkgray;">MRP : ₹ <s>{{productdetail.MRP}}</s></span> 
+          {{/eq}}
+        </div> <!-- price-wrap.// --> 
+
+{{#if productdetail.offer}}
+        <div><span style="color: rgb(15, 167, 15); font-weight: bolder;">{{productdetail.offer}}%</span> off</div>
+        {{else}}
+        <div style="opacity: 0%;"><span style="color: rgb(15, 167, 15); opacity: 0%; font-weight: bolder;">{{productdetail.offer}}</span>% off</div>
+        {{/if}}
 
 
 
@@ -61,14 +72,92 @@
 		
 
 
+	{{#if user}}
 
-	
-	<a style="margin-top: 10px;" href="#" class="btn  btn-primary"> <span class="text">Add to cart</span> <i class="fas fa-shopping-cart"></i>  </a>
-	<a style="margin-top: 10px;" href="#" class="btn  btn-success"> <span class="text">Buy Now</span>   </a>
+	{{#gt productdetail.qty '0'}}
+      <p>Stock : <span style="color: green;">In Stock</span> </p>
+				<div>
+					<a style="margin-top: 10px;" class="btn btn-success" href="/buyNow/{{productdetail._id}}">Buy Now</a>
+          {{#hello cart productdetail._id productdetail.newprice}}
+          {{/hello}}
+					{{!-- <button style="margin-top: 10px; " onclick="addToCart('{{this._id}}',{{this.newprice}})" class="btn btn-primary" >Add to Cart <i class="fas fa-shopping-cart"></i></button> --}}
+				</div>
+        {{else}}
+        <p>Stock : <span style="color: red;">Out of Stock</span> </p>
+        
+
+        <!-- Button trigger modal -->
+<button style="margin-top: 10px;" type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+ Buy Now
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Product Out of Stock</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Check Later
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Close</button>
+       
+      </div>
+    </div>
+  </div>
+</div>
+        
+
+        <!-- Button trigger modal -->
+<button style="margin-top: 10px;" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+  Add To Cart<i class="fas fa-shopping-cart"></i>
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Product Out of Stock</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Check Later
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Close</button>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+        {{/gt}}
+
+		{{else}}
+
+		<div>
+        <a class="btn btn-success" href="/userlogin">Buy Now</a>
+        <a class="btn btn-primary" href="/userlogin">Add To Cart<i class="fas fa-shopping-cart"></i></a>
+        </div>
+
+		{{/if}}
+
+
+
+
+
 </article> <!-- product-info-aside .// -->
 		</main> <!-- col.// -->
 	</div> <!-- row.// -->
 </div> <!-- card.// -->
+
+
+
+
 <!-- ============================ COMPONENT 1 END .// ================================= -->
 
 
@@ -109,7 +198,6 @@
 </div> <!-- container .//  -->
 </section>
 <!-- ========================= SECTION CONTENT END// ========================= -->
-
 
 
 

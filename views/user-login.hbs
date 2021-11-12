@@ -19,9 +19,9 @@
 
 <div class="row  col-12">
 
-      <div class="wrapper">
+      <div style="" class="wrapper">
         <div class="card">
-          <form style="border:solid 5px #961010;" action="/userloginsubmit" id="valid" method="POST" class="d-flex flex-column">
+          <form style="" action="/userloginsubmit" id="valid" method="POST" class="d-flex flex-column">
             <div class="h3 text-center " style="color: #961010;">Login</div>
             <div style="color: #961010;" class="d-flex align-items-center input-field my-3 mb-4">
               <span class="far fa-user p-2"></span>
@@ -34,6 +34,15 @@
                 class="form-control"
               />
             </div>
+
+ 
+
+
+
+
+
+
+
             <div style="color: #961010;" class="d-flex align-items-center input-field mb-4">
               <span class="fas fa-lock p-2"></span>
               <input
@@ -46,30 +55,42 @@
               />
               <br>
 
-              
 
-              <button class="btn" onclick="showPassword()">
-                <span class="fas fa-eye-slash"></span>
-              </button>
+
+              
             </div>
+
+            <div style="display: flex; justify-content: center;" class="my-3">
+              <input style="width: 150px;" type="submit" value="Login" class="btn btn-success" />
+            </div>
+
+			<a class="btn " style="background-color: #961010; margin-bottom: 20px;font-weight: bolder;" href="/loginwith_otp">Login with OTP</a>
+
+
             <h6 style="margin-left: 20px; "><a style="color: #961010;" href="/userForgotPassword"> forgot password ?</a></h6>
             <div
               class="d-sm-flex align-items-sm-center justify-content-sm-between"
             >
               
             </div>
-            <div class="my-3">
-              <input type="submit" value="Login" class="btn btn-primary" />
-            </div>
+
+			
+
+             {{#if loginError}}
+          <p style="color: rgb(73, 7, 7); font-size: 20px; font-weight: bolder;">Invalid Email ID or Passsword</p>
+          {{/if}}
+
+          {{#if blockUser}}
+             <p style="color: rgb(73, 7, 7); font-size: 20px; font-weight: bolder;">Access Denied</p>
+          {{/if}}
+
             <div class="mb-3">
               <span class="text-light-white">Don't have an account?</span>
               <button style="background-color: rgb(1, 7, 8);"><a href="/usersignup">Sign Up</a></button>
             </div>
           </form>
           
-          {{#if loginError}}
-          <p style="color: rgb(73, 7, 7); font-size: 20px; font-weight: bolder;">Invalid Username or Passsword</p>
-          {{/if}}
+         
 
         </div>
       </div>
@@ -83,21 +104,43 @@
 
 
 
-
-<!-- ========================= FOOTER ========================= -->
-<footer class="section-footer border-top padding-y">
-	<div class="container">
-		<p class="float-md-right"> 
-			&copy Copyright 2019 All rights reserved
-		</p>
-		<p>
-			<a href="#">Terms and conditions</a>
-		</p>
-	</div><!-- //container -->
-</footer>
-<!-- ========================= FOOTER END // ========================= -->
-
-
-
 </body>
 </html>
+
+
+      <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.js"></script>
+
+
+
+      <script>
+
+       $(document).ready(function(){
+  $("#valid").validate({
+    rules:{
+      username:{
+        required:true
+      },
+      mobile:{
+        required:true,
+        minlength:10,
+        maxlength:10
+      },
+      email:{
+        required:true
+      },
+      password:{
+        required:true,
+        minlength:3
+      }
+    },
+    messages:{
+      username:"enter user name",
+      email:"Enter Email",
+      password:"Enter password",
+      mobile:"enter mobile"
+    }
+  })
+})
+
+      </script>

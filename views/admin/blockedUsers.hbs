@@ -1,0 +1,69 @@
+
+
+
+
+
+<body class="dark-edition">
+
+    
+    
+    <div class="container">
+        <div class="row">
+
+            <div style="margin-top: 100px;">
+                <p style="margin-bottom: 40px; color: white; font-size: 40px; font-family: 'Acme', sans-serif;">BLOCKED USERS</p>
+
+                <table class="table " id="TSearch" style=" border-style: solid;3 px ;">
+  <thead >
+    <tr>
+      <th scope="col">No</th>
+      
+      <th scope="col">User Name</th>
+      <th scope="col">Mobile</th>
+      <th scope="col">Email</th>
+     
+      <th scope="col">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+      {{#each BlockedUser}}
+    <tr>
+      <th scope="row">{{add @index '1'}}</th>
+      
+      <td>{{this.username}}</td>
+      <td>{{this.mobile}}</td>
+      <td>{{this.email}}</td>
+    
+      <td>
+        {{#eq this.block 'true'}}
+        <a href="/admin/blockedUser/{{this._id}}" onclick="return confirm('Are you want to Block {{this.username}}')" class="btn btn-danger">Block</a>
+        
+        
+        {{else}}
+        <a href="/admin/unblockedUser/{{this._id}}" onclick="return confirm('Are you want to UnBlock {{this.username}}')" class="btn btn-success">UnBlock</a>
+        {{/eq}}
+      </td>
+    </tr>   
+   
+    {{/each}}
+  </tbody>
+</table>
+
+
+            </div>
+
+        </div>
+    </div>
+
+</body>
+
+
+
+<script>
+
+    $(document).ready( function () {
+    $('#TSearch').DataTable();
+} );
+
+
+ </script>

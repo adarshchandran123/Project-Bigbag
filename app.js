@@ -3,12 +3,16 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-var hbs=require('express-handlebars')
+var exhbs=require('express-handlebars')
 var fileUpload=require('express-fileupload')
-
+var helper = require('handlebars-helpers')()
 var userRouter = require('./routes/user');
 var adminRouter = require('./routes/admin');
+var Handlebars=require('handlebars')
  
+var hbs = exhbs.create({extname:'hbs',defaultLayout:'layout',layoutsDir:__dirname+'/views/layout/',partialsDir:__dirname+'/views/partials/',
+helpers : helper
+})
 
 var app = express();
 var db=require('./config/connection')
@@ -18,7 +22,7 @@ var session=require('express-session')
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
-app.engine('hbs',hbs({extname:'hbs',defaultLayout:'layout',layoutsDir:__dirname+'/views/layout/',partialsDir:__dirname+'/views/partials/'}))
+app.engine('hbs',hbs.engine)
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -43,6 +47,34 @@ db.connect((err)=>{
 })
 app.use('/', userRouter);
 app.use('/admin', adminRouter);
+
+
+Handlebars.registerHelper('hello',function(context,options,price){
+
+  for(key in context){
+    if(options.toString()=== context[key].item.toString()){
+      var inp =true
+      break;
+    }else{
+      var inp=false
+    }
+  }
+  if(inp ===true){
+    var data ='<a href="/cart"  style="margin-top: 10px; color: white; font-weight: bold;"  class="btn btn-primary add-to-cart"> View Cart</a>'
+  }else{
+    var data =`<a style="margin-top: 10px; color: white; font-weight: bold;" class="btn btn-primary add-to-cart" onclick="addToCart('${options}','${price}')">Add To Cart <i class="fas fa-shopping-cart"></i> </a>`
+  }
+  return data
+
+})
+
+
+
+
+
+
+
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

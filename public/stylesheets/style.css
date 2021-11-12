@@ -1,6 +1,6 @@
 .logo1{
     
-    width: 250px;
+    width: 100%;
     height: 100px;
     left: 81.55px;
     top: 51px;
@@ -42,7 +42,7 @@
     background-image: linear-gradient(135deg, #ff00ba 0%, #fae713 100%); */
     /* background-image: linear-gradient(150deg, #12031b 0%, #192438 100%, #4f2957 100%); */
     background-image: url("https://images3.alphacoders.com/853/thumb-1920-85305.jpg");
-    height: auto;
+    height: 100vh;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -154,6 +154,88 @@
 
 
 
+#card {
+    position: relative;
+    width: 320px;
+    height: auto;
+    display: block;
+    margin: 40px auto;
+    text-align: center;
+    font-family: 'Source Sans Pro', sans-serif;
+  }
+
+
+  #upper-side {
+    padding: 2em;
+    background-color: #8BC34A;
+    display: block;
+    color: #fff;
+    border-top-right-radius: 8px;
+    border-top-left-radius: 8px;
+  }
+
+
+  #checkmark {
+    font-weight: lighter;
+    fill: #fff;
+    margin: -3.5em auto auto 20px;
+  }
+
+
+  #status {
+    font-weight: lighter;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 1em;
+    margin-top: -.2em;
+    margin-bottom: 0;
+  }
+
+
+  #lower-side {
+    padding: 2em 2em 5em 2em;
+    background: #c9e0af;
+    height: auto;
+    display: block;
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+  }
+
+
+  #message {
+    margin-top: -.5em;
+    color: #0c0b0b;
+    letter-spacing: 1px;
+    font-size: larger;
+    font-weight: bold;
+  }
+
+  .contBtn {
+    position: relative;
+    top: 1.5em;
+    text-decoration: none;
+    background: #8bc34a;
+    color: #fff;
+    margin: auto;
+    padding: .8em 3em;
+    -webkit-box-shadow: 0px 15px 30px rgba(50, 50, 50, 0.21);
+    -moz-box-shadow: 0px 15px 30px rgba(50, 50, 50, 0.21);
+    box-shadow: 0px 15px 30px rgba(50, 50, 50, 0.21);
+    border-radius: 25px;
+    -webkit-transition: all .4s ease;
+          -moz-transition: all .4s ease;
+          -o-transition: all .4s ease;
+          transition: all .4s ease;
+  }
+  #contBtn:hover {
+    -webkit-box-shadow: 0px 15px 30px rgba(50, 50, 50, 0.41);
+    -moz-box-shadow: 0px 15px 30px rgba(50, 50, 50, 0.41);
+    box-shadow: 0px 15px 30px rgba(50, 50, 50, 0.41);
+    -webkit-transition: all .4s ease;
+          -moz-transition: all .4s ease;
+          -o-transition: all .4s ease;
+          transition: all .4s ease;
+  }
 
 
 

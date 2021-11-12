@@ -1,0 +1,340 @@
+<body class="dark-edition">
+    
+    {{#if carts}}
+
+<div class="container">
+    <div class="row">
+        <div style="margin-top: 50px;">
+            <p style="margin-bottom: 40px; font-size: 40px; font-family: 'Acme', sans-serif;">DETAILS</p>
+
+            <div class="col-sm-12 col-md-6" style="float: left; padding-right: 30px; padding-left: 10px;">
+
+                <div style="float: left; margin-top: 30px;" class="col-md-6 ">
+                       <label for="">Name :</label>
+                   </div>
+                   <div style="float: left; margin-top: 30px;" class="col-md-6 ">
+                       <input readonly type="text" value="{{orderproduct.deliveryDetails.fname}}">
+                   </div>
+
+
+
+                   <div style="float: left; margin-top: 30px;" class="col-md-6 ">
+                       <label for="">Address  :</label>
+                   </div>
+                   <div style="float: left; margin-top: 30px;" class="col-md-6 ">
+                       <input readonly type="text" value="{{orderproduct.deliveryDetails.house_name}}"><br>
+                       <input style="margin-top: 20px;" readonly type="text" value="{{orderproduct.deliveryDetails.address1}}"><br>
+                       <input style="margin-top: 20px;" readonly type="text" value="{{orderproduct.deliveryDetails.address2}}"><br>
+                   </div>
+
+
+            </div>
+            <div class="col-sm-12 col-md-6" style=" float: left; padding-right: 30px; padding-left: 10px;">
+
+                <div style="float: left; margin-top: 30px;" class="col-md-6 ">
+                       <label for="">Town or city  :</label>
+                   </div>
+                   <div style="float: left; margin-top: 30px;" class="col-md-6 ">
+                       <input readonly type="text" value="{{orderproduct.deliveryDetails.town_city}}">
+                   </div>
+    
+               
+
+
+                   <div style="float: left; margin-top: 30px;" class="col-md-6 ">
+                       <label for="">Country  :</label>
+                   </div>
+                   <div style="float: left; margin-top: 30px;" class="col-md-6 ">
+                       <input readonly type="text" value="{{orderproduct.deliveryDetails.country_state}}">
+                   </div>
+
+
+                   <div style="float: left; margin-top: 30px;" class="col-md-6 ">
+                       <label for="">Pincode  :</label>
+                   </div>
+                   <div style="float: left; margin-top: 30px;" class="col-md-6 ">
+                       <input readonly type="number" value="{{orderproduct.deliveryDetails.pincode_zip}}">
+                   </div>
+
+
+
+                   <div style="float: left; margin-top: 30px;" class="col-md-6 ">
+                       <label for="">Payment Metod  :</label>
+                   </div>
+                   <div style="float: left; margin-top: 30px;" class="col-md-6 ">
+                       <input readonly type="text" value="{{orderproduct.paymentMethod}}">
+                   </div>
+
+
+
+                   
+
+
+
+            </div>
+
+        </div>
+
+        
+
+        <div style="margin-top: 100px;">
+            <p style="margin-bottom: 40px; font-size: 40px; font-family: 'Acme', sans-serif;">PRODUCT DETAILS</p>
+
+            
+                   
+
+
+        </div>
+
+    </div>
+</div>
+
+
+<section>
+
+    <div class="container">
+        <div style="margin-top: 70px;" class="row">
+
+            <table class="table " id="tableSearch" style=" border-style: solid;3 px ;">
+  <thead >
+    <tr>
+      <th scope="col">No</th>
+      
+      <th scope="col">Image</th>
+      <th scope="col">Product Id</th>
+      <th scope="col">Quantity</th>
+     
+      <th scope="col">Price</th>
+       <th scope="col">Total Amount</th>
+       <th scope="col">Status</th>
+    </tr>
+  </thead>
+  <tbody>
+      {{#each orderproduct.products}}
+    <tr>
+      <th scope="row">{{add @index '1'}}</th>
+      <td>  <img style="width: 70px; height: 60px;" src="/product-image/{{this.item}}__1.jpg" alt=""></td>
+      
+      <td>{{this.item}}</td>
+      <td>{{this.quantity}}</td>
+      <td>{{this.price}}</td>
+      <td>{{this.totalprice}}</td>
+        <td>
+
+            <div class="dropdown">
+  <button class="btn btn-danger dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+    {{this.status}}
+    
+  </button>
+  {{#eq this.status 'Delivered'}}
+
+  {{else}}
+
+  {{#eq this.status 'Cancelled'}}
+  
+
+  {{else}}
+  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+    <li><a class="dropdown-item" href="/admin/change_orderStatus?proId={{this.item}}&status=Cancelled">Cancelled</a></li>
+    <li><a class="dropdown-item" href="/admin/change_orderStatus?proId={{this.item}}&status=Delivered">Delivered</a></li>
+    <li><a class="dropdown-item" href="/admin/change_orderStatus?proId={{this.item}}&status=Pending">Pending</a></li>
+    <li><a class="dropdown-item" href="/admin/change_orderStatus?proId={{this.item}}&status=Placed">Placed</a></li>
+    
+    <li><a class="dropdown-item" href="/admin/change_orderStatus?proId={{this.item}}&status=Shipped">Shipped</a></li>
+    
+  </ul>
+  {{/eq}}
+  {{/eq}}
+  
+</div>
+
+
+        </td>
+     
+    </tr>   
+   
+    {{/each}}
+  </tbody>
+</table>
+
+
+
+        </div>
+
+    </div>
+
+</section>
+{{/if}}
+
+
+
+
+    {{#if buynow}}
+
+<div class="container">
+    <div class="row">
+        <div style="margin-top: 50px;">
+            <p style="margin-bottom: 40px; font-size: 40px; font-family: 'Acme', sans-serif;">DETAILS</p>
+
+            <div class="col-sm-12 col-md-6" style="float: left; padding-right: 30px; padding-left: 10px;">
+
+                <div style="float: left; margin-top: 30px;" class="col-md-6 ">
+                       <label for="">Name :</label>
+                   </div>
+                   <div style="float: left; margin-top: 30px;" class="col-md-6 ">
+                       <input readonly type="text" value="{{orderproduct.deliveryDetails.fname}}">
+                   </div>
+
+
+
+                   <div style="float: left; margin-top: 30px;" class="col-md-6 ">
+                       <label for="">Address  :</label>
+                   </div>
+                   <div style="float: left; margin-top: 30px;" class="col-md-6 ">
+                       <input readonly type="text" value="{{orderproduct.deliveryDetails.house_name}}"><br>
+                       <input style="margin-top: 20px;" readonly type="text" value="{{orderproduct.deliveryDetails.address1}}"><br>
+                       <input style="margin-top: 20px;" readonly type="text" value="{{orderproduct.deliveryDetails.address2}}"><br>
+                   </div>
+
+
+            </div>
+            <div class="col-sm-12 col-md-6" style=" float: left; padding-right: 30px; padding-left: 10px;">
+
+                <div style="float: left; margin-top: 30px;" class="col-md-6 ">
+                       <label for="">Town or city  :</label>
+                   </div>
+                   <div style="float: left; margin-top: 30px;" class="col-md-6 ">
+                       <input readonly type="text" value="{{orderproduct.deliveryDetails.town_city}}">
+                   </div>
+    
+               
+
+
+                   <div style="float: left; margin-top: 30px;" class="col-md-6 ">
+                       <label for="">Country  :</label>
+                   </div>
+                   <div style="float: left; margin-top: 30px;" class="col-md-6 ">
+                       <input readonly type="text" value="{{orderproduct.deliveryDetails.country_state}}">
+                   </div>
+
+
+                   <div style="float: left; margin-top: 30px;" class="col-md-6 ">
+                       <label for="">Pincode  :</label>
+                   </div>
+                   <div style="float: left; margin-top: 30px;" class="col-md-6 ">
+                       <input readonly type="number" value="{{orderproduct.deliveryDetails.pincode_zip}}">
+                   </div>
+
+
+
+                   <div style="float: left; margin-top: 30px;" class="col-md-6 ">
+                       <label for="">Payment Metod  :</label>
+                   </div>
+                   <div style="float: left; margin-top: 30px;" class="col-md-6 ">
+                       <input readonly type="text" value="{{orderproduct.paymentMethod}}">
+                   </div>
+
+
+
+                   
+
+
+
+            </div>
+
+        </div>
+
+        
+
+        <div style="margin-top: 100px;">
+            <p style="margin-bottom: 40px; color: white; font-size: 40px; font-family: 'Acme', sans-serif;">PRODUCT DETAILS</p>
+
+            
+                   
+
+
+        </div>
+
+    </div>
+</div>
+
+
+<section>
+
+    <div class="container">
+        <div style="margin-top: 70px;" class="row">
+
+            <table class="table " id="tableSearch" style=" border-style: solid;3 px ;">
+  <thead >
+    <tr>
+      <th scope="col">No</th>
+      
+      <th scope="col">Image</th>
+      <th scope="col">Product Id</th>
+      <th scope="col">Quantity</th>
+     
+      
+       <th scope="col">Total Amount</th>
+       <th scope="col">Status</th>
+    </tr>
+  </thead>
+  <tbody>
+      
+    <tr>
+      <th scope="row">1</th>
+      <td>  <img style="width: 70px; height: 60px;" src="/product-image/{{orderproduct.proId}}__1.jpg" alt=""></td>
+      
+      <td>{{orderproduct.proId}}</td>
+      <td>1</td>
+      <td>{{orderproduct.productprice}}</td>
+      
+        <td>
+
+            <div class="dropdown">
+  <button class="btn btn-danger dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+    {{orderproduct.status}}
+    
+  </button>
+
+  {{#eq orderproduct.status 'Delivered'}}
+
+  {{else}}
+  
+  {{#eq orderproduct.status 'Cancelled'}}
+
+  {{else}}
+  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+    <li><a class="dropdown-item" href="/admin/change_orderStatus?proId={{orderproduct.proId}}&status=Cancelled">Cancelled</a></li>
+    <li><a class="dropdown-item" href="/admin/change_orderStatus?proId={{orderproduct.proId}}&status=Delivered">Delivered</a></li>
+    <li><a class="dropdown-item" href="/admin/change_orderStatus?proId={{orderproduct.proId}}&status=Pending">Pending</a></li>
+    <li><a class="dropdown-item" href="/admin/change_orderStatus?proId={{orderproduct.proId}}&status=Placed">Placed</a></li>
+    
+    <li><a class="dropdown-item" href="/admin/change_orderStatus?proId={{orderproduct.proId}}&status=Shipped">Shipped</a></li>
+    {{/eq}}
+    {{/eq}}
+  </ul>
+</div>
+
+
+        </td>
+     
+    </tr>   
+   
+    
+  </tbody>
+</table>
+
+
+
+        </div>
+
+    </div>
+
+</section>
+{{/if}}
+
+
+
+</body>
+
+

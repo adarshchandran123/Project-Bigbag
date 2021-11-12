@@ -1,0 +1,98 @@
+
+
+<body class="dark-edition">
+    
+    <div class="container">
+        <div class="row">
+            <p style="margin-top: 100px; color: white; font-size: 40px; font-family: 'Acme', sans-serif;">ADD CATEGORY</p>
+
+
+<div style="border: solid 1px;margin-top: 80px; width: 50%;">
+
+        <form method="POST" id="valid8" action="/admin/addCategory">
+  <div style="" class="mb-3">
+    <label for="exampleInputEmail1" style="font-size: x-large;" class="form-label">Category</label>
+    <input type="text" name="category" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+  </div>
+
+
+  <button type="submit" class="btn btn-primary">Add Category</button>
+</form>
+
+<div>
+    {{!-- <h3>All Category</h3> --}}
+
+    <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">No</th>
+      <th scope="col">All Category</th>
+      <th scope="col">Action</th>
+      
+    </tr>
+  </thead>
+  <tbody>
+      {{#each productCategory}}
+    <tr>
+      <th scope="row">{{add @index '1'}}</th>
+      <td>{{this.category}}</td>
+      <td>
+
+         <a href="/admin/DeleteCategory/{{this._id}}/{{this.category}}"> <svg xmlns="http://www.w3.org/2000/svg" style="color: red;" width="20" height="20" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+  <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
+</svg></a>
+
+          
+
+      </td>
+      
+    </tr>
+    {{/each}}
+
+  </tbody>
+</table><br><br><br>
+
+
+
+</div>
+
+
+
+</div>
+
+
+
+
+        </div>
+    </div>
+    
+</body>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.js"></script>
+
+
+
+
+<script>
+
+       $(document).ready(function(){
+  $("#valid8").validate({
+    rules:{
+      category:{
+        required:true,
+        minlength:2
+
+      }
+
+    },
+    messages:{
+      category:"enter  category",
+      
+    }
+  })
+})
+
+      </script>
+

@@ -7,17 +7,24 @@
   },
   "dependencies": {
     "bcrypt": "^5.0.1",
+    "chart.js": "^3.6.0",
     "cookie-parser": "~1.4.4",
+    "cropperjs": "^1.5.12",
     "debug": "~2.6.9",
     "express": "~4.16.1",
     "express-fileupload": "^1.2.1",
     "express-handlebars": "^5.3.3",
     "express-session": "^1.17.2",
+    "handlebars-helpers": "^0.10.0",
     "hbs": "^4.1.2",
     "http-errors": "~1.6.3",
+    "jquery": "^3.6.0",
+    "jquery-cropper": "^1.0.1",
     "mongodb": "^4.1.1",
     "morgan": "~1.9.1",
     "nodemon": "^2.0.12",
+    "razorpay": "^2.0.7",
+    "sweetalert2": "^11.1.9",
     "twilio": "^3.68.0"
   }
 }

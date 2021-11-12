@@ -1,0 +1,482 @@
+
+<div class="container">
+    <div class="row">
+
+
+        <div class="col-md-12 col-sm-12 ">
+                <div class="billing-address">
+                    <h4 style="font-weight: bolder; margin-top: 50px; margin-bottom: 50px;" class="checkout-box-title">NEW ADDRESS</h4><br><hr>
+
+
+
+                     {{#each userAddress}}
+                    <div style="float: left; width:auto; height: 200px; margin-left: 20px; " class="col-sm-12 col-md-2 pt-2  text-center">
+                        <button class="btn btn-outline-success" onclick="a('{{this.fname}}','{{this.lname}}','{{this.house_name}}','{{this.address1}}','{{this.address2}}','{{this.town_city}}','{{this.country_state}}','{{this.pincode_zip}}','{{this.phone}}')" id="{{this._id}}" name="address" value="{{this._id}}">Choose </button>
+                        <a class="btn btn-outline-danger" href="/DeleteUserNewAddress/{{this.userId}}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+  <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
+</svg>
+                        </a>
+                        <div style="text-align: left;">
+                        <label for="">
+                            <h4>Address</h4>
+                            {{this.fname}} &nbsp; {{this.lname}} <br>
+                            {{this.house_name}} <br>
+                            {{this.address1}} <br>
+                            {{this.address2}}
+
+                        </label>
+                        </div>
+                                        
+                                    </div>
+                        {{/each}}
+
+                        <br><br><br><br><br><br><br><br><br>
+
+
+
+
+
+                    <div class="checkout-billing-adress-box">
+                        <form action="/Addnewaddress" id="valid7" method="POST">
+                        <div class="billing-address-input clearfix">
+                            <label>FIRST NAME *</label>
+                            <input id="fname" name="fname" type="text">
+                        </div>
+						{{!-- <input type="text" name="userId" id="" value="{{user._id}}" hidden> --}}
+                        {{!-- <input type="text" name="proId" value="{{orderproduct._id}}" hidden> --}}
+                        <div class="billing-address-input clearfix">
+                            <label>LAST NAME *</label>
+                            <input id="lname" name="lname" type="text">
+                        </div>
+                        <div class="billing-address-input clearfix">
+                            <label>HOUSE NAME *</label>
+                            <input id="house_name" name="house_name" type="text">
+                        </div>
+                        <div class="billing-address-input clearfix">
+                            <label>ADDRESS *</label>
+                            <input id="address1" name="address1" type="text" placeholder="Street Address">
+                            <input id="address2" name="address2" type="text" placeholder="Fashin, suite, unite ect (optinal)">
+                        </div>
+                        <div class="billing-address-input clearfix">
+                            <label>TOWN / CITY *</label>
+                            <input id="town_city" name="town_city" type="text">
+                        </div>
+                        <div class="billing-address-input clearfix">
+                            <label>STATES</label>
+                            <input id="country_state" name="country_state" type="text">
+                        </div>
+                        <div class="billing-address-input clearfix">
+                            <label>POSTCODE *</label>
+                            <input id="pincode_zip" name="pincode_zip" type="number">
+                        </div>
+                        
+                        <div class="billing-address-input clearfix" style="margin-bottom:0px">
+                            <label>PHONE *</label>
+                            <input id="phone" name="phone" type="tel">
+                        </div>
+
+                        
+                            <div class="col-12" style="margin-top: 50px; ">
+                            <input style="text-align: center;" class="btn btn-outline-primary "  type="submit" value="Submit">
+                            </div>
+
+                        </form>
+                       
+                    </div>
+                </div>
+            </div>
+
+
+    </div>
+
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.js"></script>
+
+
+<style>
+    dt {
+        color: black;
+    }
+
+    .checkout-top {
+        margin-bottom: 23px;
+    }
+
+    .checkout-top p,
+    .checkout-top p a {
+        color: #000000;
+        font-family: "Montserrat", sans-serif
+        font-size: 16px;
+    }
+
+    .checkout-top p a {
+        color: #961010;
+    }
+
+    .checkout-box-title {
+        border-bottom: 1px solid #ecedee;
+        color: #000000;
+        font-size: 18px;
+        font-weight: normal;
+        letter-spacing: 0;
+        padding: 16px 0;
+        text-align: center;
+    }
+
+    .billing-address {
+        background: #fff none repeat scroll 0 0;
+        border: 1px solid #ecedee;
+    }
+
+    .checkout-billing-adress-box {
+        padding: 21px 35px 50px 25px;
+    }
+
+    .billing-address-input {
+        margin-bottom: 20px;
+    }
+
+    .billing-address-input label {
+        color: #000000;
+        float: left;
+        font-size: 14px;
+        font-weight: 700;
+        letter-spacing: 0;
+
+    }
+
+    .billing-address-input select,
+    .billing-address-input input[type="text"] {
+        border: 0 none;
+        border-bottom: 1px solid #e5e5e5;
+        color: #000000;
+        float: right;
+        font-size: 14px;
+        font-weight: 300;
+        height: 40px;
+        padding: 0 10px;
+        width: 55%;
+    }
+
+    .billing-address-input select option {}
+
+    .cbab-create-account {
+        margin-bottom: 19px;
+    }
+
+    .cbab-create-account input[type="checkbox"] {}
+
+    .cbab-create-account label {
+        color: #000000;
+        font-size: 14px;
+        font-weight: 300;
+        letter-spacing: 0;
+        line-height: 16px;
+        margin: 0;
+    }
+
+    .cbab-create-account p {
+        color: #000000;
+        line-height: 24px;
+        margin: 12px 0 0;
+    }
+
+    .cbab-account-password {
+        margin: 0 0 31px;
+    }
+
+    .cbab-account-password label {
+        color: #000000;
+        font-size: 14px;
+        font-weight: 300;
+        letter-spacing: 0;
+        line-height: 16px;
+        margin: 0;
+    }
+
+    .cbab-account-password input[type="password"] {
+        border: 0 none;
+        border-bottom: 1px solid #e5e5e5;
+        color: #000000;
+        float: right;
+        font-size: 14px;
+        font-weight: 300;
+        height: 40px;
+        padding: 0 10px;
+        width: 55%;
+    }
+
+    .cbab-order-notes {}
+
+    .cbab-order-notes p {
+        color: #000000;
+        font-size: 14px;
+        font-weight: 300;
+        letter-spacing: 0;
+        line-height: 16px;
+        margin: 0 0 10px;
+    }
+
+    .cbab-order-notes input[type="text"] {
+        border: 0 none;
+        border-bottom: 1px solid #e5e5e5;
+        color: #000000;
+        font-size: 14px;
+        font-weight: 300;
+        height: 40px;
+        padding: 0 10px;
+        width: 100%;
+    }
+
+    .promotional-code-box {
+        background: #fff none repeat scroll 0 0;
+        border: 1px solid #ecedee;
+        margin-bottom: 30px;
+        margin-top: 30px;
+    }
+
+    .pcb-content {
+        padding: 0 35px 25px;
+    }
+
+    .pcb-content p {
+        color: #000000;
+        margin-bottom: 25px;
+    }
+
+    .pcb-cuppon-input {}
+
+    .pcb-cuppon-input input[type="text"] {
+        border: 0 none;
+        border-bottom: 1px solid #e5e5e5;
+        color: #000000;
+        float: left;
+        font-weight: 300;
+        height: 40px;
+        letter-spacing: 0;
+        text-align: center;
+        width: 46%;
+    }
+
+    .pcb-cuppon-input button {
+        float: right;
+        width: 50%;
+    }
+
+    .checkout-page-button {
+        background: #961010 none repeat scroll 0 0;
+        border: 0 none;
+        border-radius: 3px;
+        color: #fff;
+		font-weight: bold;
+        display: inline-block;
+        padding: 5px 30px;
+        text-transform: uppercase;
+    }
+
+    .your-order-box {
+        background: #fff none repeat scroll 0 0;
+        border: 1px solid #ecedee;
+        margin-bottom: 30px;
+    }
+
+    .yob-content {
+        padding: 25px 25px 70px;
+    }
+
+    .yobc-title,
+    .yobc-title span {
+        color: #232530;
+        font-family: "Montserrat", sans-serif;
+        margin-bottom: 33px;
+    }
+
+    .yobc-title span {
+        float: right;
+    }
+
+    .yob-content ul {
+        list-style: outside none none;
+        padding: 0;
+    }
+
+    .yob-content ul li {
+        border-bottom: 1px solid #e5e5e5;
+        color: #000000;
+        font-size: 14px;
+        font-weight: 400;
+        letter-spacing: 0;
+        line-height: 30px;
+        margin: 0 0 27px;
+        padding: 0 0 1px;
+    }
+
+    .yob-content ul li.order-total {
+        text-transform: uppercase;
+    }
+
+    .yob-content ul li span {
+        color: #961010;
+        float: right;
+    }
+
+    .create-account-checkout-method {}
+
+    .select-payment-method {
+        margin-bottom: 3px;
+    }
+
+    .select-payment-method input[type="checkbox"] {}
+
+    .select-payment-method label {
+        color: #000000;
+        font-size: 14px;
+        font-weight: 300;
+        letter-spacing: 0;
+        margin-left: 10px;
+    }
+
+    .create-account-text {
+        border: 1px solid #e5e5e5;
+        margin: 0 0 20px;
+        padding: 21px 20px;
+    }
+
+    .create-account-text p {
+        color: #000000;
+        font-weight: 300;
+        line-height: 24px;
+    }
+
+    .place-order {
+        margin: 15px 0 0;
+        text-align: center;
+    }
+
+    .place-order button {}
+
+
+
+
+     label.error{
+         color: red;
+        }
+     
+</style>
+
+
+
+
+
+
+
+<script>
+
+       $(document).ready(function(){
+  $("#valid7").validate({
+    rules:{
+      fname:{
+        required:true,
+        minlength:3
+
+      }
+      
+        
+      ,
+      lname:{
+        required:true,
+        minlength:1,
+        
+      },
+      house_name:{
+        required:true,
+        minlength:3,
+    
+        
+      },
+      address1:{
+        required:true,
+        minlength:3
+        
+      },
+      address2:{
+        required:true,
+        minlength:3
+        
+      },
+      town_city:{
+        required:true,
+        minlength:3
+      },
+      country_state:{
+        required:true,
+        minlength:3
+      },
+      pincode_zip:{
+        required:true,
+        minlength:6,
+        maxlength:6
+      },
+      phone:{
+        required:true,
+        minlength:10,
+        maxlength:10
+      },
+      payment:{
+        required:true
+
+      }
+    },
+    messages:{
+      fname:"Enter  Your FirstName",
+      lname:"Enter Your Last name ",
+      house_name:"Enter Your house name ",
+      address1:"Enter Address",
+      address2:"Enter Address",
+      town_city:"Enter Your City",
+      country_state:"Enter Your State",
+      pincode_zip:"Enter pincode",
+      phone:"Enter Mobile number",
+      payment:"Select anyone"
+      
+
+
+
+    }
+
+
+
+  })
+})
+
+      </script>
+
+
+
+
+
+
+      <script>
+        function a(fname,lname,house_name,address1,address2,town_city,country_state,pincode_zip,phone){
+            document.getElementById('fname').value = fname
+            document.getElementById('lname').value = lname
+            document.getElementById('house_name').value = house_name
+            document.getElementById('address1').value = address1
+            document.getElementById('address2').value = address2
+            document.getElementById('town_city').value = town_city
+            document.getElementById('country_state').value = country_state
+            document.getElementById('pincode_zip').value = pincode_zip
+            document.getElementById('phone').value = phone
+            
+    
+    
+            
+    
+        }
+    </script>
+
+
+

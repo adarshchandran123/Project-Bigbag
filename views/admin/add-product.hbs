@@ -4,11 +4,11 @@
     <div class="row">
 
       <div style="margin-top: 150px;">
-          <p style="font-size: 40px; font-family: 'Acme', sans-serif;">ADD PRODUCT</p>
+          <p style="font-size: 40px; color: white; font-family: 'Acme', sans-serif;">ADD PRODUCT</p>
 
           <div style="width: 60%;">
 
-        <form action="/admin/add-product" method="POST" id="vaild" enctype="multipart/form-data" >
+        <form action="/admin/add-product" method="POST" id="valid2" enctype="multipart/form-data" >
           <div class="mt-5">
             <label for="exampleInput2" class="form-label1">Product Name</label>
             <input
@@ -23,12 +23,13 @@
 
           <div class="mt-5">
             <select style="color: white;   border-top: rgb(77, 78, 80); border-left: hidden;  border-right: hidden; font-size: larger; transition: 0s;"  class="form-select dark-edition" name="category" aria-label="Default select example">
-  <option >Category</option>
-  <option value="travelling bag">Travelling Bag</option>
-  <option value="school bag">School Bag</option>
-  <option value="college bag">College Bag</option>
-  <option value="hand bag">Hand Bag</option>
-  <option value="laptop bag">Laptop Bag</option>
+              
+  <option value="" >Category</option>
+  {{#each productCategory}}
+  <option value="{{this.category}}">{{this.category}}</option>
+
+
+  {{/each}}
 </select>
           </div>
 
@@ -43,7 +44,7 @@
               type="text"
                 name="discription"
               class="form-control"
-              id="exampleInputPassword1"
+              id="example"
             />
           </div>
 
@@ -57,7 +58,7 @@
               type="number"
                 name="oldprice"
               class="form-control"
-              id="exampleInputPassword1"
+              id="exampleInputPas"
             />
           </div>
 
@@ -71,24 +72,10 @@
               type="number"
                 name="newprice"
               class="form-control"
-              id="exampleInputPassword1"
+              id="exampleInputPass"
             />
           </div>
 
-
-          <div class="mt-5">
-            <label
-              for="exampleInput2"
-              class="form-label1"
-            >Date</label>
-            <input
-              type="date"
-              
-                name="date"
-              class="form-control"
-              id="exampleInputPassword1"
-            />
-          </div>
 
 
           <div class="mt-5">
@@ -101,68 +88,53 @@
               type="number"
                 name="qty"
               class="form-control"
-              id="exampleInputPassword1"
+              id="exampleInputPasswor"
             />
           </div>
+          
 
-          <div class="mt-5">
+        <div class="col-12">
 
-             <div id="imagePreview1"></div>
-           
-           
+          <div id="image-box" style="width: 500px; height: 500px; display: none;" ></div>
+                                    <button class="btn btn-primary mt-3" type="button" style="display: none;" id="crop-btn">Crop</button>
+            </div>
 
-            <label
-              for="exampleInput2"
-              class="form-label1"
-            >IMAGE-1</label>
-            
-            <input
-              type="file"
-                name="image1"
-                id="file1"
-                onchange="return fileValidation1()"
-              class="form-control"    
-              
-            />
-          </div>
+              <div class="mt-5">
+                <div id="invalid1"> </div>
+                                <label for="">IMAGE 1</label>
+                                <img src="" alt="" style="width: 100px; height:auto" id="imgview1">
+                                {{!-- <div id="preview1"></div> --}}
+                                <input  type="file" name="image1" id="file1" class="form-control"
+                                    onchange="return fileValidation1()">
+                                    
+                    </div>       
 
-          <div class="mt-5">
-            <div id="imagePreview2"></div>
-            <label
-              for="exampleInput2"
-              class="form-label1"
-            >IMAGE-2</label>
-            <input
-              type="file"
-              id="file2"
-              onchange="return fileValidation2()"
-                name="image2"
-              class="form-control" 
-             
-              
-            />
-          </div>
 
-          <div class="mt-5">
-            <div id="imagePreview3"></div>
-            
-            <label
-              for="exampleInput2"
-              class="form-label1"
-            >IMAGE-3</label>
-            <input
-              type="file"
-                name="image3"
-                id="file3"
-                onchange="return fileValidation3()"
-               
-              class="form-control"    
-             
-            />
-          </div>
+                    <div class="mt-5">
+                      <div id="invalid2"> </div>
+                                <label for="">IMAGE 2</label>
+                                <img src="" alt="" style="width: 100px; height:auto" id="imgview2">
+                                {{!-- <div id="preview1"></div> --}}
+                                <input  type="file" name="image2" id="file2" class="form-control"
+                                    onchange="return fileValidation2()">
+                                   
+                    </div>  
+
+                    <div class="mt-5">
+                      <div id="invalid3"> </div>
+                                <label for="">IMAGE 3</label>
+                                <img src="" alt="" style="width: 100px; height:auto" id="imgview3">
+                                {{!-- <div id="preview1"></div> --}}
+                                <input  type="file" name="image3" id="file3" class="form-control"
+                                    onchange="return fileValidation3()">
+                                    
+                    </div>
+
+
+
 
          
-          <button type="submit" class="btn btn-primary">Submit</button>
+          <button type="submit" id="confirm-btn" class="btn btn-primary">Submit</button>
         </form>
         </div> <br><br><br><br>
 
@@ -171,21 +143,6 @@
     </div>
 
   </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -201,147 +158,87 @@
 
 
 
-
-
-
- <script>
-        function fileValidation3() {
-            var fileInput = 
-                document.getElementById('file3');
-              
-            var filePath = fileInput.value;
-          
-            // Allowing file type
-            var allowedExtensions = 
-                    /(\.jpg|\.jpeg|\.png|\.gif)$/i;
-              
-            if (!allowedExtensions.exec(filePath)) {
-                document.getElementById('imagePreview3').innerHTML='<p style="color: red; font-weight: bolder; font-size: large; " >Invalid file type<p>'
-                fileInput.value = '';
-                return false;
-            } 
-            else 
-            {
-              
-                // Image preview
-                if (fileInput.files && fileInput.files[0]) {
-                    var reader = new FileReader();
-                    reader.onload = function(e) {
-                        document.getElementById(
-                            'imagePreview3').innerHTML = 
-                            '<img style="width: 70px; height: 60px;"  src="' + e.target.result
-                            + '"/>';
-                    };
-                      
-                    reader.readAsDataURL(fileInput.files[0]);
-                }
-            }
-        }
-    </script>
-
-
-
-    <script>
-        function fileValidation1() {
-            var fileInput = 
-                document.getElementById('file1');
-              
-            var filePath = fileInput.value;
-          
-            // Allowing file type
-            var allowedExtensions = 
-                    /(\.jpg|\.jpeg|\.png|\.gif)$/i;
-              
-            if (!allowedExtensions.exec(filePath)) {
-                document.getElementById('imagePreview1').innerHTML='<p style="color: red; font-weight: bolder; font-size: large; " >Invalid file type<p>'
-                fileInput.value = '';
-                return false;
-            } 
-            else 
-            {
-              
-                // Image preview
-                if (fileInput.files && fileInput.files[0]) {
-                    var reader = new FileReader();
-                    reader.onload = function(e) {
-                        document.getElementById(
-                            'imagePreview1').innerHTML = 
-                            '<img style="width: 70px; height: 60px;"  src="' + e.target.result
-                            + '"/>';
-                    };
-                      
-                    reader.readAsDataURL(fileInput.files[0]);
-                }
-            }
-        }
-    </script>
-
-
-
-    <script>
-        function fileValidation2() {
-            var fileInput = 
-                document.getElementById('file2');
-              
-            var filePath = fileInput.value;
-          
-            // Allowing file type
-            var allowedExtensions = 
-                    /(\.jpg|\.jpeg|\.png|\.gif)$/i;
-              
-            if (!allowedExtensions.exec(filePath)) {
-                document.getElementById('imagePreview2').innerHTML='<p style="color: red; font-weight: bolder; font-size: large; " >Invalid file type<p>'
-                fileInput.value = '';
-                return false;
-            } 
-            else 
-            {
-              
-                // Image preview
-                if (fileInput.files && fileInput.files[0]) {
-                    var reader = new FileReader();
-                    reader.onload = function(e) {
-                        document.getElementById(
-                            'imagePreview2').innerHTML = 
-                            '<img style="width: 70px; height: 60px;"  src="' + e.target.result
-                            + '"/>';
-                    };
-                      
-                    reader.readAsDataURL(fileInput.files[0]);
-                }
-            }
-        }
-    </script>
-
  
-      <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.js"></script>
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.11/cropper.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.11/cropper.js"></script>
 
 
-      <script>
+
+
+
+<script>
 
        $(document).ready(function(){
-  $("#valid").validate({
+  $("#valid2").validate({
     rules:{
       productName:{
+        required:true,
+        minlength:3
+
+      },
+      category:{
         required:true
+
+      }
+      
+        
+      ,
+      discription:{
+        required:true,
+        minlength:5,
+        maxlength:25
       },
       oldprice:{
         required:true,
-        minlength:10,
-        maxlength:10
+        minlength:1
+        
+      },
+      newprice:{
+        required:true,
+        minlength:1
+        
+      },
+      date:{
+        required:true
+        
+      },
+      qty:{
+        required:true,
+        minlength:1
+      },
+      image1:{
+        required:true
+      },
+      image2:{
+        required:true
+      },
+      image3:{
+        required:true
       }
     },
     messages:{
-      email:"Enter Email",
-      password:"Enter password"
+      productName:"enter  product name",
+      category:"select Category ",
+      discription:"Enter Discription",
+      oldprice:"Enter Oldprice",
+      newprice:"Enter Newprice",
+      date:"Enter Date",
+      qty:"Enter QTY",
+      image1:"Select Image",
+      image2:"Select Image",
+      image3:"Select Image",
+
+
+
     }
   })
 })
 
       </script>
 
+ 
 
 
 
@@ -351,259 +248,214 @@
 
 
 <script>
-        const x = new Date().getFullYear();
-        let date = document.getElementById('date');
-        date.innerHTML = '&copy; ' + x + date.innerHTML;
-      </script>
-    </div>
-  </div>
-  <div class="fixed-plugin">
-    <div class="dropdown show-dropdown">
-      <a href="#" data-toggle="dropdown">
-        <i class="fa fa-cog fa-2x"> </i>
-      </a>
-      <ul class="dropdown-menu">
-        <li class="header-title"> Sidebar Filters</li>
-        <li class="adjustments-line">
-          <a href="javascript:void(0)" class="switch-trigger active-color">
-            <div class="badge-colors ml-auto mr-auto">
-              <span class="badge filter badge-purple active" data-color="purple"></span>
-              <span class="badge filter badge-azure" data-color="azure"></span>
-              <span class="badge filter badge-green" data-color="green"></span>
-              <span class="badge filter badge-warning" data-color="orange"></span>
-              <span class="badge filter badge-danger" data-color="danger"></span>
-            </div>
-            <div class="clearfix"></div>
-          </a>
-        </li>
-        <li class="header-title">Images</li>
-        <li>
-          <a class="img-holder switch-trigger" href="javascript:void(0)">
-            <img src="../assets/img/sidebar-1.jpg" alt="">
-          </a>
-        </li>
-        <li class="active">
-          <a class="img-holder switch-trigger" href="javascript:void(0)">
-            <img src="../assets/img/sidebar-2.jpg" alt="">
-          </a>
-        </li>
-        <li>
-          <a class="img-holder switch-trigger" href="javascript:void(0)">
-            <img src="../assets/img/sidebar-3.jpg" alt="">
-          </a>
-        </li>
-        <li>
-          <a class="img-holder switch-trigger" href="javascript:void(0)">
-            <img src="../assets/img/sidebar-4.jpg" alt="">
-          </a>
-        </li>
-        <li class="button-container">
-          <a href="https://www.creative-tim.com/product/material-dashboard-dark" target="_blank" class="btn btn-primary btn-block">Free Download</a>
-        </li>
-        <!-- <li class="header-title">Want more components?</li>
-            <li class="button-container">
-                <a href="https://www.creative-tim.com/product/material-dashboard-pro" target="_blank" class="btn btn-warning btn-block">
-                  Get the pro version
-                </a>
-            </li> -->
-        <li class="button-container">
-          <a href="https://demos.creative-tim.com/material-dashboard-dark/docs/2.0/getting-started/introduction.html" target="_blank" class="btn btn-default btn-block">
-            View Documentation
-          </a>
-        </li>
-        <li class="button-container github-star">
-          <a class="github-button" href="https://github.com/creativetimofficial/material-dashboard/tree/dark-edition" data-icon="octicon-star" data-size="large" data-show-count="true" aria-label="Star ntkme/github-buttons on GitHub">Star</a>
-        </li>
-        <li class="header-title">Thank you for 95 shares!</li>
-        <li class="button-container text-center">
-          <button id="twitter" class="btn btn-round btn-twitter"><i class="fa fa-twitter"></i> &middot; 45</button>
-          <button id="facebook" class="btn btn-round btn-facebook"><i class="fa fa-facebook-f"></i> &middot; 50</button>
-          <br>
-          <br>
-        </li>
-      </ul>
-    </div>
-  </div>
-  <!--   Core JS Files   -->
-  <script src="../assets/js/core/jquery.min.js"></script>
-  <script src="../assets/js/core/popper.min.js"></script>
-  <script src="../assets/js/core/bootstrap-material-design.min.js"></script>
-  <script src="https://unpkg.com/default-passive-events"></script>
-  <script src="../assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
-  <!-- Place this tag in your head or just before your close body tag. -->
-  <script async defer src="https://buttons.github.io/buttons.js"></script>
-  <!--  Google Maps Plugin    -->
-  <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
-  <!-- Chartist JS -->
-  <script src="../assets/js/plugins/chartist.min.js"></script>
-  <!--  Notifications Plugin    -->
-  <script src="../assets/js/plugins/bootstrap-notify.js"></script>
-  <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
-  <script src="../assets/js/material-dashboard.js?v=2.1.0"></script>
-  <!-- Material Dashboard DEMO methods, don't include it in your project! -->
-  <script src="../assets/demo/demo.js"></script>
-  <script>
-    $(document).ready(function() {
-      $().ready(function() {
-        $sidebar = $('.sidebar');
 
-        $sidebar_img_container = $sidebar.find('.sidebar-background');
-
-        $full_page = $('.full-page');
-
-        $sidebar_responsive = $('body > .navbar-collapse');
-
-        window_width = $(window).width();
-
-        $('.fixed-plugin a').click(function(event) {
-          // Alex if we click on switch, stop propagation of the event, so the dropdown will not be hide, otherwise we set the  section active
-          if ($(this).hasClass('switch-trigger')) {
-            if (event.stopPropagation) {
-              event.stopPropagation();
-            } else if (window.event) {
-              window.event.cancelBubble = true;
-            }
-          }
-        });
-
-        $('.fixed-plugin .active-color span').click(function() {
-          $full_page_background = $('.full-page-background');
-
-          $(this).siblings().removeClass('active');
-          $(this).addClass('active');
-
-          var new_color = $(this).data('color');
-
-          if ($sidebar.length != 0) {
-            $sidebar.attr('data-color', new_color);
-          }
-
-          if ($full_page.length != 0) {
-            $full_page.attr('filter-color', new_color);
-          }
-
-          if ($sidebar_responsive.length != 0) {
-            $sidebar_responsive.attr('data-color', new_color);
-          }
-        });
-
-        $('.fixed-plugin .background-color .badge').click(function() {
-          $(this).siblings().removeClass('active');
-          $(this).addClass('active');
-
-          var new_color = $(this).data('background-color');
-
-          if ($sidebar.length != 0) {
-            $sidebar.attr('data-background-color', new_color);
-          }
-        });
-
-        $('.fixed-plugin .img-holder').click(function() {
-          $full_page_background = $('.full-page-background');
-
-          $(this).parent('li').siblings().removeClass('active');
-          $(this).parent('li').addClass('active');
-
-
-          var new_image = $(this).find("img").attr('src');
-
-          if ($sidebar_img_container.length != 0 && $('.switch-sidebar-image input:checked').length != 0) {
-            $sidebar_img_container.fadeOut('fast', function() {
-              $sidebar_img_container.css('background-image', 'url("' + new_image + '")');
-              $sidebar_img_container.fadeIn('fast');
+     function fileValidation1() {
+        const imagebox = document.getElementById('image-box')
+        const crop_btn = document.getElementById('crop-btn')
+        var fileInput = document.getElementById('file1');
+        
+        var filePath = fileInput.value;
+        var allowedExtensions = /(\.jpg)$/i;
+        if (!allowedExtensions.exec(filePath)) {
+            document.getElementById('invalid1').innerHTML='<p style="font-size: larger; font-weight: bolder; color: red;">Invalid</p>'
+            fileInput.value = '';
+            return false;
+        } else {
+          document.getElementById('invalid1').innerHTML=''
+            //Image preview
+            const img_data = fileInput.files[0]
+            const url = URL.createObjectURL(img_data)
+            imagebox.innerHTML = `<img src="${url}" id="image" style="width:100%">`
+            const image = document.getElementById('image')
+            document.getElementById('image-box').style.display = 'block'
+            document.getElementById('crop-btn').style.display = 'block'
+            document.getElementById('confirm-btn').style.display = 'none'
+           
+            const cropper = new Cropper(image, {
+                autoCropArea: 1,
+                viewMode: 1,
+                scalable: false,
+                zoomable: false,
+                movable: false,
+                aspectRatio: 16 / 19,
+              //  preview: '.preview',
+                minCropBoxWidth: 180,
+                minCropBoxHeight: 240,
+            })
+            crop_btn.addEventListener('click', () => {
+                cropper.getCroppedCanvas().toBlob((blob) => {
+                    let fileInputElement = document.getElementById('file1');
+                    let file = new File([blob], img_data.name, { type: "image/*", lastModified: new Date().getTime() });
+                    let container = new DataTransfer();
+                   
+                    container.items.add(file);
+                     const img = container.files[0]
+                     var url =URL.createObjectURL(img)                    
+                     fileInputElement.files = container.files;
+                     document.getElementById('imgview1').src=url
+                    document.getElementById('image-box').style.display = 'none'
+                    document.getElementById('crop-btn').style.display = 'none'
+                    document.getElementById('confirm-btn').style.display = 'block'
+                });
             });
-          }
+        }
+    }
 
-          if ($full_page_background.length != 0 && $('.switch-sidebar-image input:checked').length != 0) {
-            var new_image_full_page = $('.fixed-plugin li.active .img-holder').find('img').data('src');
 
-            $full_page_background.fadeOut('fast', function() {
-              $full_page_background.css('background-image', 'url("' + new_image_full_page + '")');
-              $full_page_background.fadeIn('fast');
+</script>
+
+
+
+
+
+
+<script>
+
+     function fileValidation2() {
+        const imagebox = document.getElementById('image-box')
+        const crop_btn = document.getElementById('crop-btn')
+        var fileInput = document.getElementById('file2');
+        
+        var filePath = fileInput.value;
+        var allowedExtensions = /(\.jpg)$/i;
+        if (!allowedExtensions.exec(filePath)) {
+            document.getElementById('invalid2').innerHTML='<p style="font-size: larger; font-weight: bolder; color: red;">Invalid</p>'
+            fileInput.value = '';
+            return false;
+        } else {
+          document.getElementById('invalid2').innerHTML=''
+            //Image preview
+            const img_data = fileInput.files[0]
+            const url = URL.createObjectURL(img_data)
+            imagebox.innerHTML = `<img src="${url}" id="image" style="width:100%">`
+            const image = document.getElementById('image')
+            document.getElementById('image-box').style.display = 'block'
+            document.getElementById('crop-btn').style.display = 'block'
+            document.getElementById('confirm-btn').style.display = 'none'
+           
+            const cropper = new Cropper(image, {
+                autoCropArea: 1,
+                viewMode: 1,
+                scalable: false,
+                zoomable: false,
+                movable: false,
+                aspectRatio: 16 / 19,
+              //  preview: '.preview',
+                minCropBoxWidth: 180,
+                minCropBoxHeight: 240,
+            })
+            crop_btn.addEventListener('click', () => {
+                cropper.getCroppedCanvas().toBlob((blob) => {
+                    let fileInputElement = document.getElementById('file2');
+                    let file = new File([blob], img_data.name, { type: "image/*", lastModified: new Date().getTime() });
+                    let container = new DataTransfer();
+                   
+                    container.items.add(file);
+                     const img = container.files[0]
+                     var url =URL.createObjectURL(img)                    
+                     fileInputElement.files = container.files;
+                     document.getElementById('imgview2').src=url
+                    document.getElementById('image-box').style.display = 'none'
+                    document.getElementById('crop-btn').style.display = 'none'
+                    document.getElementById('confirm-btn').style.display = 'block'
+                });
             });
-          }
+        }
+    }
 
-          if ($('.switch-sidebar-image input:checked').length == 0) {
-            var new_image = $('.fixed-plugin li.active .img-holder').find("img").attr('src');
-            var new_image_full_page = $('.fixed-plugin li.active .img-holder').find('img').data('src');
 
-            $sidebar_img_container.css('background-image', 'url("' + new_image + '")');
-            $full_page_background.css('background-image', 'url("' + new_image_full_page + '")');
-          }
+</script>
 
-          if ($sidebar_responsive.length != 0) {
-            $sidebar_responsive.css('background-image', 'url("' + new_image + '")');
-          }
-        });
 
-        $('.switch-sidebar-image input').change(function() {
-          $full_page_background = $('.full-page-background');
 
-          $input = $(this);
 
-          if ($input.is(':checked')) {
-            if ($sidebar_img_container.length != 0) {
-              $sidebar_img_container.fadeIn('fast');
-              $sidebar.attr('data-image', '#');
-            }
+<script>
 
-            if ($full_page_background.length != 0) {
-              $full_page_background.fadeIn('fast');
-              $full_page.attr('data-image', '#');
-            }
+     function fileValidation3() {
+        const imagebox = document.getElementById('image-box')
+        const crop_btn = document.getElementById('crop-btn')
+        var fileInput = document.getElementById('file3');
+        
+        var filePath = fileInput.value;
+        var allowedExtensions = /(\.jpg)$/i;
+        if (!allowedExtensions.exec(filePath)) {
+            document.getElementById('invalid3').innerHTML='<p style="font-size: larger; font-weight: bolder; color: red;">Invalid</p>'
+            fileInput.value = '';
+            return false;
+        } else {
+          document.getElementById('invalid3').innerHTML=''
+            //Image preview
+            const img_data = fileInput.files[0]
+            const url = URL.createObjectURL(img_data)
+            imagebox.innerHTML = `<img src="${url}" id="image" style="width:100%">`
+            const image = document.getElementById('image')
+            document.getElementById('image-box').style.display = 'block'
+            document.getElementById('crop-btn').style.display = 'block'
+            document.getElementById('confirm-btn').style.display = 'none'
+           
+            const cropper = new Cropper(image, {
+                autoCropArea: 1,
+                viewMode: 1,
+                scalable: false,
+                zoomable: false,
+                movable: false,
+                aspectRatio: 16 / 19,
+              //  preview: '.preview',
+                minCropBoxWidth: 180,
+                minCropBoxHeight: 240,
+            })
+            crop_btn.addEventListener('click', () => {
+                cropper.getCroppedCanvas().toBlob((blob) => {
+                    let fileInputElement = document.getElementById('file3');
+                    let file = new File([blob], img_data.name, { type: "image/*", lastModified: new Date().getTime() });
+                    let container = new DataTransfer();
+                   
+                    container.items.add(file);
+                     const img = container.files[0]
+                     var url =URL.createObjectURL(img)                    
+                     fileInputElement.files = container.files;
+                     document.getElementById('imgview3').src=url
+                    document.getElementById('image-box').style.display = 'none'
+                    document.getElementById('crop-btn').style.display = 'none'
+                    document.getElementById('confirm-btn').style.display = 'block'
+                });
+            });
+        }
+    }
 
-            background_image = true;
-          } else {
-            if ($sidebar_img_container.length != 0) {
-              $sidebar.removeAttr('data-image');
-              $sidebar_img_container.fadeOut('fast');
-            }
 
-            if ($full_page_background.length != 0) {
-              $full_page.removeAttr('data-image', '#');
-              $full_page_background.fadeOut('fast');
-            }
+</script>
 
-            background_image = false;
-          }
-        });
 
-        $('.switch-sidebar-mini input').change(function() {
-          $body = $('body');
 
-          $input = $(this);
 
-          if (md.misc.sidebar_mini_active == true) {
-            $('body').removeClass('sidebar-mini');
-            md.misc.sidebar_mini_active = false;
 
-            $('.sidebar .sidebar-wrapper, .main-panel').perfectScrollbar();
 
-          } else {
 
-            $('.sidebar .sidebar-wrapper, .main-panel').perfectScrollbar('destroy');
 
-            setTimeout(function() {
-              $('body').addClass('sidebar-mini');
 
-              md.misc.sidebar_mini_active = true;
-            }, 300);
-          }
 
-          // we simulate the window Resize so the charts will get updated in realtime.
-          var simulateWindowResize = setInterval(function() {
-            window.dispatchEvent(new Event('resize'));
-          }, 180);
 
-          // we stop the simulation of Window Resize after the animations are completed
-          setTimeout(function() {
-            clearInterval(simulateWindowResize);
-          }, 1000);
 
-        });
-      });
-    });
-  </script>
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
 
 
 

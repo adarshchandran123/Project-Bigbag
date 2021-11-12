@@ -1,0 +1,694 @@
+
+
+
+
+
+<section id="page-title" class="page-title">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12">
+                <h3>Checkout</h3>
+            </div>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<section style="margin-top: 30px;padding-top: 50px">
+    <div class="container">
+		<form action="" id="checkout_form1">
+        <div class="row">
+            <div class="col-xs-6" style="margin-bottom: 10px ;">
+
+                <div class="billing-address">
+
+                    <h5 class="checkout-box-title">SAVED ADDRESS</h5>
+
+                    {{!-- <div class="checkout-billing-adress-box">
+                        <dl>
+                            <dt>1.Coffee</dt>
+                            <dd>Black hot drink</dd>
+                            <dt><input type="checkbox" id="useaddress" placeholder="Use"><span style="color: #007eff;">
+                                    Use Address</span></dt><br>
+                            <dt>2.Milk</dt>
+                            <dd>White cold drink</dd>
+                            <dt><input type="checkbox" id="useaddress" placeholder="Use"><span style="color: #007eff;">
+                                    Use Address</span></dt><br>
+                        </dl>
+                    </div> --}}
+
+                                        {{#each userAddress}}
+                    <div style="float: left; width:auto;  margin-left: 20px;" class="col-sm-12 col-md-2 pt-2  text-center">
+                        <button class="btn btn-outline-success" onclick="a('{{this.fname}}','{{this.lname}}','{{this.house_name}}','{{this.address1}}','{{this.address2}}','{{this.town_city}}','{{this.country_state}}','{{this.pincode_zip}}','{{this.phone}}')" id="{{this._id}}" name="address" value="{{this._id}}">Choose </button>
+                        <div style="text-align: left;">
+                        <label for="">
+                            <h4>Address</h4>
+                            {{this.fname}} &nbsp; {{this.lname}} <br>
+                            {{this.house_name}} <br>
+                            {{this.address1}} <br>
+                            {{this.address2}}
+
+                        </label>
+                        </div>
+                                        
+                                    </div>
+                        {{/each}}
+
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-8 col-sm-12 col-xs-12">
+                <div class="billing-address">
+                    <h5 class="checkout-box-title">NEW ADDRESS</h5>
+                    <div class="checkout-billing-adress-box">
+
+                        <div class="billing-address-input clearfix">
+                            <label>FIRST NAME *</label>
+                            <input name="fname" id="fname" type="text">
+                        </div>
+						<input type="text" name="userId" id="" value="{{user._id}}" hidden>
+                        <input type="text" name="proId" value="{{orderproduct._id}}" hidden>
+                        <div class="billing-address-input clearfix">
+                            <label>LAST NAME *</label>
+                            <input name="lname" id="lname" type="text">
+                        </div>
+                        <div class="billing-address-input clearfix">
+                            <label>HOUSE NAME *</label>
+                            <input name="house_name" id="house_name" type="text">
+                        </div>
+                        <div class="billing-address-input clearfix">
+                            <label>ADDRESS *</label>
+                            <input name="address1" id="address1" type="text" placeholder="Street Address">
+                            <input name="address2" id="address2" type="text" placeholder="Fashin, suite, unite ect (optinal)">
+                        </div>
+                        <div class="billing-address-input clearfix">
+                            <label>TOWN / CITY *</label>
+                            <input name="town_city" id="town_city" type="text">
+                        </div>
+                        <div class="billing-address-input clearfix">
+                            <label>STATES</label>
+                            <input name="country_state" id="country_state" type="text">
+                        </div>
+                        <div class="billing-address-input clearfix">
+                            <label>POSTCODE *</label>
+                            <input name="pincode_zip" id="pincode_zip" type="number">
+                        </div>
+                        {{!-- <div class="billing-address-input clearfix">
+                            <label>EMAIL ADDRESS *</label>
+                            <input type="text">
+                        </div> --}}
+                        <div class="billing-address-input clearfix" style="margin-bottom:0px">
+                            <label>PHONE *</label>
+                            <input name="phone" id="phone" type="tel">
+                        </div>
+                        {{!-- <div class="cbab-create-account">
+                            <input type="checkbox">
+                            <label>Use registered phone number</label>
+                        </div>
+                        <div class="billing-address-input clearfix">
+                            <label>ALTERNATE PHONE *</label>
+                            <input name="saved_number" type="tel">
+                        </div><br> --}}
+                        {{!-- <div class="cbab-create-account">
+                            <input type="checkbox">
+                            <label>Save address</label>
+                        </div> --}}
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-12 col-xs-12">
+                <div class="promotional-code-box">
+                    <h5 class="checkout-box-title">COUPON CODE</h5>
+                    <div class="pcb-content">
+                        <p>Enter your coupon code if you have one</p>
+                        <div id="invalidcoupon" >  </div>
+                        <div id="alreadyUsedCoupon"> </div>
+                        <div class="pcb-cuppon-input clearfix">
+                            <input name="coupon" id="couponCode" type="text" placeholder="Coupon code">
+                            <button type="button" onclick="checkCoupon('{{productprice}}')" class="btn" style="background:#961010; color: white; font-weight: bolder;">Apply</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="your-order-box">
+                    <h5 class="checkout-box-title">YOUR ORDER</h5>
+                    <div class="yob-content">
+                        <ul>
+                           
+                       <li class="clearfix">Cart Subtotal <span style="font-weight: bolder;font-size: 20px;">₹
+                                   {{productprice}} </span></li>
+                            <li class="clearfix">Shipping and Handling <span>Free Shipping</span></li>
+                            <li class="clearfix">Discount <span id="totaldiscount" style="font-weight: bolder;font-size: 20px;">₹
+                                   000 </span></li>
+
+                            <li class="order-total clearfix">Order Total <span id="totalprice" >₹ {{productprice}}</span></li>
+                            <input name="totalfinalprice" id="totalfinalprice" type="hidden"  value="{{productprice}}" >
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="promotional-code-box">
+                    <h5 class="checkout-box-title">PAYMENT METHOD</h5>
+                    <div class="pcb-content">
+                        <p>Select your payment method</p>
+                        <div class="pcb-cuppon-input clearfix">
+                            <input value="COD" name="payment" type="radio">
+                            <label
+                                style="margin-left: 10px;color: #000000;font-size: 14px;font-weight: 400;">COD</label>
+                        </div>
+                        <div class="pcb-cuppon-input clearfix">
+                            <input name="payment" value="Online" type="radio">
+                            <label style="margin-left: 10px;color: #000000;font-size: 14px;font-weight: 400;">Online
+                                Payment</label>
+
+                        </div>
+                        <div class="create-account-checkout-method">
+                            <div class="place-order">
+                                <button type="submit" class="checkout-page-button hvr-bs">Place order</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+			</div>
+
+			</form>
+
+			</div>
+
+</section>
+
+
+<style>
+    dt {
+        color: black;
+    }
+
+    .checkout-top {
+        margin-bottom: 23px;
+    }
+
+    .checkout-top p,
+    .checkout-top p a {
+        color: #000000;
+        font-family: "Montserrat", sans-serif;
+        font-size: 16px;
+    }
+
+    .checkout-top p a {
+        color: #961010;
+    }
+
+    .checkout-box-title {
+        border-bottom: 1px solid #ecedee;
+        color: #000000;
+        font-size: 18px;
+        font-weight: normal;
+        letter-spacing: 0;
+        padding: 16px 0;
+        text-align: center;
+    }
+
+    .billing-address {
+        background: #fff none repeat scroll 0 0;
+        border: 1px solid #ecedee;
+    }
+
+    .checkout-billing-adress-box {
+        padding: 21px 35px 50px 25px;
+    }
+
+    .billing-address-input {
+        margin-bottom: 20px;
+    }
+
+    .billing-address-input label {
+        color: #000000;
+        float: left;
+        font-size: 14px;
+        font-weight: 700;
+        letter-spacing: 0;
+
+    }
+
+    .billing-address-input select,
+    .billing-address-input input[type="text"] {
+        border: 0 none;
+        border-bottom: 1px solid #e5e5e5;
+        color: #000000;
+        float: right;
+        font-size: 14px;
+        font-weight: 300;
+        height: 40px;
+        padding: 0 10px;
+        width: 55%;
+    }
+
+    .billing-address-input select option {}
+
+    .cbab-create-account {
+        margin-bottom: 19px;
+    }
+
+    .cbab-create-account input[type="checkbox"] {}
+
+    .cbab-create-account label {
+        color: #000000;
+        font-size: 14px;
+        font-weight: 300;
+        letter-spacing: 0;
+        line-height: 16px;
+        margin: 0;
+    }
+
+    .cbab-create-account p {
+        color: #000000;
+        line-height: 24px;
+        margin: 12px 0 0;
+    }
+
+    .cbab-account-password {
+        margin: 0 0 31px;
+    }
+
+    .cbab-account-password label {
+        color: #000000;
+        font-size: 14px;
+        font-weight: 300;
+        letter-spacing: 0;
+        line-height: 16px;
+        margin: 0;
+    }
+
+    .cbab-account-password input[type="password"] {
+        border: 0 none;
+        border-bottom: 1px solid #e5e5e5;
+        color: #000000;
+        float: right;
+        font-size: 14px;
+        font-weight: 300;
+        height: 40px;
+        padding: 0 10px;
+        width: 55%;
+    }
+
+    .cbab-order-notes {}
+
+    .cbab-order-notes p {
+        color: #000000;
+        font-size: 14px;
+        font-weight: 300;
+        letter-spacing: 0;
+        line-height: 16px;
+        margin: 0 0 10px;
+    }
+
+    .cbab-order-notes input[type="text"] {
+        border: 0 none;
+        border-bottom: 1px solid #e5e5e5;
+        color: #000000;
+        font-size: 14px;
+        font-weight: 300;
+        height: 40px;
+        padding: 0 10px;
+        width: 100%;
+    }
+
+    .promotional-code-box {
+        background: #fff none repeat scroll 0 0;
+        border: 1px solid #ecedee;
+        margin-bottom: 30px;
+        margin-top: 30px;
+    }
+
+    .pcb-content {
+        padding: 0 35px 25px;
+    }
+
+    .pcb-content p {
+        color: #000000;
+        margin-bottom: 25px;
+    }
+
+    .pcb-cuppon-input {}
+
+    .pcb-cuppon-input input[type="text"] {
+        border: 0 none;
+        border-bottom: 1px solid #e5e5e5;
+        color: #000000;
+        float: left;
+        font-weight: 300;
+        height: 40px;
+        letter-spacing: 0;
+        text-align: center;
+        width: 46%;
+    }
+
+    .pcb-cuppon-input button {
+        float: right;
+        width: 50%;
+    }
+
+    .checkout-page-button {
+        background: #961010 none repeat scroll 0 0;
+        border: 0 none;
+        border-radius: 3px;
+        color: #fff;
+		font-weight: bold;
+        display: inline-block;
+        padding: 5px 30px;
+        text-transform: uppercase;
+    }
+
+    .your-order-box {
+        background: #fff none repeat scroll 0 0;
+        border: 1px solid #ecedee;
+        margin-bottom: 30px;
+    }
+
+    .yob-content {
+        padding: 25px 25px 70px;
+    }
+
+    .yobc-title,
+    .yobc-title span {
+        color: #232530;
+        font-family: "Montserrat", sans-serif;
+        margin-bottom: 33px;
+    }
+
+    .yobc-title span {
+        float: right;
+    }
+
+    .yob-content ul {
+        list-style: outside none none;
+        padding: 0;
+    }
+
+    .yob-content ul li {
+        border-bottom: 1px solid #e5e5e5;
+        color: #000000;
+        font-size: 14px;
+        font-weight: 400;
+        letter-spacing: 0;
+        line-height: 30px;
+        margin: 0 0 27px;
+        padding: 0 0 1px;
+    }
+
+    .yob-content ul li.order-total {
+        text-transform: uppercase;
+    }
+
+    .yob-content ul li span {
+        color: #961010;
+        float: right;
+    }
+
+    .create-account-checkout-method {}iam muhammed unaise the full stack flutter developer developer
+    the real done ever case are loading now dont mess with me i will finish you 
+
+    .select-payment-method {
+        margin-bottom: 3px;
+    }
+
+    .select-payment-method input[type="checkbox"] {}
+
+    .select-payment-method label {
+        color: #000000;
+        font-size: 14px;
+        font-weight: 300;
+        letter-spacing: 0;
+        margin-left: 10px;
+    }
+
+    .create-account-text {
+        border: 1px solid #e5e5e5;
+        margin: 0 0 20px;
+        padding: 21px 20px;
+    }
+
+    .create-account-text p {
+        color: #000000;
+        font-weight: 300;
+        line-height: 24px;
+    }
+
+    .place-order {
+        margin: 15px 0 0;
+        text-align: center;
+    }
+
+    .place-order button {}
+
+label.error{
+         color: red;
+        }
+
+
+</style>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.js"></script>
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+
+
+      <script>
+
+          function checkCoupon(productprice){
+              let couponCode=document.getElementById('couponCode').value
+              $.ajax({
+                  url:'/couponChecking/'+couponCode+'/'+productprice,
+                  method:'get',
+                  success:(response)=>{
+                      document.getElementById('totaldiscount').innerHTML = '₹'+ response.discountprice
+                      document.getElementById('totalprice').innerHTML = '₹' + parseInt(response.finalprice)
+                      document.getElementById('totalfinalprice').value = parseInt(response.finalprice)
+                      if(response.couponInvalid){
+                        document.getElementById('invalidcoupon').innerHTML='<p style="font-weight: bolder; font-size: larger; color: red;">Invalid Coupon</p>'
+                      }else{
+                          document.getElementById('invalidcoupon').innerHTML=''
+                      }
+
+                      if(response.alreadyCouponUsed){
+                          document.getElementById('alreadyUsedCoupon').innerHTML='<p style="font-weight: bolder; font-size: larger; color: red;">Already Used Coupon</p>'
+                      }else{
+                          document.getElementById('alreadyUsedCoupon').innerHTML=''
+                      }
+                      
+                  }
+              })
+          }
+
+      </script>
+
+
+
+
+
+
+
+<script>
+
+       $(document).ready(function(){
+  $("#checkout_form1").validate({
+    rules:{
+      fname:{
+        required:true,
+        minlength:3
+
+      }
+      
+        
+      ,
+      lname:{
+        required:true,
+        minlength:1,
+        
+      },
+      house_name:{
+        required:true,
+        minlength:3,
+    
+        
+      },
+      address1:{
+        required:true,
+        minlength:3
+        
+      },
+      address2:{
+        required:true,
+        minlength:3
+        
+      },
+      town_city:{
+        required:true,
+        minlength:3
+      },
+      country_state:{
+        required:true,
+        minlength:3
+      },
+      pincode_zip:{
+        required:true,
+        minlength:6,
+        maxlength:6
+      },
+      phone:{
+        required:true,
+        minlength:10,
+        maxlength:10
+      },
+      payment:{
+        required:true
+
+      }
+    },
+    messages:{
+      fname:"Enter  Your FirstName",
+      lname:"Enter Your Last name ",
+      house_name:"Enter Your house name ",
+      address1:"Enter Address",
+      address2:"Enter Address",
+      town_city:"Enter Your City",
+      country_state:"Enter Your State",
+      pincode_zip:"Enter pincode",
+      phone:"Enter Mobile number",
+      payment:"Select anyone"
+      
+
+
+
+    },
+    submitHandler: function(){
+
+        $.ajax({
+			url:'/BuynowPlaceOrder',
+			method:'post',
+			data:$('#checkout_form1').serialize(),
+			success:(response)=>{
+				
+                if(response.COD_success){
+                    location.href="/successPage"
+                }else{
+
+                    razorpayPayment(response)
+
+                }
+			}
+		})
+
+
+    }
+
+
+
+
+
+  })
+})
+
+      </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+
+	
+
+    function razorpayPayment(order){
+        var options = {
+    "key": "rzp_test_PjwJi1AI0OquKP", // Enter the Key ID generated from the Dashboard
+    "amount": order.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+    "currency": "INR",
+    "name": "BIG BAG",
+    "description": "Test Transaction",
+    "image": "https://example.com/your_logo",
+    "order_id": order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+    "handler": function (response){
+        
+
+        verifyPayment(response,order)
+    },
+    "prefill": {
+        "name": "Gaurav Kumar",
+        "email": "gaurav.kumar@example.com",
+        "contact": "9999999999"
+    },
+    "notes": {
+        "address": "Razorpay Corporate Office"
+    },
+    "theme": {
+        "color": "#3399cc"
+    }
+};
+    var rzp1 = new Razorpay(options);
+    rzp1.open();
+    }
+
+
+    function verifyPayment(payment,order){
+
+        $.ajax({
+            url:'/verify_payment',
+            data:{
+                payment,
+                order
+            },
+            method:'post',
+            success:(response)=>{
+                if(response.status){
+                    location.href="/successPage"
+                }else{
+                    alert('payment failed')
+                }
+            }
+        })
+
+    }
+
+
+</script>
+
+
+
+
+
+<script>
+        function a(fname,lname,house_name,address1,address2,town_city,country_state,pincode_zip,phone){
+            document.getElementById('fname').value = fname
+            document.getElementById('lname').value = lname
+            document.getElementById('house_name').value = house_name
+            document.getElementById('address1').value = address1
+            document.getElementById('address2').value = address2
+            document.getElementById('town_city').value = town_city
+            document.getElementById('country_state').value = country_state
+            document.getElementById('pincode_zip').value = pincode_zip
+            document.getElementById('phone').value = phone
+            
+    
+    
+            
+    
+        }
+    </script>
+

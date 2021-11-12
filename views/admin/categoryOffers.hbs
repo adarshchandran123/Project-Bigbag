@@ -1,0 +1,123 @@
+
+<body class="dark-edition">
+
+    <div class="container">
+        <div class="row">
+            
+            <div style="margin-top: 100px; width: 50%;">
+                <p style="font-size: 40px; color: white; font-family: 'Acme', sans-serif;">CATEGORY OFFER</p>
+
+                <form action="/admin/submitCategoryOffer" method="POST" id="valid18">
+
+                    <label for=""> Category Name</label> <br>
+                    <select class="form-select" name="category" aria-label="Default select example">
+                      <option value="" selected>Select Category</option>
+                      {{#each productCategory}}
+                      <option value="{{this.category}}">{{this.category}}</option>
+                      {{/each}}
+                      
+                    </select><br>
+
+                    <label for=""> Percentage</label><br>
+                    <input type="number" name="offer" placeholder="Offer"><br><br>
+
+                    <label for="">Limit</label><br>
+                    <input name="offerLimit" min="{{currentDate}}"  type="date"> <br><br>
+
+                    <input type="submit" value="Submit" class="btn btn-success">
+
+
+
+
+                </form>
+            </div>
+
+
+
+
+          {{#if allreadyUsed}}
+
+        <p style="color: rgb(231, 33, 33); font-weight: bolder; font-size: larger;">Category already used</p> 
+
+          {{/if}}
+
+
+            <table class="table" style="width: 60%; border: solid;  1px ">
+  <thead>
+    <tr>
+      <th scope="col">No</th>
+      <th scope="col">Category</th>
+      <th scope="col">Offer</th>
+      <th scope="col">Offer Starting <br>Date</th>
+      <th scope="col">Limit</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each CategoryOffer}}
+    <tr>
+      <th scope="row">{{add @index '1'}}</th>
+      <td>{{this.category}}</td>
+      <td>{{this.offer}}</td>
+      <td>{{this.offerStartingDate}}</td>
+      <td>{{this.offerLimit}}</td>
+      <td><a class="btn btn-outline-primary" href="/admin/DeleteCategoryOffer/{{this._id}}/{{this.category}}">Delete</a></td>
+    </tr>
+    {{/each}}
+  </tbody>
+</table>
+
+
+
+
+
+
+
+        </div>
+    </div>
+
+
+</body>
+
+
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.js"></script>
+
+ <script>
+
+       $(document).ready(function(){
+  $("#valid18").validate({
+    rules:{
+      category:{
+        required:true,
+        
+
+      }
+      
+        
+      ,
+      offer:{
+        required:true,
+        minlength:1,
+        maxlength:2
+      },
+      offerLimit:{
+          required:true
+      }
+      
+    },
+    messages:{
+      category:"Select category name",
+      offer:"Enter Percentage Under 100",
+      offerLimit:"Enter Date Limit"
+      
+
+
+    }
+  })
+})
+
+      </script>

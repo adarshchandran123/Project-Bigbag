@@ -6,12 +6,13 @@
 
 <!-- ============================ COMPONENT 1 ================================= -->
 
-<div class="row">
+ <div class="row">
 	
 		{{#if products}}
-		<div style="background-color: white;" class="col-md-12 col-lg-12 col-xl=9">
+	{{!-- <div style="background-color: white;" class="">
 <div class="card1">
-<table class="table table-borderless table-shopping-cart">
+<div class="table-responsive">
+<table class="table col-12 table-borderless table-shopping-cart">
 <thead style="font-size: x-large; text-align: center; color: black;" class="text-muted">
 <tr class="small text-uppercase">
   <th scope="col">Product</th>
@@ -20,6 +21,7 @@
   
   <th scope="col" width="120">Quantity</th>
   <th scope="col" width="120">Price</th>
+  <th scope="col" width="120">Total</th>
   <th scope="col" class="text-right" width="200"> </th>
 </tr>
 </thead>
@@ -42,7 +44,7 @@
 			<figcaption class="info">
 				
 				<p class="text-muted small">  </p>
-				<p class="text-muted small">Matrix: 25 Mpx <br> Brand: Canon</p>
+				<p class="text">{{this.product.discription}}</p>
 			</figcaption>
 	</td>	
 	
@@ -51,24 +53,106 @@
 					<div class="col"> 
 						<div class="input-group input-spinner">
 							
+							{{#gt this.quantity '1'}}
+							<button  class="btn btn-outline-success" onclick="changeQuantity('{{this._id}}','{{this.product._id}}',-1,'{{this.product.newprice}}')" type="button" id="button-plus"> <i class="fa fa-minus"></i> </button>
+							{{else}}
+							<button  class="btn btn-outline-success"  type="button" id="button-plus"> <i class="fa fa-minus"></i> </button>
+							{{/gt}}
+							 <button id="" class="btn btn-outline-success">{{this.quantity}}</button>
+
+						
+
+							{{#gte this.quantity this.product.qty}}
 							
-							<button  class="btn btn-outline-success" onclick="changeQuantity('{{this._id}}','{{this.product._id}}',-1)" type="button" id="button-plus"> <i class="fa fa-minus"></i> </button>
 							
-							 <button id="{{this.product._id}}" class="btn btn-outline-success">{{this.quantity}}</button>
+
+							<!-- Button trigger modal -->
+<button id="button-minus" type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
+  <i class="fa fa-plus"></i>
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Limit Reached</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      
+      <div class="modal-footer">
+        <button type="button" style="width: auto;" class="btn btn-outline-danger" data-bs-dismiss="modal">Close</button>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
 							
-							<button class="btn btn-outline-success" onclick="changeQuantity('{{this._id}}','{{this.product._id}}',1)" type="button" id="button-minus"> <i class="fa fa-plus"></i> </button>
+							{{else}}
 							
+							<button class="btn btn-outline-success" onclick="changeQuantity('{{this._id}}','{{this.product._id}}',1,'{{this.product.newprice}}')" type="button" id="button-minus"> <i class="fa fa-plus"></i> </button>
+							{{/gte}}
 						</div> <!-- input-group.// -->
 					</div> <!-- col.// -->
 	</td>
 	<td> 
 		<div class="price-wrap"> 
-			<var class="price">{{this.newprice}}</var> 
-			<small class="text-muted"> $315.20 each </small> 
+			<var class="price"><span>{{this.product.newprice}}</span></var> 
+			<s class="text-muted">₹.<small > {{this.product.oldprice}} </small></s> 
 		</div> <!-- price-wrap .// -->
 	</td>
+
+	<td> 
+		<div class="price-wrap"> 
+			<!-- <var class="price"><span id="{{this.product._id}}1">{{this.totalprice}}</span></var>  // -->
+			
+		</div> <!-- price-wrap .// -->
+	</td>
+
+
+
 	<td class="text-right"> 
-	<a href="" class="btn btn-outline-danger"> Remove</a>
+
+
+	
+		<!-- Button trigger modal -->
+<button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#{{this.product.productName}}">
+  Remove
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="{{this.product.productName}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">product removed from cart</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+   
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-primary" data-dismiss="modal">cancel</button>
+        <button onclick="RemoveFromCart('{{this._id}}','{{this.product._id}}')" class="btn btn-outline-danger" >Remove</button>
+      </div>
+    </div>
+  </div>
+</div>    
+
+
+
+
+
+
+
+
+
+		
+	
 	</td>
 </tr>
 {{/each}}
@@ -78,36 +162,157 @@
 </tbody>
 
 </table>
+</div>
 
 
 
 </div> 
 </div><!-- card.// -->
+</div><!-- card.// -->  --}}
+
+
+
+
+
+
+
+	
+
+
+
+
+
+
+
+<div class="card w-85">
+  {{#each products}}
+  <div class="card-body">
+    <div class="col-md-4" style="width: 200px; height: 200px;  float: left;">
+      <img style="width: 200px; height: 200px;" src="/product-image/{{this.product._id}}__1.jpg" class="img-sm">
+    </div>
+
+    <div class="col-md-4" style="float: left;margin-left: 8px;">
+    <h5 class="card-title"><a href="#" class="title text-dark">{{this.product.productName}}</a></h5>
+    <p class="card-text">{{this.product.discription}}</p>
+
+		
+		<div class="price mt-1">₹ {{this.product.newprice}} 
+          
+          {{#eq this.product.newprice this.product.MRP}}
+          
+          {{else}}
+          <span style="padding-left: 10px; color: darkgray;">MRP : ₹ <s>{{this.product.MRP}}</s></span> 
+          {{/eq}}
+        </div> <!-- price-wrap.// -->
+
+
+    <div class="col" style="float: left;"> 
+						<div class="input-group input-spinner">
+							
+							
+							<button  class="btn btn-outline-success" onclick="changeQuantity('{{this._id}}','{{this.product._id}}',-1,'{{this.product.newprice}}',{{this.product.qty}})" type="button" id="button-plus"> <i class="fa fa-minus"></i> </button>
+							
+							 <button id="{{this.product._id}}" class="btn btn-outline-success">{{this.quantity}}</button>
+
+						
+
+
+							
+							<button class="btn btn-outline-success" onclick="changeQuantity('{{this._id}}','{{this.product._id}}',1,'{{this.product.newprice}}',{{this.product.qty}})" type="button" id="button-minus"> <i class="fa fa-plus"></i> </button>
+							
+						</div> <!-- input-group.// -->
+
+
+
+					</div>
+
+
+        
+
+    		<div class="price-wrap"> 
+			<var class="price">Total : &nbsp; &nbsp;<span id="{{this.product._id}}1">{{this.totalprice}}</span></var> 
+			
+		</div>
+
+
+    
+    </div>
+
+    <div class="removeDiv col-md-4" style=" margin-left: 20px; margin-top: 20px; display: flex; justify-content: flex-end;  ">
+
+
+      		<!-- Button trigger modal -->
+<button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#{{this.product.productName}}">
+  Remove
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="{{this.product.productName}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">product removed from cart</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      {{!-- <div class="modal-body">
+        ...
+      </div> --}}
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-primary" data-dismiss="modal">cancel</button>
+        <button onclick="RemoveFromCart('{{this._id}}','{{this.product._id}}')" class="btn btn-outline-danger" >Remove</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+    </div>
+
+
+  </div>
+  {{/each}}
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 	 <!-- col.// -->
-	<div class="col-md-12 col-lg-12 col-xl-3">
+
+
+	 <!-- col.// -->
+	<div style="margin-top: 50px;" class="col-md-12 col-lg-12 col-xl-3">
 
 		<div class="card">
 		<div class="card-body">
 			<dl class="dlist-align">
-			  <dt>Total price:</dt>
-			  <dd class="text-right">$69.97</dd>
+			  <dt style="font-weight: bolder;">Total price:</dt>
+			  <dd style="font-weight: bolder; font-size: larger;" class="text-right">₹.<span id="grand" style="font-weight: bolder; font-size: larger;">{{GrandTotal}}</span></dd>
 			</dl>
-			<dl class="dlist-align">
-			  <dt>Tax:</dt>
-			  <dd class="text-right"> $10.00</dd>
-			</dl>
-			<dl class="dlist-align">
-			  <dt>Total:</dt>
-			  <dd class="text-right text-dark b"><strong>$59.97</strong></dd>
-			</dl>
+			
 			<hr>
-			<p class="text-center mb-3">
-				<img src="./images/misc/payments.png" height="26">
-			</p>
-			<a href="./place-order.html" class="btn btn-primary btn-block"> Checkout </a>
-			<a href="./store.html" class="btn btn-light btn-block">Continue Shopping</a>
+			
+			<a href="/placeOrder" class="btn btn-primary btn-block"> Proceed To Checkout </a>
+			<a href="/userAllProduct" class="btn btn-light btn-block">Continue Shopping</a>
 		</div> <!-- card-body.// -->
 		</div> <!-- card.// -->
 
@@ -116,16 +321,21 @@
 
 </div> <!-- row.// -->
 <!-- ============================ COMPONENT 1 END .// ================================= -->
-{{/if}}
+{{else}}
+
 
 
 
 
 </div> <!-- container .//  -->
 </section>
-
-{{#if emty}}
-<h2 style="font-weight: bold; text-align: center; color: black;">your cart is empty</h2>
+<center>
+<div style="">
+	<img src="https://cobblersmagic.com/images/empty-cart.png" alt="">
+</div>
+</center>
+<h2 style="font-weight: bold; text-align: center; color:#544881;">Your Cart is Empty</h2>
+<a href="/userAllProduct" style="margin-left: 45%  ; margin-top: 30px; margin-bottom: 30px; background-color: #544881; color: white; font-weight: bolder; " class="btn">Continue Shopping</a>
 {{/if}}
 
 <!-- ========================= SECTION CONTENT END// ========================= -->
@@ -133,33 +343,137 @@
 </html>
 
 
+
+
+
+ 
+<!-- ========================= SAMPLE CART START// ========================= -->
+
+
+
+
+<!-- ========================= SAMPLE CART END// ========================= -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<style>
+  @media only screen and (max-width: 500px) {
+  .removeDiv {
+    
+
+  }
+}
+</style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 <script>
 
-	function changeQuantity(cartId,proId,count){
+	function changeQuantity(cartId,proId,count,price,productQuantity){
+		console.log('////////////',productQuantity)
+    
 		let quantity=parseInt(document.getElementById(proId).innerHTML)
+		console.log('quantity;;;;;;',quantity) 
 		count=parseInt(count)
+		console.log('count;;;;;;;',count)
+		let productId=proId+'1'
+      if(quantity == 1 && count == -1){
+		  document.getElementById('button-plus').innerHTML='<button  class="btn btn-outline-success" hidden  type="button"  <i  class="fa fa-minus"></i> </button>'
+		  
+	  }else{
+		 
+		  if(quantity >= productQuantity  && count == 1){
+			  swal("Limit reached", "info");
+		  }else{
 
-
+		
 		$.ajax({
 			url:'/change-product-quantity',
 			data:{
 				cart:cartId,
 				product:proId,
 				count:count,
-				quantity:quantity
+				quantity:quantity,
+				price:parseInt(price)
 			},
 			method:'post',
 			
 			success:(response)=>{
+				console.log("Response : ",response)
 				if(response.removeProduct){
 					alert("product removed from cart")
 					location.reload()
 				}else{
+          
 					document.getElementById(proId).innerHTML=quantity+count
+
+					console.log('1 : ',document.getElementById(proId).innerHTML=quantity+count)
+					document.getElementById(productId).innerHTML=(quantity+count)*price
+					console.log('2 : ',document.getElementById(productId).innerHTML=(quantity+count)*price)
+					document.getElementById('grand').innerHTML = response.GrandTotal
+					{{!-- location.reload() --}}
 				}
 			}
 			
 		})
+
+		  }
+	  }
+	}
+
+</script>
+
+
+<script>
+
+	function RemoveFromCart(cartId,proId){
+			 
+		$.ajax({
+			url:'/removecart',
+			data:{
+				cart:cartId,
+				product:proId
+			},
+			method:'post',
+
+			success:(response)=>{
+
+				if(response){
+					
+					
+					location.reload()
+				}
+
+
+			}
+
+
+		})
+
 	}
 
 </script>

@@ -1,0 +1,91 @@
+
+
+ 
+
+
+
+
+<div class="container" >
+        <div class="row">
+
+            <div style="margin-top: 100px;">
+                <p style="margin-bottom: 40px; font-size: 40px; font-family: 'Acme', sans-serif;">ORDER LIST</p>
+
+<div  class="table-responsive">
+                <table class="table  table-dark table-hover " cellspacing="0" id="Search"  style="  border:rgb(47, 74, 133) solid;3 px ;">
+  <thead >
+    <tr>
+      <th >No</th>
+      <th>Date</th>
+     
+      <th>Name</th>
+      <th>Address</th>
+      <th>Payment Method</th>
+      <th>Total Amount</th>
+      
+      
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+      {{#each userorders}}
+    <tr style="border:rgb(104, 138, 212) solid 2px ;">
+      <th scope="row">{{add @index '1'}}</th>
+    
+      <td>{{this.date}}</td>
+      
+      <td>{{this.deliveryDetails.fname}}{{this.deliveryDetails.lname}}</td>
+      <td>{{this.deliveryDetails.house_name}} <br>
+      {{this.deliveryDetails.address1}} <br>
+      {{this.deliveryDetails.address2}} <br>
+      {{this.deliveryDetails.town_city}} <br>
+      {{this.deliveryDetails.country_state}} <br>
+      {{this.deliveryDetails.pincode_zip}}
+      </td>
+      <td>{{this.paymentMethod}}</td>
+      <td>{{this.GrandTotal}}{{this.productprice}}</td>
+      
+      
+      <td>
+        <a href="/view_order_products/{{this._id}}" class="btn btn-primary">View Products</a><br><br>
+        {{!-- <a href="/view_order_products/{{this.products._id}}" class="btn btn-primary">View </a> --}}
+        <a href="/UserOrderInvoice/{{this._id}}" class="btn btn-success">Order Invoice</a>
+
+       
+      </td>
+    </tr>
+    {{/each}}
+    
+  </tbody>
+</table>
+
+
+</div>
+
+
+            </div>
+
+        </div>
+    </div>
+
+
+
+
+    <link rel="stylesheet" type="text/css" href="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.0/css/jquery.dataTables.css">
+    <link rel="stylesheet" type="text/css" href="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.0/css/jquery.dataTables_themeroller.css">
+
+
+      <script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.1.min.js"></script>
+      <script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.0/jquery.dataTables.min.js"></script>
+    
+
+
+
+<script>
+
+  $(document).ready( function () {
+    $('#Search').DataTable();
+} );
+
+</script>
+
