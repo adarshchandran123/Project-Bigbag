@@ -29,6 +29,12 @@
 
 
 
+        {{#if this.wishlist.offer}}
+        <div><span style="color: rgb(15, 167, 15); font-weight: bolder;">{{this.wishlist.offer}}%</span> off</div>
+        {{else}}
+        <div style="opacity: 0%;"><span style="color: rgb(15, 167, 15); opacity: 0%; font-weight: bolder;">{{this.wishlist.offer}}</span>% off</div>
+        {{/if}}
+
 
 				{{!-- <div>
 					<a style="margin-top: 10px;" class="btn btn-success" href="/buyNow/{{this.wishlist._id}}">Buy Now</a>

@@ -29,10 +29,10 @@ function addtoWishlist(proId){
         url:'/addtoWishlist/'+proId,
         method:'get',
         success:(response)=>{
-            if(response.productIn){
+            if(response){
                 document.getElementById(proId).style.color = "green";
             }else{
-                document.getElementById(proId).style.color = "green";
+                document.getElementById(proId).style.color = "black";
             }
             
         }

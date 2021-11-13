@@ -12,7 +12,7 @@
                                     <button class="btn btn-primary mt-3" type="button" style="display: none;" id="crop-btn">Crop</button>
             </div>
 
-                <form action="/admin/add_Adds1" method="POST" id="valid18" enctype="multipart/form-data">
+                <form action="/admin/add_Adds1" method="POST" id="valid23" enctype="multipart/form-data">
 
                 <div style="width: 30%;">
                     <label for=""> Category Name</label> <br>
@@ -55,10 +55,44 @@
 
 </body>
 
-
+<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.js"></script>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.11/cropper.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.11/cropper.js"></script>
+
+
+
+
+
+<script>
+    $(document).ready(function(){
+        $('#valid23').validate({
+            rules:{
+                category:{
+                    required:true
+                },
+                image1:{
+                    required:true
+                }
+            },
+            messages:{
+                category:"Select Category",
+                image1:"Select Images"
+
+            }
+        })
+    })
+</script>
+
+
+<style>
+    label.error{
+        color: rgb(170, 33, 33);
+        font-size: large;
+    }
+</style>
+
+
 
 
 
@@ -118,6 +152,8 @@
 
 
 </script>
+
+
 
 
 

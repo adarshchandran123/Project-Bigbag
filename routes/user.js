@@ -24,6 +24,8 @@ router.get("/",async function (req, res, next) {
 
     let ADSCategory=await userHelpers.find_ADS_details()
 
+    let productCategory=await userHelpers.findCategory()
+
     let checkCategoryOfferValidity=await productHelpers.checkCategoryOfferValidity()
 
     checkCategoryOfferValidity.map((categoryDetails)=>{
@@ -41,22 +43,13 @@ router.get("/",async function (req, res, next) {
       })
 
     })
-
-
-
     let productOfferValidity=await productHelpers.productOfferValidity()
 
-    console.log('==============',productOfferValidity)
-
       productOfferValidity.map((productdetail)=>{
-
         productHelpers.DeleteProductOffer(productdetail._id,productdetail.productName).then(()=>{
 
         })
-
       })
-
-    
       let checkCouponValidity=await userHelpers.checkCouponValidity()
       
       checkCouponValidity.map((CouponOfferDetails)=>{
@@ -64,21 +57,20 @@ router.get("/",async function (req, res, next) {
           
         })
       })
-
-      // res.render("user-home", {  user: true, name: req.session.user.username,cartcount });
-    
       const arrival=await productHelpers.getnewArrival()
 
-      res.render("user-home", {  user: true, name: req.session.user.username,arrival,cartcount ,cart,showwishlist,ADSCategory});
+      res.render("user-home", {  user: true, name: req.session.user.username,arrival,cartcount ,cart,showwishlist,ADSCategory,productCategory});
 
     
   } else {
     const arrival=await productHelpers.getnewArrival()
 
     let ADSCategory=await userHelpers.find_ADS_details()
+
+    let productCategory=await userHelpers.findCategory()
     
       
-      res.render("user-home", { withoutLogin: true, arrival,ADSCategory })
+      res.render("user-home", { withoutLogin: true, arrival,ADSCategory,productCategory })
     
     
        

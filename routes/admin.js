@@ -336,9 +336,10 @@ router.get('/report',adminLoginHelper, async(req,res)=>{
 router.get('/Add_Coupon',async(req,res)=>{
 
   let allcoupon=await userHelpers.findAllcoupon()
-  
+  let currentDate=new Date().toISOString().slice(0,10)
 
-  res.render('admin/AddCoupon',{admin:true,allcoupon})
+  res.render('admin/AddCoupon',{admin:true,allcoupon,currentDate,couponAlreadyUsed:req.session.alreadyUsed})
+  req.session.alreadyUsed=false
   
 })
 
@@ -347,6 +348,11 @@ router.post('/addcoupon',(req,res)=>{
  
   userHelpers.Addcoupon(req.body).then((response)=>{
 
+    if(response){
+
+    }else{
+      req.session.alreadyUsed=true
+    }
     
 
     res.redirect('/admin/Add_Coupon')

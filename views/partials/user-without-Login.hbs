@@ -67,16 +67,32 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link active text-white" aria-current="page" href="/">Home</a>
+          <a class="nav-link active text-white" style="font-weight: bolder;" aria-current="page" href="/">Home</a>
         </li>
 		<li class="nav-item">
-          <a class="nav-link active text-white" aria-current="page" href="/userAllProduct">Shop</a>
+          <a class="nav-link active text-white" style="font-weight: bolder;" aria-current="page" href="/userAllProduct">Shop</a>
         </li>
-		<li class="nav-item">
+		{{!-- <li class="nav-item">
           <a class="nav-link active text-white" aria-current="page" href="#">About</a>
-        </li>
+        </li> --}}
+    <div class="dropdown">
+      <button style="background-color:#961010;  color: white; font-weight: bolder; text-decoration: none;" class="btn btn-link dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+        Category  
+      </button>
+
+      <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+    	  {{#each productCategory}}
+
+        <li><a class="dropdown-item" href="/categoryDisplay/{{this.category}}">{{this.category}}</a></li>
+
+       {{/each}}
+      </ul>
+
+    </div>
+
+
 		<li class="nav-item">
-          <a class="nav-link active text-white" aria-current="page" href="#">Contact</a>
+          <a class="nav-link active text-white" style="font-weight: bolder;" aria-current="page" href="#">Contact</a>
         </li>
        
         

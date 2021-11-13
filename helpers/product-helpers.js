@@ -155,7 +155,19 @@ AddCategoryOffer:(detail)=>{
           offer:detail.offer
         }
       })
-      
+
+      // let Wishlist_offerUpdate=await db.get().collection(collection.WISH_LIST_COLLECTION).updateMany({category:detail.category},{
+      //   $set:{
+      //     offer:detail.offer
+      //   }
+      // })
+
+      let che=await db.get().collection(collection.WISH_LIST_COLLECTION).updateMany({"wishlist.category":detail.category},{
+        $set:{
+          "wishlist.offer":detail.offer
+        }
+      })
+      console.log('chebdvdvdvdvdvdvdvdvd',che)
       let findAllCategoryOffers=await db.get().collection(collection.PRODUCT_COLLECTION).find({category:detail.category}).toArray()
 
       // findAllCategoryOffers.map((productdetail)=>{
@@ -210,9 +222,19 @@ AddCategoryOffer:(detail)=>{
 
 updateCategoryOfferPrice:(productdetail)=>{
 
-  return new Promise((resolve,reject)=>{
+  return new Promise(async(resolve,reject)=>{
     let percentage=productdetail.offer/100
     console.log('jjj======',percentage)
+
+
+    let changeWishlistPrice=await db.get().collection(collection.WISH_LIST_COLLECTION).updateOne({proId:objectId(productdetail._id)},{
+      $set:{
+        "wishlist.MRP":productdetail.newprice,
+        "wishlist.newprice":productdetail.newprice-(productdetail.newprice * percentage)
+      }
+    })
+    
+
     db.get().collection(collection.PRODUCT_COLLECTION).updateOne({_id:objectId(productdetail._id)},
     {$set:{
       MRP:productdetail.newprice,
@@ -245,6 +267,11 @@ DeleteCategoryOffer:(categoryId,category)=>{
           offer:1
         }})
 
+        let removeOffersFromWishlist=await db.get().collection(collection.WISH_LIST_COLLECTION).updateMany({"wishlist.category":category},
+          {$unset:{
+            "wishlist.offer":1
+          }})
+
         let removeCategory_ADS=await db.get().collection(collection.ADS___COLLECTION).deleteOne({category:category})
 
       let findprodetails=await db.get().collection(collection.PRODUCT_COLLECTION).find({category:category}).toArray()  
@@ -256,7 +283,14 @@ DeleteCategoryOffer:(categoryId,category)=>{
 },
 
 changeCategoryOfferpriceToMRP:(productdetail)=>{
-  return new Promise((resolve,reject)=>{
+  return new Promise(async(resolve,reject)=>{
+
+    let changeWishlistPrice=await db.get().collection(collection.WISH_LIST_COLLECTION).updateOne({proId:objectId(productdetail._id)},{
+      $set:{
+        "wishlist.newprice":productdetail.MRP
+      }
+    })
+
     db.get().collection(collection.PRODUCT_COLLECTION).updateOne({_id:objectId(productdetail._id)},
     {$set:{
       newprice:productdetail.MRP
@@ -296,6 +330,20 @@ AddProductOffer:(detail)=>{
             
           }
         })
+
+
+        let WishlistProductofferUpdate=await db.get().collection(collection.WISH_LIST_COLLECTION).updateOne({"wishlist.productName":detail.productName},{
+          $set:{
+            "wishlist.offer":detail.offer,
+            "wishlist.MRP":findProduct.newprice,
+            "wishlist.newprice":findProduct.newprice - (findProduct.newprice * percentage)
+            
+            
+          }
+        })
+
+
+
   
         let insertoffer=await db.get().collection(collection.PRODUCT_OFFER_COLLECTION).insertOne(detail)
         resolve(response)
@@ -334,12 +382,24 @@ DeleteProductOffer:(offerId,productName)=>{
       offer:1
     }})
 
+
+    let WishlistchanngeProductOffer=await db.get().collection(collection.WISH_LIST_COLLECTION).updateOne({"wishlist.productName":productName},
+      {$unset:{
+        "wishlist.offer":1
+      }})
+
     let findProduct=await db.get().collection(collection.PRODUCT_COLLECTION).findOne({productName:productName})
 
     let channgeProductOfferPrice=await db.get().collection(collection.PRODUCT_COLLECTION).updateOne({productName:productName},
       {$set:{
         newprice:findProduct.MRP
       }})
+
+    let WhishlistchanngeProductOfferPrice=await db.get().collection(collection.WISH_LIST_COLLECTION).updateOne({"wishlist.productName":productName},
+      {$set:{
+        "wishlist.newprice":findProduct.MRP
+      }})
+
     
     resolve()
 

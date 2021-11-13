@@ -855,7 +855,7 @@ module.exports={
                     userId:objectId(userId),
                     proId:productdetail._id,
                     wishlist:productdetail,
-                    productIn:true
+                   // productIn:true
                     
 
                     
@@ -866,11 +866,11 @@ module.exports={
                 resolve(userwishlist)
                 console.log('aaaaaaaaaaaaaaaa===',userwishlist)
             }else{
-               let wishlist={
-                   productIn:true
-               }
-               console.log('xxxxxxxxxxxxxxx==',wishlist)
-                resolve(wishlist)
+            //    let wishlist={
+            //        productIn:false
+            //    }
+            //    console.log('xxxxxxxxxxxxxxx==',wishlist)
+                resolve(false)
             }
 
 
@@ -1379,15 +1379,15 @@ module.exports={
 
             if(checkCoupon == null){
 
-                db.get().collection(collection.COUPON_COLLECTION).insertOne(couponData).then(()=>{
-                    resolve()
+                db.get().collection(collection.COUPON_COLLECTION).insertOne(couponData).then((response)=>{
+                    resolve(response)
                     
                 })
 
             }else{
                 let couponAlreadyUsed=true
-                
-                resolve(couponAlreadyUsed)
+                console.log('################',couponAlreadyUsed)
+                resolve(false)
             }
 
 

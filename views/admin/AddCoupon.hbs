@@ -11,8 +11,8 @@
             <div style="margin-top: 100px;">
                 <form action="/admin/addcoupon" id="valid11" method="POST">
                     <div class="col-sm-12 col-md-6">
-                      {{#if alreadyUsed}}
-                        <div style="color: red;"><p>Coupon Already Used</p></div>
+                      {{#if couponAlreadyUsed}}
+                        <div style="color: red; font-weight: bolder; font-size: larger;"><p>Coupon Already Used</p></div>
                       {{/if}}
 
                         <label for="#coupon">Coupon</label><br>
@@ -25,7 +25,7 @@
                     
                     <div class="col-sm-12 col-md-6">
                          <label for="date">Date Limit</label><br>
-                        <input   name="offerlimit" id="date" type="date">
+                        <input min="{{currentDate}}"  name="offerlimit" id="date" type="date">
                     </div>
 
 
@@ -144,3 +144,9 @@
 
       </script>
 
+<style>
+    label.error{
+        color: rgb(170, 33, 33);
+        font-size: large;
+    }
+</style>
