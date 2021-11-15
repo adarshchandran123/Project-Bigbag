@@ -20,7 +20,7 @@ var adminLoginHelper = (req,res,next)=>{
   }
 
 }
-
+var answer
 
 /* GET users listing. */
 router.get("/",adminLoginHelper,async function(req, res, next) {
@@ -40,20 +40,51 @@ router.get("/",adminLoginHelper,async function(req, res, next) {
 
   let salesReportMonth=await userHelpers.findMonthSalesReport()
 
+  
+
+  let productCategory=await userHelpers.findCategory()
+
+  var categoryReport=[]
+ 
+ 
+  
+  for(key in productCategory){
+    var details =await userHelpers.categoryproductsTotal(productCategory[key].category)
+    categoryReport.push(details)
+  }
+
+
+//   const start = new Date("02/05/2020");
+//   const end = new Date("02/10/2020");
+  
+//   let loop = new Date(start);
+//   while (loop <= end) {
+//     console.log('rrrrrr',loop);
+//     let newDate = loop.setDate(loop.getDate() + 1);
+//     loop = new Date(newDate);
+//   }
+// console.log('kkkkk',loop)
+
+
+var date = new Date()
+
+d= new Date().getTime()
+
+var sevenday=date.setDate(new Date().getDate()-10)
+
+console.log('!@@@@@@@2',date)
+
+
+
+  
+ 
+  
+
+
   let payment=[paymentMethod.COD,paymentMethod.online]
   
   let totalOrder=[allorderStatus.totalOrder]
 
-  var day = new Date().getDate()
-  var month = new Date().getMonth()+1
-  var year = new Date().getFullYear()
-
-  console.log('dat 1',day);
-  console.log('dates2 ',month);
-  console.log(' 333333',year);
-  let date=new Date(year-month-day)
-
-console.log('datesssss',date);
   let order=[allorderStatus.totalcancel,  allorderStatus.totalDelivered]
   
   let lineorder=[allorderStatus.totalcancel, allorderStatus.totalPending, allorderStatus.totalDelivered, allorderStatus.totalPlaced, allorderStatus.totalShipped]
@@ -66,7 +97,7 @@ console.log('datesssss',date);
 
   const arrival=await productHelpers.getnewArrival()
 
-  res.render("admin/dashboard", { admin: true,totalUser,totalproduct,totalCategory,totalRevenue,allorderStatus,order,lineorder,payment,arrival,totalOrder })
+  res.render("admin/dashboard", { admin: true,totalUser,totalproduct,totalCategory,totalRevenue,allorderStatus,order,lineorder,payment,arrival,totalOrder,categoryReport })
 });
  
 

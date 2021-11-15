@@ -154,7 +154,7 @@
 </svg></button>
 {{else}}
 
- <a  style="color: red;"  class="btn btn-link " href="/userlogin" ><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-suit-heart-fill" viewBox="0 0 16 16">
+ <a  style="color: red;"  class="btn btn-link " href="/userlogin?id={{this._id}}&token=guestToWishList" ><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-suit-heart-fill" viewBox="0 0 16 16">
   <path d="M4 1c2.21 0 4 1.755 4 3.92C8 2.755 9.79 1 12 1s4 1.755 4 3.92c0 3.263-3.234 4.414-7.608 9.608a.513.513 0 0 1-.784 0C3.234 9.334 0 8.183 0 4.92 0 2.755 1.79 1 4 1z"/>
 </svg></a>
 
@@ -179,6 +179,7 @@
 <button style="margin-top: 10px;" type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
  Buy Now
 </button>
+
 
 <!-- Modal -->
 <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -226,10 +227,71 @@
 
         {{/gt}}
         {{else}}
+
+        {{#gt this.qty '0'}}
+        <p>Stock : <span style="color: green;">In Stock</span> </p>
         <div>
-        <a class="btn btn-success" href="/userlogin">Buy Now</a>
-        <a class="btn btn-primary" href="/userlogin">Add To Cart<i class="fas fa-shopping-cart"></i></a>
+        <a class="btn btn-success" href="/userlogin?prodId={{this._id}}&token=guestToBuyNow">Buy Now</a>
+        <a class="btn btn-primary" href="/userlogin?id={{this._id}}&price={{this.newprice}}&token=gustToAddToCart">Add To Cart<i class="fas fa-shopping-cart"></i></a>
         </div>
+
+        {{else}}
+        <p>Stock : <span style="color: red;">Out of Stock</span> </p>
+
+        <button style="margin-top: 10px;" type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+         Buy Now
+        </button>
+
+        <!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Product Out of Stock</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Check Later
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Close</button>
+       
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+        <button style="margin-top: 10px;" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+          Add To Cart<i class="fas fa-shopping-cart"></i>
+        </button>
+
+
+
+        <!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Product Out of Stock</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Check Later
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Close</button>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+
+        {{/gt}}
+        
         {{/if}}
 
 			</figcaption>

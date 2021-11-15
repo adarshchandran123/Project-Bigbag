@@ -79,18 +79,73 @@ router.get("/",async function (req, res, next) {
   }
 });
 
+
+
+
+
+
+
+router.get("/userlogin/", (req, res) => {
+
+  console.log('!@#$$%^&',req.query)
+
+ var token=req.query.token
+
+
+    
+
+    if(token == 'guestToBuyNow'){
+      req.session.guestToBuyNow=true
+      req.session.guestToBuyNowProId=req.query.prodId
+    }
+
+   else if(token == 'gustToAddToCart'){
+     console.log('$%%%%%%%pppppppppp')
+      req.session.gustToAddToCart=true
+      req.session.gustToAddToCartProId=req.query.id
+      req.session.gustToAddToCartPrice=req.query.price
+    }
+   else if(token == 'guestToWishList'){
+     console.log('enter    wishlist    m')
+
+     req.session.guestToWishList=true
+     req.session.guestToWishListProId=req.query.id
+   }
+   else if(token == 'gustViewWishlist'){
+     req.session.gustViewWishlist=true
+
+   }
+   else if(token == 'gustViewAddToCart'){
+     console.log('``%%%%%%%%%%%%5555555555555555');
+    req.session.gustViewAddToCart=true
+   } 
+    
+
+ 
+  
+  res.render("user-login", { loginError: req.session.error ,blockUser:req.session.blocked });
+  req.session.error = false;
+  req.session.blocked=false
+})
+
+// __________________________________________________
+
+
+
+
+
+// ______________________________________________________________
+
+
+
 router.get("/usersignup", (req, res) => {
 
   res.render("user-signup",{emailvalid:req.session.emailORpasswd})
   req.session.emailORpasswd=false
 });
 
-router.get("/userlogin", (req, res) => {
-  
-  res.render("user-login", { loginError: req.session.error ,blockUser:req.session.blocked });
-  req.session.error = false;
-  req.session.blocked=false
-})
+
+
 
 router.post("/signupsubmit", (req, res) => {
 
@@ -110,20 +165,36 @@ router.post("/signupsubmit", (req, res) => {
              .verifications
              .create({to:'+'+mobileNum , channel: 'sms'})
              .then(verification => console.log(verification.sid)).catch((err)=>{
-              console.log('OTP     ERRRRRRR',err);
+              console.log('OTP signup    ERRRRRRR',err);
+              res.render('404')
              })
-             res.render('usersignupOTP_Verify',{mobileNum})
+            //  res.render('usersignupOTP_Verify',{mobileNum})
+             res.redirect('/signupOTP_Verify')
     }else{
       console.log('enter else case')
       req.session.emailORpasswd=true
       res.redirect('/usersignup')
     }
   }).catch((err)=>{
-   console.log('what is this')
+
+   console.log('signup what is this')
   })
 
 
 });
+
+
+
+
+
+
+router.get('/signupOTP_Verify',(req,res)=>{
+  var mobileNumber=req.session.userRegnumber
+
+  res.render('usersignupOTP_Verify',{mobileNumber,otpError:req.session.otpError,serverError:req.session.serverError})
+  req.session.otpError=false
+  req.session.serverError=false
+})
 
 
 
@@ -161,16 +232,49 @@ router.post('/signupOTP',(req,res)=>{
         // res.render('user-changePassword',{mobileNum})
       }else{
         req.session.otpError = true  
-        res.render('usersignupOTP_Verify',{mobileNum,otpError:req.session.otpError})
-        req.session.otpError = false
+        res.redirect('/signupOTP_Verify')
+        
       }
       }
-      ).catch((err)=>{console.log("RRR : ",err);});
+      ).catch((err)=>{console.log("RRR  signupOTP: ",err);
+
+      req.session.serverError=true
+
+      res.redirect('/signupOTP_Verify')
+      // res.render('404')
+    });
 
 
 
    // res.render('/usersignupOTP_Verify')
  })
+
+
+
+ router.get('/resend_OTP_signUp',(req,res)=>{
+
+  
+  var mobileNum=req.session.userRegnumber
+  console.log('+++++++++++++0))))))))))',mobileNumber)
+
+
+  twilio.verify.services(OTP.serviceID)
+  .verifications
+  .create({to:'+'+mobileNum , channel: 'sms'})
+  .then(verification => console.log(verification.sid)).catch((err)=>{
+   console.log('OTP signup    ERRRRRRR',err);
+   res.render('404')
+  })
+ //  res.render('usersignupOTP_Verify',{mobileNum})
+  res.redirect('/signupOTP_Verify')
+
+
+
+
+  
+})
+
+
 
 
 router.get('/loginwith_otp',(req,res)=>{
@@ -207,9 +311,12 @@ router.post("/loginwithOTP", (req, res) => {   ///original login router
              .verifications
              .create({to:'+'+mobileNum , channel: 'sms'})
              .then(verification => console.log(verification.sid)).catch((err)=>{
+
+              res.render('404')
            
              })
-             res.render('userLoginOTP_Verify',{mobileNum})
+             res.redirect('/LoginOTP_Verify')
+            //  res.render('userLoginOTP_Verify',{mobileNum})
     }else{
             req.session.user.block=='false'
             req.session.blocked=true
@@ -226,11 +333,21 @@ router.post("/loginwithOTP", (req, res) => {   ///original login router
 
   }).catch((err)=>{
     console.log('@@@@@@@@@@@@@@@@  catch');
+    res.render('404')
   })
 
 
 })
 
+
+router.get('/LoginOTP_Verify',(req,res)=>{
+
+  mobileNum=req.session.userRegnumber
+
+  res.render('userLoginOTP_Verify',{mobileNum,otpError:req.session.otpError,serverError:req.session.serverError})
+  req.session.otpError=false
+  req.session.serverError=false
+})
 
 
 
@@ -260,13 +377,20 @@ router.post('/userloginOTP',(req,res)=>{
 
         // res.render('user-changePassword',{mobileNum})
       }else{
-        otpError = true  
-        res.render('usersignupOTP_Verify',{mobileNum,otpError})
-        otpError = false
+        req.session.otpError = true 
+        console.log('ivade kayari'); 
+        // res.render('usersignupOTP_Verify',{mobileNum,otpError})
+        res.redirect('/LoginOTP_Verify')
+        
       }
       }
       ).catch((err)=>{
-        console.log("RRR : ",err);
+        console.log("RRR vannoennu nokkam : ",err);
+        req.session.serverError = true  
+        // res.render('usersignupOTP_Verify',{mobileNum,otpError})
+        res.redirect('/LoginOTP_Verify')
+       
+        // res.render('404')
 
     
       });
@@ -280,6 +404,37 @@ router.post('/userloginOTP',(req,res)=>{
 
 
 
+router.get('/resend_OTP_Login_with_OTP',(req,res)=>{
+
+
+  var mobileNum=req.session.userRegnumber
+
+  
+
+
+  twilio.verify.services(OTP.serviceID)
+  .verifications
+  .create({to:'+'+mobileNum , channel: 'sms'})
+  .then(verification => console.log(verification.sid)).catch((err)=>{
+
+   res.render('404')
+
+  })
+  res.redirect('/LoginOTP_Verify')
+ 
+
+
+  
+
+
+})
+
+
+
+
+
+
+
 
 
 
@@ -287,6 +442,7 @@ router.post('/userloginOTP',(req,res)=>{
 router.post("/userloginsubmit",(req,res)=>{     //its just for trial without otp verification
   
   userHelpers.doLogin(req.body).then((response)=>{
+    
 
         if (response.status) {
     
@@ -294,21 +450,55 @@ router.post("/userloginsubmit",(req,res)=>{     //its just for trial without otp
       
       req.session.loggedIn = true;
       req.session.user = response.user;
+
       
 
       if(req.session.user.block=='true'){
-       
-        
-        res.redirect('/')
-      }else{
+
+      
+
+
+     if(req.session.guestToBuyNow)
+      { 
+     
+        res.redirect('/buyNow/'+req.session.guestToBuyNowProId)
+      }
+
+     else if(req.session.gustToAddToCart){
+     
+    
+        res.redirect('/addToCart?id='+req.session.gustToAddToCartProId)
+      }
+     else if(req.session.guestToWishList){
+  
+
+       res.redirect('/addtoWishlist/'+req.session.guestToWishListProId)
+
+     }
+     else if(req.session.gustViewWishlist){
+      res.redirect('/wishlist')
+     }
+     else if(req.session.gustViewAddToCart){
+
+ 
+       res.redirect('/cart')
+     }
+
+     res.redirect('/')
+
+    }else{
+
         req.session.user.block=='false'
         req.session.blocked=true
         
        
 
         res.redirect('/userlogin')
-      }
+      
        
+
+
+    }
 
       
     } else {
@@ -328,20 +518,13 @@ router.post("/userloginsubmit",(req,res)=>{     //its just for trial without otp
 
 
 
-
-
-
-
-
-
-
-
 router.get('/userForgotPassword',(req,res)=>{
   if(req.session.loggedIn){
     res.redirect("/")
   }else{
-    res.render("user-forgot-password",{err:req.session.mobileNumber_OR_CountryCode_ERR});
+    res.render("user-forgot-password",{err:req.session.mobileNumber_OR_CountryCode_ERR,serverError:req.session.serverError});
     req.session.mobileNumber_OR_CountryCode_ERR=false
+    req.session.serverError=false
   }
 })
 
@@ -352,26 +535,42 @@ router.post('/userForgotPassword',(req,res,next)=>{
  
  
   userHelpers.findNumber(req.body).then((response)=>{
+    console.log('#@@@#@####$##',response)
     if(response){
       
-      req.session.userRegnumber=response
+      req.session.userRegnumber=mobileNum
      
      
       twilio.verify.services(OTP.serviceID)
              .verifications
              .create({to:'+'+mobileNum , channel: 'sms'})
              .then(verification => console.log(verification.sid)).catch((err)=>{
+               
                console.log('forgor OTP errr',err);
+                res.redirect('/userForgotPassword')
              })
-             res.render('otp-verify',{mobileNum})
+           
+            res.redirect('OTP_VERIFY')
     }else{
 
       req.session.mobileNumber_OR_CountryCode_ERR=true
       res.redirect('/userForgotPassword')
     }
   }).catch((err)=>{
-   
+    console.log('forgottPassword ',err);
+   res.render('404');
   })
+})
+
+
+router.get('/OTP_VERIFY',(req,res)=>{
+
+ var mobileNum =req.session.userRegnumber
+
+
+
+  res.render("otp-verify",{mobileNum,otpError:req.session.otpError})
+  req.session.otpError = false
 })
 
 
@@ -379,10 +578,10 @@ router.post('/userForgotPassword',(req,res,next)=>{
 
 router.post('/otpverify',(req,res,next)=>{
  
-  mobile1 = req.body.mobile
-  mobileNum =parseInt(mobile1)
-  let otp=req.body.digit_1+req.body.digit_2+req.body.digit_3+req.body.digit_4
   
+  mobileNum =req.session.userRegnumber
+  let otp=req.body.digit_1+req.body.digit_2+req.body.digit_3+req.body.digit_4
+ 
   
   
  
@@ -395,13 +594,45 @@ router.post('/otpverify',(req,res,next)=>{
       if(verification_check.status == 'approved'){
         res.render('user-changePassword',{mobileNum})
       }else{
-        otpError = true  
-        res.render('otp-verify',{mobileNum,otpError})
-        otpError = false
+        req.session.otpError = true  
+        res.redirect('/OTP_VERIFY')
+        
       }
       }
-      ).catch((err)=>{console.log("RRR : ",err);});
+      ).catch((err)=>{console.log("RRR otp verify le error : ",err);
+      req.session.serverError = true  
+        res.redirect('/userForgotPassword')
+      
+    
+    });
 })
+
+
+
+
+router.get('/resend_OTP_forgotOTP_verify',(req,res)=>{
+
+  var mobileNum =req.session.userRegnumber
+
+ 
+
+  twilio.verify.services(OTP.serviceID)
+  .verifications
+  .create({to:'+'+mobileNum , channel: 'sms'})
+  .then(verification => console.log(verification.sid)).catch((err)=>{
+    res.render('404')
+    console.log('forgor OTP errr',err);
+  })
+ 
+ res.redirect('OTP_VERIFY')
+
+
+
+})
+
+
+
+
 
 
 
@@ -419,7 +650,9 @@ router.post('/changepassword',(req,res,next)=>{
        req.session.loggedIn=false
        res.redirect('/userlogin')
      }  }).catch((err)=>{
-      
+        console.log('changepassword --- - = =   =', err)
+
+      res.render('404')
      })
  })
 
@@ -457,51 +690,55 @@ router.get("/product-detail", async function (req, res, next) {
     let cart=await userHelpers.getCartProducts(req.session.user._id)
 
     const productdetail = await productHelpers.getproductdetails(req.query.id);
+
+    let productCategory=await userHelpers.findCategory()
     
     res.render("product-detail", {
       user: true,
       name: req.session.user.username,
-      productdetail,cartcount,cart
+      productdetail,cartcount,cart,productCategory
     });
-    // productHelpers.getAllProduct().then((product)=>{
-    //   res.render('product-detail', {user:true,name:req.session.user.username,product});
-
-    // })
+ 
   } else {
     
-
+    let productCategory=await userHelpers.findCategory()
 
     const productdetail = await productHelpers.getproductdetails(req.query.id);
-    res.render("product-detail", { withoutLogin: true, productdetail });
+    res.render("product-detail", { withoutLogin: true, productdetail ,productCategory});
 
     
   }
 });
 
 router.get("/cart",async function (req, res, next) {
+ 
   if (req.session.loggedIn) {
+  
+    req.session.gustViewAddToCart=false
+  
     let cartcount=null
     cartcount=await userHelpers.getCartCount(req.session.user._id)
 
+    let productCategory=await userHelpers.findCategory()
+
     const products=await userHelpers.getCartProducts(req.session.user._id)
 
-    console.log('m........,,,..,.,.m,mmm==',products)
+  
     
     
     if(products){
           
      let GrandTotal=await userHelpers.getTotalPrice(req.session.user._id)
 
-      res.render("cart", { user: true, name: req.session.user.username,products,cartcount,GrandTotal });
-      }else{
+      res.render("cart", { user: true, name: req.session.user.username,products,cartcount,GrandTotal,productCategory });
+      }
+      else{
+       
         
-        // res.render('cart',{user:true,name: req.session.user.username,cartcount})
-        res.redirect('/userlogin')
+        res.render('cart',{user:true,name: req.session.user.username,cartcount})
+        
         
       }
-      
-      
-
 
    
   } else {
@@ -513,18 +750,34 @@ router.get("/cart",async function (req, res, next) {
 router.get("/addToCart/",async function (req, res, next) {
  
   if (req.session.loggedIn) {
-  
-    let findprodetails=await userHelpers.Findprodetails(req.query.id)
-    userHelpers.addToCart(req.query.id,req.session.user._id,req.query.price,findprodetails).then(async()=>{
+
+    if(req.session.gustToAddToCart){
+
+      req.session.gustToAddToCart=false
+      let findprodetails=await userHelpers.Findprodetails(req.query.id)
+      userHelpers.addToCart(req.query.id,req.session.user._id,req.query.price,findprodetails).then(async()=>{
+        
+       
+        res.redirect('/cart')  
       
-     
-     
+      })
 
-      res.json({status:true})  
-    // res.redirect('/')
-    }) 
+    }else{
 
-    // res.render("cart", { user: true, name: req.session.user.username });
+      let findprodetails=await userHelpers.Findprodetails(req.query.id)
+      userHelpers.addToCart(req.query.id,req.session.user._id,req.query.price,findprodetails).then(async()=>{
+        
+       
+        res.json({status:true})  
+      
+      })
+
+
+    }
+
+ 
+
+   
   } else {
    
     res.redirect("/userlogin");
@@ -552,6 +805,8 @@ router.get('/placeOrder',async(req,res)=>{
     let cartcount=null
     cartcount=await userHelpers.getCartCount(req.session.user._id)
 
+    let productCategory=await userHelpers.findCategory()
+
     let GrandTotal=await userHelpers.getTotalPrice(req.session.user._id)
     
 
@@ -561,7 +816,7 @@ router.get('/placeOrder',async(req,res)=>{
  
   
   
-  res.render('Place-Order',{user:true,name: req.session.user.username,GrandTotal,cartcount,user:req.session.user,userAddress})
+  res.render('Place-Order',{user:true,name: req.session.user.username,GrandTotal,cartcount,user:req.session.user,userAddress,productCategory})
   }else{
     res.redirect("/userlogin")
   }
@@ -661,9 +916,11 @@ router.get('/successPage',async(req,res)=>{
     let cartcount=null
     cartcount=await userHelpers.getCartCount(req.session.user._id)
 
+    let productCategory=await userHelpers.findCategory()
+
     
 
-  res.render('SuccessPage',{user:true,name: req.session.user.username,cartcount})
+  res.render('SuccessPage',{user:true,name: req.session.user.username,cartcount,productCategory})
 
   }
   
@@ -675,12 +932,14 @@ router.get('/OrderList',async(req,res)=>{
     if(req.session.loggedIn){
       let cartcount=null
     cartcount=await userHelpers.getCartCount(req.session.user._id)
+
+    let productCategory=await userHelpers.findCategory()
    
       let userorders=await userHelpers.getuserOrders(req.session.user._id)
       let GrandTotal=await userHelpers.getTotalPrice(req.session.user._id)
       
 
-      res.render('OrderList',{user:true,name: req.session.user.username,cartcount,userorders,GrandTotal})
+      res.render('OrderList',{user:true,name: req.session.user.username,cartcount,userorders,GrandTotal,productCategory})
 
     }else{
       res.redirect("/userlogin")
@@ -701,6 +960,8 @@ router.get('/view_order_products/:id',async(req,res)=>{
 
 let allorder=await userHelpers.findorder(orderId)
 
+var productCategory=await userHelpers.findCategory()
+
 
     if(allorder.mode == 'cart'){
      
@@ -710,10 +971,10 @@ let allorder=await userHelpers.findorder(orderId)
     cartcount=await userHelpers.getCartCount(req.session.user._id)
     let orderproducts=await userHelpers.getorderproducts(orderId)
    
-    console.log('cccaaaarrrtttt====',orderproducts)
+   
     
     
-    res.render('viewOrderProducts',{user:true,name: req.session.user.username,user:req.session.user,cartcount,orderproducts,carts:true})
+    res.render('viewOrderProducts',{user:true,name: req.session.user.username,user:req.session.user,cartcount,orderproducts,carts:true,productCategory})
 
  
     }else if(allorder.mode == 'buyNow'){
@@ -727,11 +988,11 @@ let allorder=await userHelpers.findorder(orderId)
       
       let buyproduct=await userHelpers.BuynowProductDetails(orderId)
 
-      console.log('buy nnnnnnnnnnn==',buyproduct)
+     
 
      
 
-      res.render('viewOrderProducts',{user:true,name: req.session.user.username,user:req.session.user,cartcount,buyproduct,buyNowpro:true})
+      res.render('viewOrderProducts',{user:true,name: req.session.user.username,user:req.session.user,cartcount,buyproduct,buyNowpro:true,productCategory})
  
 
     } 
@@ -759,9 +1020,11 @@ router.get('/userorderedProduct',async(req,res)=>{
     
     cartcount=await userHelpers.getCartCount(req.session.user._id)
 
+    var productCategory=await userHelpers.findCategory()
+
     let userOrderedProducts=await userHelpers.FindUserOrderedProducts(req.session.user._id)
 
-    res.render('UserOrderedProduct',{user:true,name: req.session.user.username,user:req.session.user,cartcount,userOrderedProducts})
+    res.render('UserOrderedProduct',{user:true,name: req.session.user.username,user:req.session.user,cartcount,userOrderedProducts,productCategory})
   }
 
   
@@ -772,6 +1035,8 @@ router.get('/userorderedProduct',async(req,res)=>{
 
 
 router.get('/UserOrderInvoice/:id',async(req,res)=>{
+
+  var productCategory=await userHelpers.findCategory()
 
   if(req.session.loggedIn){
 
@@ -787,14 +1052,14 @@ router.get('/UserOrderInvoice/:id',async(req,res)=>{
     
     cartcount=await userHelpers.getCartCount(req.session.user._id)
 
-  res.render('user_order_invoice',{user:true,name: req.session.user.username,orderInvoice,cartcount,user:req.session.user,carts:true})
+  res.render('user_order_invoice',{user:true,name: req.session.user.username,orderInvoice,cartcount,user:req.session.user,carts:true,productCategory})
 
     }else if(orderInvoice.mode == 'buyNow'){
       let cartcount=null
     
       cartcount=await userHelpers.getCartCount(req.session.user._id)
   
-    res.render('user_order_invoice',{user:true,name: req.session.user.username,orderInvoice,cartcount,user:req.session.user,buynows:true})
+    res.render('user_order_invoice',{user:true,name: req.session.user.username,orderInvoice,cartcount,user:req.session.user,buynows:true,productCategory})
 
     }
 
@@ -810,8 +1075,10 @@ router.get('/UserOrderInvoice/:id',async(req,res)=>{
 
 
 router.get('/userProfile',async(req,res)=>{
+
   
   if(req.session.loggedIn){
+    var productCategory=await userHelpers.findCategory()
 
     let cartcount=null
     cartcount=await userHelpers.getCartCount(req.session.user._id)
@@ -819,7 +1086,7 @@ router.get('/userProfile',async(req,res)=>{
     let userdetail=await userHelpers.getUserDetails(userId)
   
 
-    res.render('user_profile',{user:true,name: req.session.user.username,userdetail,cartcount,userId})
+    res.render('user_profile',{user:true,name: req.session.user.username,userdetail,cartcount,userId,productCategory})
   }else{
     res.redirect("/userlogin")
   }
@@ -830,11 +1097,12 @@ router.get('/userProfile',async(req,res)=>{
 router.get('/editProfile',async(req,res)=>{
 
   if(req.session.loggedIn){
+    var productCategory=await userHelpers.findCategory()
 
     let userId=req.session.user._id
     let userdetail=await userHelpers.getUserDetails(userId)
 
-    res.render('edit_profile',{user:true,name: req.session.user.username,userdetail})
+    res.render('edit_profile',{user:true,name: req.session.user.username,userdetail,productCategory})
   }else{
     res.redirect("/userlogin")
   }
@@ -871,11 +1139,13 @@ router.get('/addNewAddress',async(req,res)=>{
     let cartcount=null
     cartcount=await userHelpers.getCartCount(req.session.user._id)
 
+    var productCategory=await userHelpers.findCategory()
+
     let userAddress=await userHelpers.findUserAddress(req.session.user._id)
-    console.log('???????????????????????????===',userAddress);
+   
 
 
-    res.render('newAddress',{user:true,name: req.session.user.username,cartcount,userAddress})
+    res.render('newAddress',{user:true,name: req.session.user.username,cartcount,userAddress,productCategory})
   }
 
   
@@ -916,10 +1186,13 @@ router.get('/DeleteUserNewAddress/:userId',(req,res)=>{
 router.get('/buyNow/:id',async(req,res)=>{
 
   if(req.session.loggedIn){
+    req.session.guestToBuyNow=false
     
     
     let cartcount=null
     cartcount=await userHelpers.getCartCount(req.session.user._id)
+
+    var productCategory=await userHelpers.findCategory()
 
     let userId=req.session.user._id
     let proId=req.params.id
@@ -932,7 +1205,7 @@ router.get('/buyNow/:id',async(req,res)=>{
     
     
     
-    res.render('buynowPlaceOrder',{user:true,name: req.session.user.username,userId,orderproduct,user:req.session.user,productprice,cartcount,userAddress})
+    res.render('buynowPlaceOrder',{user:true,name: req.session.user.username,userId,orderproduct,user:req.session.user,productprice,cartcount,userAddress,productCategory})
     
   }else{
     res.redirect("/userlogin")
@@ -946,7 +1219,7 @@ router.get('/buyNow/:id',async(req,res)=>{
 
 router.post('/BuynowPlaceOrder',async(req,res)=>{
   if(req.session.loggedIn){
-    console.log('[][[][]]]][][][][][][]llllllll===',req.body)
+   
   let orderproduct=await userHelpers.buyNow(req.body.proId)
   req.session.cart=false
   let productprice=orderproduct.newprice
@@ -987,9 +1260,12 @@ productHelpers.buynowProductQuantityupdate(req.body.proId).then(()=>{
 
 router.get('/wishlist',async(req,res)=>{
   if(req.session.loggedIn){
+    req.session.gustViewWishlist=false
 
     let cartcount=null
     cartcount=await userHelpers.getCartCount(req.session.user._id)
+
+    var productCategory=await userHelpers.findCategory()
 
     let cart=await userHelpers.getCartProducts(req.session.user._id)
 
@@ -997,7 +1273,7 @@ router.get('/wishlist',async(req,res)=>{
 
     
 
-    res.render('user_wishlist',{user:true,name: req.session.user.username,cart,cartcount,showwishlist})
+    res.render('user_wishlist',{user:true,name: req.session.user.username,cart,cartcount,showwishlist,productCategory})
 
   }else{
 
@@ -1013,12 +1289,28 @@ router.get('/addtoWishlist/:id',(req,res)=>{
 
   if(req.session.loggedIn){
 
-    userHelpers.addtoWishlist(req.params.id,req.session.user._id).then((response)=>{
-      console.log('\\\\\\\\;;;;;;;',response);
-      res.json(response)
+    if(req.session.guestToWishList){
 
-    })
+      req.session.guestToWishList=false
+      userHelpers.addtoWishlist(req.params.id,req.session.user._id).then((response)=>{
+        
+        res.redirect('/wishlist')
+  
+      })
 
+    }else{
+      userHelpers.addtoWishlist(req.params.id,req.session.user._id).then((response)=>{
+      
+        res.json(response)
+  
+      })
+
+    }
+
+
+
+  }else{
+    res.redirect('/userlogin')
   }
 
   
@@ -1130,18 +1422,20 @@ router.post('/searchResult',async(req,res)=>{
     let cartcount=null
     cartcount=await userHelpers.getCartCount(req.session.user._id)
 
+    var productCategory=await userHelpers.findCategory()
+
     let SearchData=await userHelpers.SearchDatas(req.body.searchdata)
 
     let cart=await userHelpers.getCartProducts(req.session.user._id)
 
   
-    res.render('SearchResult',{user:true,cartcount,name: req.session.user.username,SearchData,cart})
+    res.render('SearchResult',{user:true,cartcount,name: req.session.user.username,SearchData,cart,productCategory})
 
   }else{
-
+    var productCategory=await userHelpers.findCategory()
     let SearchData=await userHelpers.SearchDatas(req.body.searchdata)
 
-    res.render('SearchResult',{ withoutLogin: true,SearchData})
+    res.render('SearchResult',{ withoutLogin: true,SearchData,productCategory})
   }
 
 

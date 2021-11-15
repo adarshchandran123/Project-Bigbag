@@ -42,24 +42,34 @@
            
           </form> --}}
 
-          <form action="/signupOTP"  method="POST" class="digit-group" data-group-name="digits" data-autosubmit="false" autocomplete="off">
+          <form action="/signupOTP" id="valid27"  method="POST" class="digit-group" data-group-name="digits" data-autosubmit="false" autocomplete="off">
 	<div style="display: flex; justify-content: center">
   <input class="boxStyle" type="tel" id="digit-1" name="digit_1" data-next="digit-2" />&nbsp;
 	<input class="boxStyle" type="tel" id="digit-2" name="digit_2" data-next="digit-3" data-previous="digit-1" />&nbsp;
 	<input class="boxStyle" type="tel" id="digit-3" name="digit_3" data-next="digit-4" data-previous="digit-2" />&nbsp;
 	<input class="boxStyle" type="tel" id="digit-4" name="digit_4" data-next="digit-5" data-previous="digit-3" />
-	{{!-- <input type="text" id="digit-5" name="digit-5" data-next="digit-6" data-previous="digit-4" />
-	<input type="text" id="digit-6" name="digit-6" data-previous="digit-5" /> --}}
 
   <input type="hidden" name="mobile" value="{{mobileNum}}">
   </div>
 
-  {{#if otpError}}
-  <p style="color: rgb(145, 30, 30); font-weight: bolder; font-size: larger; text-align: center; margin-top: 20px;">OTP ERROR</p>
-  {{/if}}
+	<div style="display: flex; justify-content: center;">
+	<button style="border: none;background-color: white; margin-top: 20px; color: rgb(145, 30, 30)" id="resendButton" onclick="resendOTP('{{mobileNum}}')" type="button" class="btn btn-outline-dark btn-lg px-5"disabled>Resend OTP</button>
+	</div>
+
+			<p style="text-align: center; color: rgb(145, 30, 30);" id="counter"> </p>
+
               <div style="display: flex; justify-content: center; margin-top: 30px">
               <input type="submit" value="Submit" class="btn btn-primary" />
             </div>
+
+
+	{{#if otpError}}
+     <p style="color: rgb(145, 30, 30); font-weight: bolder; font-size: larger; text-align: center; margin-top: 20px;">OTP ERROR</p>
+    {{/if}}
+
+  {{#if serverError}}
+	<p style="color: rgb(145, 30, 30); font-weight: bolder; font-size: larger; text-align: center; margin-top: 20px;">server ERROR</p>
+  {{/if}}
 </form>
 
 
@@ -140,20 +150,69 @@ body {
 
 
 
+
+
+
+<script>
+  var count = 10
+  function counter() {
+    document.getElementById("counter").innerHTML = `<span>Resend New OTP in: ${count}s</span>`
+    count = count - 1;
+    if (count >= 0) {
+      setTimeout(counter, 1000)
+    }
+  }
+    
+  //How remove the disalbed attribute to a button
+  function setDisabled() {
+    
+    document.getElementById('resendButton').disabled = false
+  }
+  
+  window.onload = counter();
+  window.onload = function () {
+    window.setTimeout(setDisabled, 10000);
+  }
+  function resendOTP(mobileNum){
+    location.href = '/resend_OTP_signUp'
+  }
+
+</script>
+
+
+
+
+
+
       <script>
 
        $(document).ready(function(){
-  $("#valid5").validate({
+  $("#valid27").validate({
     rules:{
-      otp:{
+      digit_1:{
         required:true,
-        minlength:4,
-        maxlength:4
-      }
+        minlength:1,
+        
+      },
+	  digit_2:{
+		  required:true,
+		  minlength:1
+	  },
+	  digit_3:{
+		  required:true,
+		  minlength:1
+	  },
+	  digit_4:{
+		  required:true,
+		  minlength:1
+	  }
       
     },
     messages:{
-      username:"enter 4 Digit OTP",
+      digit_1:"Enter OTP",
+	  digit_2:"Enter OTP",
+	  digit_3:"Enter OTP",
+	  digit_4:"Enter OTP",
      
     }
   })
@@ -189,3 +248,30 @@ body {
 });
 
 </script>
+
+
+{{!-- <script>
+  var count = 10
+  function counter() {
+    document.getElementById("counter").innerHTML = `<span>Resend New OTP in: ${count}s</span>`
+    count = count - 1;
+    if (count >= 0) {
+      setTimeout(counter, 1000)
+    }
+  }
+    
+  //How remove the disalbed attribute to a button
+  function setDisabled() {
+    
+    document.getElementById('resendButton').disabled = false
+  }
+  
+  window.onload = counter();
+  window.onload = function () {
+    window.setTimeout(setDisabled, 10000);
+  }
+  function resendOTP(countryCode,mobileNumber){
+    location.href = '/resend_OTP_CHANGEPASSWORD'
+  }
+
+</script> --}}

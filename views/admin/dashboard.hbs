@@ -166,6 +166,37 @@
 
     </div>
 
+    <div class="col-md-6">
+
+      <div>
+
+        <table style="background-color: #070723;" class="table">
+  <thead >
+    <tr style="border: solid 1px rgb(88 5 119);  ">
+      <th style="color: white; font-weight: bolder; font-size: large;" scope="col">No</th>
+      <th style="color: white; font-weight: bolder; font-size: large;" scope="col">Category</th>
+      <th style="color: white; font-weight: bolder; font-size: large;" scope="col">Quantity</th>
+     
+    </tr>
+  </thead>
+  <tbody>
+    {{#each categoryReport}}
+    <tr style="border: solid 2px rgb(88 5 119);  ">
+      <th style="color: white; font-weight: bolder; font-size: large;" scope="row">{{add @index '1'}}</th>
+      <td style="color: white; font-weight: bolder;">{{this.categoryName}}</td>
+      <td style="color: white; font-weight: bolder;">{{this.CategoryTotal}}</td>
+      
+    </tr>
+    {{/each}}
+ 
+  </tbody>
+</table>
+
+      </div>
+
+
+    </div>
+
     
   </div>
 </div>

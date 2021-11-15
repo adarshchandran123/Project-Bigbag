@@ -170,7 +170,7 @@ module.exports={
     },
     changePassword:(userData,oldData)=>{
         return new Promise(async(resolve,reject)=>{
-            userData.password=await bcrypt.hash(adduserData.password,10)
+            userData.password=await bcrypt.hash(userData.password,10)
 
             var dataupdated=await db.get().collection(collection.USER_COLLECTION).updateOne({_id:objectId(oldData._id)},{$set:{password:userData.password}})
             resolve(dataupdated)
@@ -1609,6 +1609,25 @@ module.exports={
             })
         })
 
+    },
+
+    categoryproductsTotal:(categoryDetails)=>{        
+        return new Promise(async(resolve,reject)=>{
+           let total=await db.get().collection(collection.PRODUCT_COLLECTION).count({category:categoryDetails})
+        
+           
+
+            let CategoryTotal= total
+
+            var data={}
+
+            data.CategoryTotal=CategoryTotal,
+            data.categoryName=categoryDetails
+           
+            
+               
+           resolve(data)
+        })
     }
 
 

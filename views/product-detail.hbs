@@ -139,10 +139,69 @@
 
 		{{else}}
 
-		<div>
-        <a class="btn btn-success" href="/userlogin">Buy Now</a>
-        <a class="btn btn-primary" href="/userlogin">Add To Cart<i class="fas fa-shopping-cart"></i></a>
+        {{#gt this.qty '0'}}
+        <p>Stock : <span style="color: green;">In Stock</span> </p>
+        <div>
+        <a class="btn btn-success" href="/userlogin?prodId={{productdetail._id}}&token=guestToBuyNow">Buy Now</a>
+        <a class="btn btn-primary" href="/userlogin?id={{productdetail._id}}&price={{productdetail.newprice}}&token=gustToAddToCart">Add To Cart<i class="fas fa-shopping-cart"></i></a>
         </div>
+
+        {{else}}
+        <p>Stock : <span style="color: red;">Out of Stock</span> </p>
+
+        <button style="margin-top: 10px;" type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+         Buy Now
+        </button>
+
+        <!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Product Out of Stock</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Check Later
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Close</button>
+       
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+        <button style="margin-top: 10px;" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+          Add To Cart<i class="fas fa-shopping-cart"></i>
+        </button>
+
+
+
+        <!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Product Out of Stock</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Check Later
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Close</button>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+
+        {{/gt}}
 
 		{{/if}}
 
