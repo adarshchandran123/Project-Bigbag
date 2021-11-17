@@ -7,6 +7,9 @@ const { response } = require('express')
 const { ObjectId } = require('bson')
 var Razorpay=require('razorpay')
 const { resolve } = require('path')
+var paypal = require('paypal-rest-sdk');
+const axios = require('axios')
+const ACCESS_KEY=('42e763d0bc1e54bb799ff9b2a7b8a611')
 
 
 var instance = new Razorpay({
@@ -15,6 +18,12 @@ var instance = new Razorpay({
   })
 
 	
+
+  paypal.configure({
+    'mode': 'sandbox', //sandbox or live
+    'client_id': 'AW34zrBBw_s5jM8eqYRaKtT4GtWMhIx00AqnARrDYhX7kjC0mkQdil-P0B_voSm4Yg1VV9GDOQ2rWM0R',
+    'client_secret': 'EMf1rybJY3I9JFDZyrTyeKsK8MNxO1vovuBgpMMvtxBHJ3vBvSI5-1Td3lDnFTzuALcSSb_paXudncp2'
+});
 
 
 
@@ -526,9 +535,10 @@ module.exports={
     },
 
     getuserOrders:(userId)=>{
-       
+       console.log('check',userId);
         return new Promise(async(resolve,reject)=>{
             let userorders=await db.get().collection(collection.ORDER_COLLECTION).find({userId:objectId(userId)}).sort({date:-1}).toArray()
+           
             resolve(userorders)
           
             
@@ -1351,10 +1361,10 @@ module.exports={
     findpaymentMethod:()=>{
         return new Promise(async(resolve,reject)=>{
             let COD=await db.get().collection(collection.ORDER_COLLECTION).count({paymentMethod:'COD'})
-            let online=await db.get().collection(collection.ORDER_COLLECTION).count({paymentMethod:'Online'})
+            let Razorpay=await db.get().collection(collection.ORDER_COLLECTION).count({paymentMethod:'Razorpay'})
             let payment={}
             payment.COD=COD
-            payment.online=online
+            payment.Razorpay=Razorpay
 
             resolve(payment)
             console.log('/===========000000==',payment)
@@ -1628,8 +1638,65 @@ module.exports={
                
            resolve(data)
         })
-    }
+    },
 
+//pay pall
+generatePaypal: (orderId, totalPrice) => {
+    totalPrice = parseFloat(totalPrice).toFixed(2)
+    return new Promise(async (resolve, reject) => {
+        var create_payment_json = {
+            "intent": "sale",
+            "payer": {
+                "payment_method": "paypal"
+            },
+            "redirect_urls": {
+                "return_url": 'http://localhost:8000/test',
+                "cancel_url": "http://cancel.url"
+            },
+            "transactions": [{
+                "item_list": {
+                    "items": [{
+                        "name": orderId,
+                        "sku": "item",
+                        "price": totalPrice,
+                        "currency": "USD",
+                        "quantity": 1
+                    }]
+                },
+                "amount": {
+                    "currency": "USD",
+                    "total": totalPrice,
+                },
+                "description": "The Payement success"
+            }]
+        };
+        paypal.payment.create(create_payment_json, function (error, payment) {
+            if (error) {
+                console.log('🦈🦈🦈🦈🦈 The error in payement : ', error.response.details)
+                reject(false);
+            } else {
+                console.log('🦠🦠🦠🦠🦠🦠🦠 : ', payment.transactions[0].item_list.items[0]);
+                resolve(true)
+            }
+        });
+    })
+},
+
+convertAmount : (amount)=>{
+    console.log('0111',amount)
+    return new Promise(async(resolve,reject)=>{
+        amount = parseInt(amount)
+        axios.get(`http://apilayer.net/api/live?access_key=${ACCESS_KEY}&currencies=INR`).then(response => {
+          console.log('ddddddddddddddddddddddddddddddddddddddddddddddd',response)
+            amount = amount/response.data.quotes.USDINR
+
+            console.log('the amount is ',amount);
+            resolve(amount)
+        })
+       
+       
+    })  
+},
 
   
     

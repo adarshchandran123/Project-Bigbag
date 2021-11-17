@@ -539,7 +539,7 @@ router.post('/userForgotPassword',(req,res,next)=>{
     if(response){
       
       req.session.userRegnumber=mobileNum
-     
+     req.session.userdetail=response
      
       twilio.verify.services(OTP.serviceID)
              .verifications
@@ -650,7 +650,7 @@ router.post('/changepassword',(req,res,next)=>{
        req.session.loggedIn=false
        res.redirect('/userlogin')
      }  }).catch((err)=>{
-        console.log('changepassword --- - = =   =', err)
+       
 
       res.render('404')
      })
@@ -843,15 +843,34 @@ userHelpers.placeOrder(req.body,cartProduct,GrandTotal).then((orderId)=>{
 
  
   if(req.body['payment']=='COD'){
+  
 
     res.json({COD_success:true})
 
-  }else{
-    userHelpers.generateRazorpay(orderId,GrandTotal).then((response)=>{
-      res.json(response)
+  }
 
+
+  else if (req.body.payment == 'Razorpay'){
+   
+    userHelpers.generateRazorpay(orderId, GrandTotal).then((response) => {
+  
+
+      res.json(response)
+    }).catch((err) => {
+      res.redirect('/404')
     })
   }
+
+      // Paypal
+      else if (req.body.payment == 'Paypal'){
+        
+        userHelpers.generatePaypal(orderId, GrandTotal).then((paySuccess)=>{
+    
+          res.json(paySuccess)
+        }).catch((err)=>{
+          res.redirect('/404')
+        })
+      }
 
 
 
@@ -1220,22 +1239,47 @@ router.get('/buyNow/:id',async(req,res)=>{
 router.post('/BuynowPlaceOrder',async(req,res)=>{
   if(req.session.loggedIn){
    
-  let orderproduct=await userHelpers.buyNow(req.body.proId)
+  var orderproduct=await userHelpers.buyNow(req.body.proId)
   req.session.cart=false
-  let productprice=orderproduct.newprice
+  var productprice=orderproduct.newprice
 userHelpers.BuynowPlaceOrder(req.body,orderproduct,productprice).then((orderId)=>{
 
  
   if(req.body['payment']=='COD'){
-
+    console.log(')()))()()()()()()(',req.body);
     res.json({COD_success:true})
 
-  }else{
-    userHelpers.generateRazorpay(orderId,productprice).then((response)=>{
-      res.json(response)
-
-    })   
   }
+
+
+   else if (req.body.payment == 'Razorpay'){
+      userHelpers.generateRazorpay(orderId, productprice).then((response) => {
+        // userHelpers.decreaseProductQuantity(req.body.proId).then((result) => {
+        //   res.json(response)
+        // })
+
+        res.json(response)
+      }).catch((err) => {
+        res.redirect('/404')
+      })
+    }
+    // Paypal
+    else if (req.body.payment == 'Paypal'){
+      console.log('buy now paypal');
+      userHelpers.generatePaypal(orderId, productprice).then((paySuccess)=>{
+        // userHelpers.decreaseProductQuantity(req.body.proId).then((rslt) => {
+        //   res.json(paySuccess)
+        // })
+        res.json(paySuccess)
+      }).catch((err)=>{
+        res.redirect('/404')
+      })
+    }
+    
+
+
+
+  
 
 
 })  
@@ -1441,6 +1485,20 @@ router.post('/searchResult',async(req,res)=>{
 
 
 
+
+
+})
+
+
+
+router.post('/currencycoverterCart/:amount',(req,res)=>{
+
+  console.log('$$$$$$$$',req.params)
+
+  userHelpers.convertAmount(req.params.amount).then((total)=>{
+    console.log('jjjjj',total);
+    res.json(total)
+  })
 
 
 })

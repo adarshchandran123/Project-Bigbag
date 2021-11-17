@@ -81,7 +81,7 @@ console.log('!@@@@@@@2',date)
   
 
 
-  let payment=[paymentMethod.COD,paymentMethod.online]
+  let payment=[paymentMethod.COD,paymentMethod.Razorpay]
   
   let totalOrder=[allorderStatus.totalOrder]
 
