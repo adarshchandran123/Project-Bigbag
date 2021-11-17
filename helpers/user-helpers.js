@@ -1362,9 +1362,11 @@ module.exports={
         return new Promise(async(resolve,reject)=>{
             let COD=await db.get().collection(collection.ORDER_COLLECTION).count({paymentMethod:'COD'})
             let Razorpay=await db.get().collection(collection.ORDER_COLLECTION).count({paymentMethod:'Razorpay'})
+            let Paypal=await db.get().collection(collection.ORDER_COLLECTION).count({paymentMethod:'Paypal'})
             let payment={}
             payment.COD=COD
             payment.Razorpay=Razorpay
+            payment.Paypal=Paypal
 
             resolve(payment)
             console.log('/===========000000==',payment)
@@ -1372,16 +1374,6 @@ module.exports={
 
     },
     
-    
-    findMonthSalesReport:()=>{
-        return new Promise(async(resolve,reject)=>{
-            let buyNowWeekendSales=await db.get().collection(collection.ORDER_COLLECTION).find({mode:'buyNow',status:'Delivered'}).sort({date:-1}).limit(7).toArray()
-            console.log('<<<<[{{{{{}}}{}{}{{{{{{}{}{{}{}{}{{{}}',buyNowWeekendSales)
-            resolve(buyNowWeekendSales)
-
-        })
-    },
-
     Addcoupon:(couponData)=>{
        
         return new Promise(async(resolve,reject)=>{
@@ -1690,7 +1682,7 @@ convertAmount : (amount)=>{
           console.log('ddddddddddddddddddddddddddddddddddddddddddddddd',response)
             amount = amount/response.data.quotes.USDINR
 
-            console.log('the amount is ',amount);
+          
             resolve(amount)
         })
        
@@ -1698,6 +1690,58 @@ convertAmount : (amount)=>{
     })  
 },
 
+find7daysSalesReport:(day)=>{
+    return new Promise(async(resolve,reject)=>{
+       
+
+        let buynowsales=await db.get().collection(collection.ORDER_COLLECTION).count({mode:'buyNow',status:'Delivered',date:day})
+        let cartsales=await db.get().collection(collection.ORDER_COLLECTION).aggregate([{$match:{mode:"cart"}},
+            { 
+                $unwind:"$products"
+            },
+            {
+                $match:{"products.status":"Delivered"}
+            },
+            {
+                $match:{date:day}
+            },
+            {             
+                $project:{
+                    
+                    quantity:'$products.quantity'
+                    
+                    
+                }
+            },
+            {
+                $group:{
+                    _id:null,
+                    quantity:{$sum:"$quantity"}
+                }
+            }
+        ]).toArray()
+        if(cartsales[0]){
+          
+            var totalcartsales=cartsales[0].quantity
+            
+        }else{
+            totalcartsales = 0
+          
+        }
+       
+        var totalsales=buynowsales+totalcartsales
+       
+
+        // var totalSalesreport={}
+
+        // totalSalesreport.date=day
+        // totalSalesreport.totalsales=totalsales
+
+        resolve(totalsales)
+
+    })
+
+}
   
     
 

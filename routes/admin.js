@@ -38,7 +38,9 @@ router.get("/",adminLoginHelper,async function(req, res, next) {
 
   let paymentMethod=await userHelpers.findpaymentMethod()
 
-  let salesReportMonth=await userHelpers.findMonthSalesReport()
+  let limitedStock=await productHelpers.findLimitedStock()
+
+  
 
   
 
@@ -54,36 +56,44 @@ router.get("/",adminLoginHelper,async function(req, res, next) {
   }
 
 
-//   const start = new Date("02/05/2020");
-//   const end = new Date("02/10/2020");
+
+var currentDate = new Date()
+
+var sevendays=[]
+
+
+
+for(var i=7; i>0; i--){
+  currentDate.setDate(currentDate.getDate()-1);
+  var date=currentDate.toISOString().slice(0,10)
+  sevendays.push(date)
   
-//   let loop = new Date(start);
-//   while (loop <= end) {
-//     console.log('rrrrrr',loop);
-//     let newDate = loop.setDate(loop.getDate() + 1);
-//     loop = new Date(newDate);
-//   }
-// console.log('kkkkk',loop)
+}
+sevendays.reverse()
 
 
-var date = new Date()
-
-d= new Date().getTime()
-
-var sevenday=date.setDate(new Date().getDate()-10)
-
-console.log('!@@@@@@@2',date)
+var sevendaysReport=[]
 
 
 
-  
+for(key in sevendays){
+  var SevenDaysSalesReport =await userHelpers.find7daysSalesReport(sevendays[key])
+  sevendaysReport.push(SevenDaysSalesReport)
+}
+
+
+console.log('the date',sevendays);
  
-  
+console.log('this is the result  ',sevendaysReport);
 
 
-  let payment=[paymentMethod.COD,paymentMethod.Razorpay]
+
+
+  let payment=[paymentMethod.COD,paymentMethod.Razorpay,paymentMethod.Paypal]
+  console.log('payyyment',payment);
   
   let totalOrder=[allorderStatus.totalOrder]
+  
 
   let order=[allorderStatus.totalcancel,  allorderStatus.totalDelivered]
   
@@ -97,7 +107,7 @@ console.log('!@@@@@@@2',date)
 
   const arrival=await productHelpers.getnewArrival()
 
-  res.render("admin/dashboard", { admin: true,totalUser,totalproduct,totalCategory,totalRevenue,allorderStatus,order,lineorder,payment,arrival,totalOrder,categoryReport })
+  res.render("admin/dashboard", { admin: true,totalUser,totalproduct,totalCategory,totalRevenue,allorderStatus,order,lineorder,payment,arrival,totalOrder,categoryReport,sevendays,sevendaysReport,limitedStock })
 });
  
 
