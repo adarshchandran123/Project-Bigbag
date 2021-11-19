@@ -23,24 +23,10 @@
 
       <div style="padding-top: 10px;" class="wrapper">
         <div class="card">
-          {{!-- <form style="" action="/otpverify" id="valid" method="POST" class="d-flex flex-column">
-            
-            <div style="color: #961010;" class="d-flex align-items-center input-field my-3 mb-5">
-              <span class="far fa-user p-2"></span>
-              <input type="number" placeholder="Please Enter OTP " name="otp" class="form-control"/>
-              <input type="hidden" name="mobile" value="{{mobileNum}}">
-            </div>
-            
-            
-            
-            <div class="m-auto">
-              <input type="submit" value="Submit" class="btn btn-primary" />
-            </div>
-           
-          </form> --}}
+ 
 
 
-                    <form action="/otpverify" id="valid21"  method="POST" class="digit-group" data-group-name="digits" data-autosubmit="false" autocomplete="off">
+  <form action="/otpverify" id="valid21"  method="POST" class="digit-group" data-group-name="digits" data-autosubmit="false" autocomplete="off">
 	<div style="display: flex; justify-content: center">
   <input class="boxStyle" type="tel" id="digit-1" name="digit_1" data-next="digit-2" />&nbsp;
 	<input class="boxStyle" type="tel" id="digit-2" name="digit_2" data-next="digit-3" data-previous="digit-1" />&nbsp;
@@ -199,8 +185,7 @@ body {
     rules:{
       digit_1:{
         required:true,
-        minlength:4,
-        maxlength:4
+       
       },
       digit_2:{
         required:true,
@@ -214,7 +199,10 @@ body {
       
     },
     messages:{
-      "Enter Currect OTP",
+      digit_1:" ",
+      digit_2:" ",
+      digit_3:" ",
+      digit_4:" "
      
     }
   })

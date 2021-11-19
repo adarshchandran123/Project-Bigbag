@@ -75,7 +75,7 @@ router.get("/",async function (req, res, next) {
     
        
 
-    // res.render('user-signup');
+   
   }
 });
 
@@ -87,7 +87,7 @@ router.get("/",async function (req, res, next) {
 
 router.get("/userlogin/", (req, res) => {
 
-  console.log('!@#$$%^&',req.query)
+  
 
  var token=req.query.token
 
@@ -100,13 +100,13 @@ router.get("/userlogin/", (req, res) => {
     }
 
    else if(token == 'gustToAddToCart'){
-     console.log('$%%%%%%%pppppppppp')
+    
       req.session.gustToAddToCart=true
       req.session.gustToAddToCartProId=req.query.id
       req.session.gustToAddToCartPrice=req.query.price
     }
    else if(token == 'guestToWishList'){
-     console.log('enter    wishlist    m')
+     
 
      req.session.guestToWishList=true
      req.session.guestToWishListProId=req.query.id
@@ -116,7 +116,7 @@ router.get("/userlogin/", (req, res) => {
 
    }
    else if(token == 'gustViewAddToCart'){
-     console.log('``%%%%%%%%%%%%5555555555555555');
+    
     req.session.gustViewAddToCart=true
    } 
     
@@ -165,19 +165,19 @@ router.post("/signupsubmit", (req, res) => {
              .verifications
              .create({to:'+'+mobileNum , channel: 'sms'})
              .then(verification => console.log(verification.sid)).catch((err)=>{
-              console.log('OTP signup    ERRRRRRR',err);
-              res.render('404')
+             
+              res.redirect('/usersignup')
              })
             //  res.render('usersignupOTP_Verify',{mobileNum})
              res.redirect('/signupOTP_Verify')
     }else{
-      console.log('enter else case')
+      
       req.session.emailORpasswd=true
       res.redirect('/usersignup')
     }
   }).catch((err)=>{
 
-   console.log('signup what is this')
+   res.render('404')
   })
 
 
@@ -189,9 +189,9 @@ router.post("/signupsubmit", (req, res) => {
 
 
 router.get('/signupOTP_Verify',(req,res)=>{
-  var mobileNumber=req.session.userRegnumber
+  var mobileNum=req.session.userRegnumber
 
-  res.render('usersignupOTP_Verify',{mobileNumber,otpError:req.session.otpError,serverError:req.session.serverError})
+  res.render('usersignupOTP_Verify',{mobileNum,otpError:req.session.otpError,serverError:req.session.serverError})
   req.session.otpError=false
   req.session.serverError=false
 })
@@ -204,10 +204,12 @@ router.post('/signupOTP',(req,res)=>{
   let otp=req.body.digit_1+req.body.digit_2+req.body.digit_3+req.body.digit_4
   
   
-  console.log('&&&&&&&&&&&&&&&&&&&&&&&&',otp)
+ 
 
-  mobile1 = req.body.mobile
-  mobileNum =parseInt(mobile1)
+  
+  var mobileNum=req.session.userRegnumber
+
+ 
  
   twilio.verify.services("VA716b2ecd593bad2dd3a9c3f305df24c7")
       .verificationChecks
@@ -229,7 +231,7 @@ router.post('/signupOTP',(req,res)=>{
 
 
 
-        // res.render('user-changePassword',{mobileNum})
+        
       }else{
         req.session.otpError = true  
         res.redirect('/signupOTP_Verify')
@@ -241,12 +243,12 @@ router.post('/signupOTP',(req,res)=>{
       req.session.serverError=true
 
       res.redirect('/signupOTP_Verify')
-      // res.render('404')
+      
     });
 
 
 
-   // res.render('/usersignupOTP_Verify')
+   
  })
 
 
@@ -255,17 +257,17 @@ router.post('/signupOTP',(req,res)=>{
 
   
   var mobileNum=req.session.userRegnumber
-  console.log('+++++++++++++0))))))))))',mobileNumber)
+ 
 
 
   twilio.verify.services(OTP.serviceID)
   .verifications
   .create({to:'+'+mobileNum , channel: 'sms'})
   .then(verification => console.log(verification.sid)).catch((err)=>{
-   console.log('OTP signup    ERRRRRRR',err);
-   res.render('404')
+  
+  
   })
- //  res.render('usersignupOTP_Verify',{mobileNum})
+ 
   res.redirect('/signupOTP_Verify')
 
 
@@ -302,7 +304,7 @@ router.post("/loginwithOTP", (req, res) => {   ///original login router
 
         
 
-      // req.session.newUser=req.body
+      
       
       req.session.userRegnumber=mobileNum
      
@@ -316,7 +318,7 @@ router.post("/loginwithOTP", (req, res) => {   ///original login router
            
              })
              res.redirect('/LoginOTP_Verify')
-            //  res.render('userLoginOTP_Verify',{mobileNum})
+            
     }else{
             req.session.user.block=='false'
             req.session.blocked=true
@@ -332,7 +334,7 @@ router.post("/loginwithOTP", (req, res) => {   ///original login router
   }
 
   }).catch((err)=>{
-    console.log('@@@@@@@@@@@@@@@@  catch');
+    
     res.render('404')
   })
 
@@ -357,7 +359,7 @@ router.post('/userloginOTP',(req,res)=>{
   mobileNum =parseInt(mobile1)
 
   let otp=req.body.digit_1+req.body.digit_2+req.body.digit_3+req.body.digit_4
-  console.log('QQQQQQQQQQQQQQQQQQQQQQQQQQQ',otp);
+  
   
   
 
@@ -375,22 +377,22 @@ router.post('/userloginOTP',(req,res)=>{
         res.redirect('/')
 
 
-        // res.render('user-changePassword',{mobileNum})
+       
       }else{
         req.session.otpError = true 
-        console.log('ivade kayari'); 
-        // res.render('usersignupOTP_Verify',{mobileNum,otpError})
+       
+       
         res.redirect('/LoginOTP_Verify')
         
       }
       }
       ).catch((err)=>{
-        console.log("RRR vannoennu nokkam : ",err);
+       
         req.session.serverError = true  
-        // res.render('usersignupOTP_Verify',{mobileNum,otpError})
+       
         res.redirect('/LoginOTP_Verify')
        
-        // res.render('404')
+       
 
     
       });
@@ -442,21 +444,13 @@ router.get('/resend_OTP_Login_with_OTP',(req,res)=>{
 router.post("/userloginsubmit",(req,res)=>{     //its just for trial without otp verification
   
   userHelpers.doLogin(req.body).then((response)=>{
-    
 
         if (response.status) {
     
-       
-      
       req.session.loggedIn = true;
       req.session.user = response.user;
 
-      
-
       if(req.session.user.block=='true'){
-
-      
-
 
      if(req.session.guestToBuyNow)
       { 
@@ -535,7 +529,7 @@ router.post('/userForgotPassword',(req,res,next)=>{
  
  
   userHelpers.findNumber(req.body).then((response)=>{
-    console.log('#@@@#@####$##',response)
+   
     if(response){
       
       req.session.userRegnumber=mobileNum
@@ -546,7 +540,7 @@ router.post('/userForgotPassword',(req,res,next)=>{
              .create({to:'+'+mobileNum , channel: 'sms'})
              .then(verification => console.log(verification.sid)).catch((err)=>{
                
-               console.log('forgor OTP errr',err);
+               
                 res.redirect('/userForgotPassword')
              })
            
@@ -557,7 +551,7 @@ router.post('/userForgotPassword',(req,res,next)=>{
       res.redirect('/userForgotPassword')
     }
   }).catch((err)=>{
-    console.log('forgottPassword ',err);
+   
    res.render('404');
   })
 })
@@ -621,7 +615,7 @@ router.get('/resend_OTP_forgotOTP_verify',(req,res)=>{
   .create({to:'+'+mobileNum , channel: 'sms'})
   .then(verification => console.log(verification.sid)).catch((err)=>{
     res.render('404')
-    console.log('forgor OTP errr',err);
+    
   })
  
  res.redirect('OTP_VERIFY')
@@ -929,7 +923,7 @@ router.get('/successPage',async(req,res)=>{
   if(req.session.loggedIn){
 
     if(req.session.cart){
-      console.log('cart deleeete aaaayii')
+     
       userHelpers.DeleteUserCart(req.session.user._id)
     }
     let cartcount=null
@@ -1246,7 +1240,7 @@ userHelpers.BuynowPlaceOrder(req.body,orderproduct,productprice).then((orderId)=
 
  
   if(req.body['payment']=='COD'){
-    console.log(')()))()()()()()()(',req.body);
+   
     res.json({COD_success:true})
 
   }
@@ -1254,10 +1248,7 @@ userHelpers.BuynowPlaceOrder(req.body,orderproduct,productprice).then((orderId)=
 
    else if (req.body.payment == 'Razorpay'){
       userHelpers.generateRazorpay(orderId, productprice).then((response) => {
-        // userHelpers.decreaseProductQuantity(req.body.proId).then((result) => {
-        //   res.json(response)
-        // })
-
+       
         res.json(response)
       }).catch((err) => {
         res.redirect('/404')
@@ -1265,11 +1256,9 @@ userHelpers.BuynowPlaceOrder(req.body,orderproduct,productprice).then((orderId)=
     }
     // Paypal
     else if (req.body.payment == 'Paypal'){
-      console.log('buy now paypal');
+     
       userHelpers.generatePaypal(orderId, productprice).then((paySuccess)=>{
-        // userHelpers.decreaseProductQuantity(req.body.proId).then((rslt) => {
-        //   res.json(paySuccess)
-        // })
+        
         res.json(paySuccess)
       }).catch((err)=>{
         res.redirect('/404')
@@ -1411,7 +1400,7 @@ router.get('/categoryDisplay/:category',async(req,res)=>{
 
 router.get('/userCancellProduct/:id/:orderId/:quantity',(req,res)=>{
   if(req.session.loggedIn){
-    console.log('bwbbwbwbwbbwbbwbwbwbbwbwbwbw==',req.params)
+    
     
     productHelpers.UserCancellProduct(req.params.id,req.params.orderId,req.params.quantity).then(()=>{
 
@@ -1462,7 +1451,7 @@ router.post('/searchResult',async(req,res)=>{
 
   if(req.session.loggedIn){
 
-    console.log('^^^^^^^^^^^^^^^^^^^',req.body.searchdata);
+   
     let cartcount=null
     cartcount=await userHelpers.getCartCount(req.session.user._id)
 
@@ -1493,10 +1482,10 @@ router.post('/searchResult',async(req,res)=>{
 
 router.post('/currencycoverterCart/:amount',(req,res)=>{
 
-  console.log('$$$$$$$$',req.params)
+  
 
   userHelpers.convertAmount(req.params.amount).then((total)=>{
-    console.log('jjjjj',total);
+    
     res.json(total)
   })
 

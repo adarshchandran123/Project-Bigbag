@@ -27,21 +27,7 @@
 
       <div style="padding-top: 10px;" class="wrapper">
         <div class="card">
-          {{!-- <form style="" action="/userloginOTP" id="valid3" method="POST" class="d-flex flex-column">
-            
-            <div style="color: #961010;" class="d-flex align-items-center input-field my-3 mb-5">
-              <span class="far fa-user p-2"></span>
-              <input type="number" placeholder="Please Enter OTP " name="otp" class="form-control"/>
-              <input type="hidden" name="mobile" value="{{mobileNum}}">
-            </div>
-            
-            
-            
-            <div class="m-auto">
-              <input type="submit" value="Submit" class="btn btn-primary" />
-            </div>
-           
-          </form> --}}
+       
 
 
           <form action="/userloginOTP" id="valid26" method="POST" class="digit-group" data-group-name="digits" data-autosubmit="false" autocomplete="off">
@@ -151,7 +137,10 @@
       
     },
     messages:{
-      "Enter OTP",
+      digit_1:" ",
+	  digit_2:" ",
+	  digit_3:" ",
+	  digit_4:" "
      
     }
   })

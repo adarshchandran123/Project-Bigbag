@@ -15,10 +15,10 @@ module.exports = {
 
     product.newprice=parseInt(product.newprice)
 
-    console.log('jjjj',product)
+   
     
     const data = await db.get().collection(collection.PRODUCT_COLLECTION).insertOne(product);
-    console.log(data.insertedId)
+    
     return data.insertedId
   },
 
@@ -34,7 +34,7 @@ module.exports = {
   deleteProduct:(proId)=>{
     return new Promise((resolve,reject)=>{
       db.get().collection(collection.PRODUCT_COLLECTION).deleteOne({_id:objectId(proId)}).then((response)=>{
-       console.log("yy==",response);
+       
         resolve(response)
       })
     })
@@ -60,7 +60,6 @@ module.exports = {
       proDetails.qty = parseInt(proDetails.qty)
       proDetails.newprice=parseInt(proDetails.newprice)
 
-      console.log('bbbbbbbbbbbbbbbbbbb==',proDetails)
 
         db.get().collection(collection.PRODUCT_COLLECTION).updateOne({_id:objectId(proId)},
         {$set:{productName:proDetails.productName,
@@ -95,7 +94,7 @@ buynowProductQuantityupdate:(proId)=>{
 
   return new Promise((resolve,reject)=>{
     db.get().collection(collection.PRODUCT_COLLECTION).updateOne({_id:objectId(proId)},{$inc:{qty:-1}}).then((data)=>{
-      console.log('enter quchangeantity ');
+    
       resolve(data)
       
     })
@@ -111,8 +110,7 @@ UserCancellProduct:(proId,orderId,quantity)=>{
     let Quantity=parseInt(quantity)
 
     let order=await db.get().collection(collection.ORDER_COLLECTION).findOne({_id:objectId(orderId)})
-    console.log('000000000000000000==',order);
-    
+
     if(order.mode == 'buyNow'){
 
       db.get().collection(collection.PRODUCT_COLLECTION).updateOne({_id:objectId(proId)},{$inc:{qty:1}})
@@ -156,42 +154,15 @@ AddCategoryOffer:(detail)=>{
         }
       })
 
-      // let Wishlist_offerUpdate=await db.get().collection(collection.WISH_LIST_COLLECTION).updateMany({category:detail.category},{
-      //   $set:{
-      //     offer:detail.offer
-      //   }
-      // })
+
 
       let che=await db.get().collection(collection.WISH_LIST_COLLECTION).updateMany({"wishlist.category":detail.category},{
         $set:{
           "wishlist.offer":detail.offer
         }
       })
-      console.log('chebdvdvdvdvdvdvdvdvd',che)
+     
       let findAllCategoryOffers=await db.get().collection(collection.PRODUCT_COLLECTION).find({category:detail.category}).toArray()
-
-      // findAllCategoryOffers.map((productdetail)=>{
-      //   db.get().collection(collection.PRODUCT_COLLECTION).updateOne({_id:objectId(productdetail._id)},
-      //   {$set:{
-      //     offerpricees:productdetail.newprice-(productdetail.newprice*percentage)
-      //   }})
-      // })
-
-
-    //  db.get().collection(collection.PRODUCT_COLLECTION).updateMany({category:detail.category},
-    //     {$set:{
-    //       offerpricees : 500-"$newprice" //"newprice"-(parseInt("newprice") * percentage)
-    //     }
-    // },{multi : true}).then((response)=>{
-    //   console.log("OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO",response)
-      
-      
-    //   resolve(response)
-    // })
-       
-        
-
-   
 
       
     resolve(findAllCategoryOffers)
@@ -205,15 +176,6 @@ AddCategoryOffer:(detail)=>{
     }else{
       resolve(false)
     }
-
-    // db.employee.aggregate([{$match: {department: "HR"}},
-    // {$project: {name: 1, newSalary: {$multiply: ["$details.salary", 3]}}}])
-    
-    
-
-
-
-
     
 
   })
@@ -224,7 +186,7 @@ updateCategoryOfferPrice:(productdetail)=>{
 
   return new Promise(async(resolve,reject)=>{
     let percentage=productdetail.offer/100
-    console.log('jjj======',percentage)
+   
 
 
     let changeWishlistPrice=await db.get().collection(collection.WISH_LIST_COLLECTION).updateOne({proId:objectId(productdetail._id)},{
@@ -410,7 +372,7 @@ findLimitedStock:()=>{
   return new Promise(async(resolve,reject)=>{
    let findStock=await db.get().collection(collection.PRODUCT_COLLECTION).find({qty:{$lte:10}}).toArray()
 
-   console.log(']===================================',findStock)
+  
    resolve(findStock)
   })
 
@@ -422,7 +384,7 @@ checkCategoryOfferValidity:()=>{
 
     let CheckValidity=await db.get().collection(collection.CATEGORY_OFFER_COLLECTION).find({offerLimit:{$lte:currentDate}}).toArray()
 
-    console.log('%%%5%%%%55$$$4####3',CheckValidity)
+  
     resolve(CheckValidity)
 
   })

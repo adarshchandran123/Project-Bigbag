@@ -38,9 +38,9 @@
             {{/if}}
 
 
-                   <table class="table" style="width: 60%; border: solid;  1px ">
+                   <table class="table" style="width: 60%; background-color: #250000; border: solid;  1px ">
   <thead>
-    <tr>
+    <tr style="border: #805c5c solid;  1px">
       <th scope="col">No</th>
       <th scope="col">Product Name</th>
       <th scope="col">Offer</th>
@@ -51,7 +51,7 @@
   </thead>
   <tbody>
     {{#each findproductOffers}}
-    <tr>
+    <tr style="border: #805c5c solid;  1px">
       <th scope="row">{{add @index '1'}}</th>
       <td>{{this.productName}}</td>
       <td>{{this.offer}}</td>

@@ -141,7 +141,7 @@
 </div>
 </center>
 <h2 style="font-weight: bold; text-align: center; color:#544881;">Your Cart is Empty</h2>
-<a href="/userAllProduct" style="margin-left: 45%  ; margin-top: 30px; margin-bottom: 30px; background-color: #544881; color: white; font-weight: bolder; " class="btn">Continue Shopping</a>
+<a href="/userAllProduct" style="margin-left: 40%  ; width: 200px; margin-top: 30px; margin-bottom: 30px; background-color: #544881; color: white; font-weight: bolder; " class="btn">Continue Shopping</a>
 {{/if}}
 
 
@@ -220,11 +220,11 @@
           
 					document.getElementById(proId).innerHTML=quantity+count
 
-					console.log('1 : ',document.getElementById(proId).innerHTML=quantity+count)
+					
 					document.getElementById(productId).innerHTML=(quantity+count)*price
-					console.log('2 : ',document.getElementById(productId).innerHTML=(quantity+count)*price)
+					
 					document.getElementById('grand').innerHTML = response.GrandTotal
-					{{!-- location.reload() --}}
+					
 				}
 			}
 			

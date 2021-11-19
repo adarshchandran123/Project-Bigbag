@@ -71,6 +71,8 @@ for(var i=7; i>0; i--){
 }
 sevendays.reverse()
 
+console.log('rrrr',sevendays);
+
 
 var sevendaysReport=[]
 
@@ -82,15 +84,15 @@ for(key in sevendays){
 }
 
 
-console.log('the date',sevendays);
+
  
-console.log('this is the result  ',sevendaysReport);
+
 
 
 
 
   let payment=[paymentMethod.COD,paymentMethod.Razorpay,paymentMethod.Paypal]
-  console.log('payyyment',payment);
+
   
   let totalOrder=[allorderStatus.totalOrder]
   
@@ -326,7 +328,7 @@ router.get('/change_orderStatus/',adminLoginHelper, (req,res)=>{
     res.redirect('/admin/OrderList')
 
   }).catch((error)=>{
-    console.log('order error==',error);
+   res.render("404")
   })
 
 
@@ -374,7 +376,7 @@ router.get('/report',adminLoginHelper, async(req,res)=>{
 
 })
 
-router.get('/Add_Coupon',async(req,res)=>{
+router.get('/Add_Coupon',adminLoginHelper,async(req,res)=>{
 
   let allcoupon=await userHelpers.findAllcoupon()
   let currentDate=new Date().toISOString().slice(0,10)
@@ -401,7 +403,7 @@ router.post('/addcoupon',(req,res)=>{
   
 })
 
-router.get('/deletecoupon/:id', (req,res)=>{
+router.get('/deletecoupon/:id',adminLoginHelper, (req,res)=>{
   
   userHelpers.DeleteCoupon(req.params.id).then((response)=>{
 
@@ -410,7 +412,7 @@ router.get('/deletecoupon/:id', (req,res)=>{
 })
 
 
-router.get('/salesReport',async(req,res)=>{
+router.get('/salesReport',adminLoginHelper,async(req,res)=>{
 
  let BuynowsalesReport=await userHelpers.BuynowFindSalesReport()
 
@@ -425,12 +427,12 @@ array.sort((a,b)=>{
 })
 
 
-console.log('qqqqooo00000',array);
+
   res.render('admin/Sales_Report',{admin:true,array,currentDate})
 })
 
 
-router.get('/ProductOffer',async(req,res)=>{
+router.get('/ProductOffer',adminLoginHelper,async(req,res)=>{
 
   let product=await productHelpers.getAllProduct()
 
@@ -460,7 +462,7 @@ router.post('/submitproductOffer',(req,res)=>{
 })
 
 
-router.get('/DeleteProductOffer/:id/:productName',(req,res)=>{
+router.get('/DeleteProductOffer/:id/:productName',adminLoginHelper,(req,res)=>{
 
   productHelpers.DeleteProductOffer(req.params.id,req.params.productName).then(()=>{
 
@@ -473,7 +475,7 @@ router.get('/DeleteProductOffer/:id/:productName',(req,res)=>{
 
 
 
-router.get('/CategoryOffer',async(req,res)=>{
+router.get('/CategoryOffer',adminLoginHelper,async(req,res)=>{
   
 
   let productCategory=await userHelpers.findCategory()
@@ -514,7 +516,7 @@ router.post('/submitCategoryOffer',async(req,res)=>{
 })
 
 
-router.get('/DeleteCategoryOffer/:id/:category',async(req,res)=>{
+router.get('/DeleteCategoryOffer/:id/:category',adminLoginHelper,async(req,res)=>{
 
 let DeleteCategoryOffer=await productHelpers.DeleteCategoryOffer(req.params.id,req.params.category)
 
@@ -535,7 +537,7 @@ DeleteCategoryOffer.map((productdetail)=>{
 })
 
 
-router.get('/productStockReport',async(req,res)=>{
+router.get('/productStockReport',adminLoginHelper,async(req,res)=>{
 
  let limitedStock=await productHelpers.findLimitedStock()
 
@@ -607,7 +609,7 @@ let allOrders=await userHelpers.getAllOrders()
 })
 
 
-router.get('/Add_Ads',async(req,res)=>{
+router.get('/Add_Ads',adminLoginHelper,async(req,res)=>{
 
   let CategoryOffer=await productHelpers.findCategoryOffers()
   
@@ -637,7 +639,7 @@ router.post('/add_Adds1',(req,res)=>{
 
 
 
-router.get('/View_Ads',async(req,res)=>{
+router.get('/View_Ads',adminLoginHelper,async(req,res)=>{
 
   let ADSCategory=await userHelpers.find_ADS_details()
   

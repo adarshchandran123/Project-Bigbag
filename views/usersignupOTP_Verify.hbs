@@ -26,21 +26,7 @@
 
       <div style="padding-top: 10px;" class="wrapper">
         <div class="card">
-          {{!-- <form style="" action="/signupOTP" id="valid5" method="POST" class="d-flex flex-column">
-            
-            <div style="color: #961010;" class="d-flex align-items-center input-field my-3 mb-5">
-              <span class="far fa-user p-2"></span>
-              <input type="number" placeholder="Please Enter OTP " name="otp" class="form-control"/>
-              <input type="hidden" name="mobile" value="{{mobileNum}}">
-            </div>
-            
-            
-            
-            <div class="m-auto">
-              <input type="submit" value="Submit" class="btn btn-primary" />
-            </div>
-           
-          </form> --}}
+
 
           <form action="/signupOTP" id="valid27"  method="POST" class="digit-group" data-group-name="digits" data-autosubmit="false" autocomplete="off">
 	<div style="display: flex; justify-content: center">
@@ -174,7 +160,7 @@ body {
     window.setTimeout(setDisabled, 10000);
   }
   function resendOTP(mobileNum){
-    location.href = '/resend_OTP_signUp'
+    location.href ='/resend_OTP_signUp'
   }
 
 </script>
@@ -209,10 +195,10 @@ body {
       
     },
     messages:{
-      digit_1:"Enter OTP",
-	  digit_2:"Enter OTP",
-	  digit_3:"Enter OTP",
-	  digit_4:"Enter OTP",
+    digit_1:" ",
+	  digit_2:" ",
+	  digit_3:" ",
+	  digit_4:" ",
      
     }
   })
@@ -249,29 +235,3 @@ body {
 
 </script>
 
-
-{{!-- <script>
-  var count = 10
-  function counter() {
-    document.getElementById("counter").innerHTML = `<span>Resend New OTP in: ${count}s</span>`
-    count = count - 1;
-    if (count >= 0) {
-      setTimeout(counter, 1000)
-    }
-  }
-    
-  //How remove the disalbed attribute to a button
-  function setDisabled() {
-    
-    document.getElementById('resendButton').disabled = false
-  }
-  
-  window.onload = counter();
-  window.onload = function () {
-    window.setTimeout(setDisabled, 10000);
-  }
-  function resendOTP(countryCode,mobileNumber){
-    location.href = '/resend_OTP_CHANGEPASSWORD'
-  }
-
-</script> --}}

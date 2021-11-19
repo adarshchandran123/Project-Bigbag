@@ -42,23 +42,17 @@ module.exports={
     doSignup:(userData)=>{
         return new Promise(async(resolve,reject)=>{
             var checkEmail = await db.get().collection(collection.USER_COLLECTION).findOne({email:userData.email})
-            console.log("Check email");
+           
             var checkMobile =await db.get().collection(collection.USER_COLLECTION).findOne({mobile:userData.mobile})
     
             if(checkEmail == null && checkMobile == null){ 
                 resolve(response)
             
-        //         userData.password=await bcrypt.hash(userData.password,10)
-        //    var details = await db.get().collection(collection.USER_COLLECTION).insertOne(userData)
-        //    var data = await db.get().collection(collection.USER_COLLECTION).findOne({_id:details.insertedId})
-        //    console.log("enterd in database");
-           
-        //    resolve(data)
-            
+     
             }
             else{
         
-           console.log("email already used");
+          
            
            resolve(false)
         }
@@ -73,7 +67,7 @@ module.exports={
             userdetail.password=await bcrypt.hash(userdetail.password,10)
            var details = await db.get().collection(collection.USER_COLLECTION).insertOne(userdetail)
            var data = await db.get().collection(collection.USER_COLLECTION).findOne({_id:details.insertedId})
-           console.log("enterd in ");
+          
            
            resolve(data)
 
@@ -97,18 +91,18 @@ module.exports={
                 bcrypt.compare(userData.password,user.password).then((status)=>{
                    
                     if(status){
-                        console.log("login success"); 
+                       
                         response.user=user
                         response.status=true
-                        console.log(response)
+                        
                         resolve(response)
                     }else{
-                        console.log("login failed");
+                        
                         resolve({status:false})
                     }
                 })
             }else{
-                console.log("login error");
+               
                 resolve({status:false})
             }
 
@@ -120,7 +114,7 @@ module.exports={
             let response={}
             let user=await db.get().collection(collection.USER_COLLECTION).findOne({mobile:detail.mobile,countryCode:detail.countryCode})
             if(user){
-                console.log('numberiiiiiii==',user)
+               
                 response.user=user
                 response.status=true
                 resolve(response)
@@ -140,11 +134,11 @@ module.exports={
     },
 
     blockedUser:(userId)=>{
-        console.log('user111==',userId);
+      
         return new Promise(async(resolve,reject)=>{
            var BLOCK_USER = await db.get().collection(collection.USER_COLLECTION).update({_id:objectId(userId)},
                 {$set:{block:'false'}})
-                console.log('rrrr=',BLOCK_USER);
+               
                 resolve(BLOCK_USER)
             
             
@@ -168,11 +162,11 @@ module.exports={
     findNumber:(userNum)=>{
         return new Promise(async(resolve,reject)=>{
             userNumber=await db.get().collection(collection.USER_COLLECTION).findOne({mobile:userNum.mobile,countryCode:userNum.countryCode})
-            console.log('usernumber==',userNumber);
+            
             if(userNumber){
                 resolve(userNumber)
             }else{
-                console.log('falsss');
+            
                 resolve(false)
             }
         })
@@ -196,8 +190,8 @@ module.exports={
     },
 
     addToCart:(proId,userId,price,productdetail)=>{
-        console.log('frrrrfr==',proId)
-        console.log('jhjhj==',productdetail)
+       
+       
        
         let proObj={
             item:objectId(proId),
@@ -219,7 +213,7 @@ module.exports={
             const userCart=await db.get().collection(collection.CART_COLLECTION).findOne({user:objectId(userId)})
             if(userCart){
                 let proExist=userCart.products.findIndex(product=> product.item==proId)
-                console.log('rtrt=',proExist)
+                
                 if(proExist != -1){
                 db.get().collection(collection.CART_COLLECTION)
                 .updateOne({user:objectId(userId),'products.item':objectId(proId)},
@@ -249,7 +243,7 @@ module.exports={
                     products:[proObj]
                 }
                 db.get().collection(collection.CART_COLLECTION).insertOne(cartObj).then((response)=>{
-                    console.log('fffff')
+                   
                     resolve(response)
                 })
             }
@@ -298,11 +292,7 @@ module.exports={
                 
             ]).toArray()
            
-            // if(cartItems){
-            //     resolve(cartItems)
-            // }else{
-            //     resolve(false)
-            // }
+
             
             if (cartItems[0]) {
                 for (key in cartItems){
@@ -383,7 +373,7 @@ module.exports={
         return new Promise(async(resolve,reject)=>{
            var BLOCK_USER = await db.get().collection(collection.USER_COLLECTION).update({_id:objectId(userId)},
                 {$set:{block:'true'}})
-                console.log('rrrr=',BLOCK_USER)
+               
                 resolve(BLOCK_USER)
             
             
@@ -527,7 +517,7 @@ module.exports={
 
         return new Promise(async(resolve,reject)=>{
             let cartProduct=await db.get().collection(collection.CART_COLLECTION).findOne({user:objectId(userId)})
-           console.log('mm....llll.....===',cartProduct);
+           
             resolve(cartProduct.products)
             
         })
@@ -535,7 +525,7 @@ module.exports={
     },
 
     getuserOrders:(userId)=>{
-       console.log('check',userId);
+       
         return new Promise(async(resolve,reject)=>{
             let userorders=await db.get().collection(collection.ORDER_COLLECTION).find({userId:objectId(userId)}).sort({date:-1}).toArray()
            
@@ -610,10 +600,10 @@ module.exports={
               };
               instance.orders.create(options, function(err, order) {
                   if(err){
-                      console.log('hjhj==',err)
+                      
                   }else{
 
-                    console.log('tytytytyt==',order)
+                  
                     resolve(order)
 
                   }
@@ -719,7 +709,7 @@ module.exports={
     BuynowPlaceOrder:(order,orderproduct,productprice)=>{
 
         let buynowproductprice=parseInt(productprice)
-        console.log('ooooooooooooooooooooooooooooooooo',orderproduct)
+       
         return new Promise(async(resolve,reject)=>{
             
             
@@ -772,8 +762,7 @@ module.exports={
 
            let detail=await db.get().collection(collection.ORDER_COLLECTION).find({_id:objectId(orderId)}).toArray()
 
-                console.log('xxxxxxxxxxzzzzzzzz==',detail);
-                console.log('');
+ 
                 resolve(detail[0])
 
 
@@ -785,7 +774,7 @@ module.exports={
 
         return new Promise(async(resolve,reject)=>{
             let order=await db.get().collection(collection.ORDER_COLLECTION).find({_id:objectId(orderId)}).toArray()
-            console.log('ggggggppppppp',order);
+            
             resolve(order[0])
             
         })
@@ -799,9 +788,6 @@ module.exports={
 
             let invoiceDetails=await db.get().collection(collection.ORDER_COLLECTION).find({_id:objectId(orderId)}).toArray()
             
-            console.log('_____++++++++++++',invoiceDetails);
-            
-        
             resolve(invoiceDetails[0])
 
 
@@ -874,21 +860,13 @@ module.exports={
                 let userwishlist=await db.get().collection(collection.WISH_LIST_COLLECTION).insertOne(wishlistObj)
 
                 resolve(userwishlist)
-                console.log('aaaaaaaaaaaaaaaa===',userwishlist)
+               
             }else{
-            //    let wishlist={
-            //        productIn:false
-            //    }
-            //    console.log('xxxxxxxxxxxxxxx==',wishlist)
+
                 resolve(false)
             }
 
 
-
-            
-
-            
-            
 
         })
 
@@ -932,7 +910,7 @@ module.exports={
             
 
             if(checkorder.mode == 'cart'){
-                console.log('caaarrrttt');
+              
                 db.get().collection(collection.ORDER_COLLECTION).updateOne({_id:objectId(orderId), products:{$elemMatch:{item:objectId(proId)}}},
                 {
                     $set:{
@@ -944,7 +922,7 @@ module.exports={
                 })
 
             }else if(checkorder.mode == 'buyNow'){
-                console.log('dddddddddddddddd');
+                
                 db.get().collection(collection.ORDER_COLLECTION).updateOne({_id:objectId(orderId)},{$set:{status:statusUpdate}}).then((orderId)=>{
                     resolve(orderId)
                 })
@@ -1085,7 +1063,7 @@ module.exports={
                 }
             ]).toArray()
 
-            console.log('///////;;;//;;/;/;===',buyrevenueTotal);
+          
             if(buyrevenueTotal[0]){
 
             resolve(buyrevenueTotal[0].buynowTotal)
@@ -1106,7 +1084,7 @@ module.exports={
         return new Promise(async(resolve,reject)=>{
             let category=await db.get().collection(collection.CATEGORY_COLLECTION).find().count()
 
-            console.log('qqqqqqqq===',category)
+          
             resolve(category)
 
         })
@@ -1114,7 +1092,7 @@ module.exports={
 
     cartStockupdate:(products)=>{
        
-        console.log('xxxxxxxxx====',products)
+       
         return new Promise((resolve,reject)=>{
             db.get().collection(collection.PRODUCT_COLLECTION).updateOne({_id:objectId(products.item)},{$inc:{qty:-products.quantity}}).then(()=>{
                 resolve()
@@ -1350,7 +1328,7 @@ module.exports={
             count.totalPlaced = totalPlaced
             count.totalShipped = totalShipped
 
-            console.log('kkkkkk==',count);
+           
             resolve(count)
             
         })
@@ -1369,7 +1347,7 @@ module.exports={
             payment.Paypal=Paypal
 
             resolve(payment)
-            console.log('/===========000000==',payment)
+           
         })
 
     },
@@ -1388,7 +1366,7 @@ module.exports={
 
             }else{
                 let couponAlreadyUsed=true
-                console.log('################',couponAlreadyUsed)
+               
                 resolve(false)
             }
 
@@ -1416,14 +1394,14 @@ module.exports={
     },
 
     BuyNowcheckingCouponExist:(couponCode,productprice,userId)=>{
-        console.log('userid checckiiing      =',userId)
+       
         return new Promise(async(resolve,reject)=>{
             let coupon =await db.get().collection(collection.COUPON_COLLECTION).findOne({couponName:couponCode})
             
             if(coupon){
                 let checkingalreadyUsingCoupon=await db.get().collection(collection.ORDER_COLLECTION).findOne({userId:objectId(userId),coupon:couponCode})
 
-                console.log('<<<<<<<<<<[[[<<<<<<==',checkingalreadyUsingCoupon)
+              
                 if(checkingalreadyUsingCoupon == null){
 
                     var couponSuccess = {}
@@ -1464,7 +1442,7 @@ module.exports={
             if(coupon){
                 let checkingalreadyUsingCoupon=await db.get().collection(collection.ORDER_COLLECTION).findOne({userId:objectId(userId),coupon:couponCode})
 
-                console.log('<<<<<<<<<<[[[<<<<<<==',checkingalreadyUsingCoupon)
+               
                 if(checkingalreadyUsingCoupon == null){
 
                     var couponSuccess = {}
@@ -1533,7 +1511,7 @@ module.exports={
     FindUserOrderedProducts:(userId)=>{
         return new Promise(async(resolve,reject)=>{
             let userorderedProduct=await db.get().collection(collection.ORDER_COLLECTION).find({userId:objectId(userId)}).sort({date:-1}).limit(12).toArray()
-            console.log('hhhhhhh[[[[[[[[[[[[[[==',userorderedProduct)
+           
             resolve(userorderedProduct)
 
         })
@@ -1541,7 +1519,7 @@ module.exports={
 
 
     SearchDatas:(searchData)=>{
-        console.log('%%%%%%%%%%%%%%%',searchData);
+      
        
         
         return new Promise(async(resolve,reject)=>{
@@ -1551,10 +1529,7 @@ module.exports={
 
                 let result=await db.get().collection(collection.PRODUCT_COLLECTION).find({ $text: { $search: searchData } }).toArray()
 
-           
-           
-
-           console.log('---------------',result)
+          
            resolve(result)
 
         })
@@ -1664,10 +1639,10 @@ generatePaypal: (orderId, totalPrice) => {
         };
         paypal.payment.create(create_payment_json, function (error, payment) {
             if (error) {
-                console.log('🦈🦈🦈🦈🦈 The error in payement : ', error.response.details)
+               
                 reject(false);
             } else {
-                console.log('🦠🦠🦠🦠🦠🦠🦠 : ', payment.transactions[0].item_list.items[0]);
+               
                 resolve(true)
             }
         });
@@ -1675,11 +1650,11 @@ generatePaypal: (orderId, totalPrice) => {
 },
 
 convertAmount : (amount)=>{
-    console.log('0111',amount)
+   
     return new Promise(async(resolve,reject)=>{
         amount = parseInt(amount)
         axios.get(`http://apilayer.net/api/live?access_key=${ACCESS_KEY}&currencies=INR`).then(response => {
-          console.log('ddddddddddddddddddddddddddddddddddddddddddddddd',response)
+         
             amount = amount/response.data.quotes.USDINR
 
           
@@ -1732,10 +1707,6 @@ find7daysSalesReport:(day)=>{
         var totalsales=buynowsales+totalcartsales
        
 
-        // var totalSalesreport={}
-
-        // totalSalesreport.date=day
-        // totalSalesreport.totalsales=totalsales
 
         resolve(totalsales)
 

@@ -42,26 +42,26 @@
           {{/if}}
 
 
-            <table class="table" style="width: 60%; border: solid;  1px ">
+            <table class="table" style="background-color: #250000; width: 60%; ">
   <thead>
-    <tr>
-      <th scope="col">No</th>
-      <th scope="col">Category</th>
-      <th scope="col">Offer</th>
-      <th scope="col">Offer Starting <br>Date</th>
-      <th scope="col">Limit</th>
-      <th scope="col"></th>
+    <tr style="border: #805c5c solid;  1px">
+      <th style="color: white; font-size: large; font-weight: bolder;" scope="col">No</th>
+      <th style="color: white; font-size: large; font-weight: bolder;" scope="col">Category</th>
+      <th style="color: white; font-size: large; font-weight: bolder;" scope="col">Offer</th>
+      <th style="color: white; font-size: large; font-weight: bolder;" scope="col">Offer Starting <br>Date</th>
+      <th style="color: white; font-size: large; font-weight: bolder;" scope="col">Limit</th>
+      <th style="color: white; font-size: large; font-weight: bolder;" scope="col"></th>
     </tr>
   </thead>
   <tbody>
     {{#each CategoryOffer}}
-    <tr>
-      <th scope="row">{{add @index '1'}}</th>
-      <td>{{this.category}}</td>
-      <td>{{this.offer}}</td>
-      <td>{{this.offerStartingDate}}</td>
-      <td>{{this.offerLimit}}</td>
-      <td><a class="btn btn-outline-primary" href="/admin/DeleteCategoryOffer/{{this._id}}/{{this.category}}">Delete</a></td>
+    <tr style=" border: #805c5c solid;  1px">
+      <th style="color: white; font-size: large; font-weight: bolder;" scope="row">{{add @index '1'}}</th>
+      <td style="color: white; font-weight: bolder;">{{this.category}}</td>
+      <td style="color: white; font-weight: bolder;">{{this.offer}}</td>
+      <td style="color: white; font-weight: bolder;">{{this.offerStartingDate}}</td>
+      <td style="color: white; font-weight: bolder;">{{this.offerLimit}}</td>
+      <td><a class="btn btn-outline-primary" style="font-weight: bolder; font-size: large;" href="/admin/DeleteCategoryOffer/{{this._id}}/{{this.category}}">Delete</a></td>
     </tr>
     {{/each}}
   </tbody>
