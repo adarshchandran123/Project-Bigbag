@@ -1,80 +1,49 @@
 
 <div class="container">
     <div class="row">
+        <div class="col-12" style="margin-top: 100px;">
 
-
-        <div class="col-md-12 col-sm-12 ">
-                <div class="billing-address">
-                    <h4 style="font-weight: bolder; margin-top: 50px; margin-bottom: 30px;" class="checkout-box-title">NEW ADDRESS</h4>
-
-
-
-                     {{#each userAddress}}
-                    <div style="float: left; width:auto; height: 200px;  margin-left: 20px; " class="col-sm-12 col-md-2 pt-2  text-center">
-                        <a class="badge btn-outline-primary" style="font-size: medium;text-align: center;" href="/EditAddress/{{this._id}}">Edit</a>
-                        
-                        <a class="badge btn-outline-danger" style="text-align: center;" href="/DeleteUserNewAddress/{{this._id}}">
-
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
-  <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
-</svg>
-                        </a>
-                        <div style="text-align: left;">
-                        <label for="">
-                            <h4>Address</h4>
-                            {{this.fname}} &nbsp; {{this.lname}} <br>
-                            {{this.house_name}} <br>
-                            {{this.address1}} <br>
-                            {{this.address2}}
-
-                        </label>
-                        </div>
-                                        
-                                    </div>
-                        {{/each}}
-
-                        <br><br><br><br><br><br><br><br><br>
-                        <hr>
+            <p style="margin-bottom: 60px; font-size: larger; font-weight: bolder; text-align: center;">EDIT ADDRESS</p>
 
 
 
-
-                    <div class="checkout-billing-adress-box col-12">
-                        <form action="/Addnewaddress" id="valid7" method="POST">
-                        <div style="margin-top: 50px;" class="billing-address-input clearfix">
+                                <div class="checkout-billing-adress-box">
+                        <form action="/edit_address" id="valid30" method="POST">
+                        <div class="billing-address-input clearfix">
                             <label>FIRST NAME *</label>
-                            <input id="fname" name="fname" type="text">
+                            <input id="fname" name="fname" value="{{addressdetails.fname}}" type="text">
                         </div>
-						
+						{{!-- <input type="text" name="userId" id="" value="{{user._id}}" hidden> --}}
+                        {{!-- <input type="text" name="proId" value="{{orderproduct._id}}" hidden> --}}
                         <div class="billing-address-input clearfix">
                             <label>LAST NAME *</label>
-                            <input id="lname" name="lname" type="text">
+                            <input id="lname" name="lname" value="{{addressdetails.lname}}" type="text">
                         </div>
                         <div class="billing-address-input clearfix">
                             <label>HOUSE NAME *</label>
-                            <input id="house_name" name="house_name" type="text">
+                            <input id="house_name" name="house_name" value="{{addressdetails.house_name}}" type="text">
                         </div>
                         <div class="billing-address-input clearfix">
                             <label>ADDRESS *</label>
-                            <input id="address1" name="address1" type="text" placeholder="Street Address">
-                            <input id="address2" name="address2" type="text" placeholder="Fashin, suite, unite ect (optinal)">
+                            <input id="address1" name="address1" value="{{addressdetails.address1}}" type="text" placeholder="Street Address">
+                            <input id="address2" name="address2" value="{{addressdetails.address2}}" type="text" placeholder="Fashin, suite, unite ect (optinal)">
                         </div>
                         <div class="billing-address-input clearfix">
                             <label>TOWN / CITY *</label>
-                            <input id="town_city" name="town_city" type="text">
+                            <input id="town_city" value="{{addressdetails.town_city}}" name="town_city" type="text">
                         </div>
                         <div class="billing-address-input clearfix">
                             <label>STATES</label>
-                            <input id="country_state" name="country_state" type="text">
+                            <input id="country_state" value="{{addressdetails.country_state}}" name="country_state" type="text">
                         </div>
                         <div class="billing-address-input clearfix">
                             <label>POSTCODE *</label>
-                            <input id="pincode_zip" name="pincode_zip" type="number">
+                            <input id="pincode_zip" value="{{addressdetails.pincode_zip}}" name="pincode_zip" type="number">
                         </div>
                         
                         <div class="billing-address-input clearfix" style="margin-bottom:0px">
                             <label>PHONE *</label>
-                            <input id="phone" name="phone" type="tel">
+                            <input id="phone" value="{{addressdetails.phone}}" name="phone" type="tel">
                         </div>
 
                         
@@ -85,13 +54,12 @@
                         </form>
                        
                     </div>
-                </div>
-            </div>
 
-
+        </div>
     </div>
-
 </div>
+
+
 
 
 <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.js"></script>
@@ -377,13 +345,14 @@
 <script>
 
        $(document).ready(function(){
-  $("#valid7").validate({
+  $("#valid30").validate({
     rules:{
       fname:{
         required:true,
         minlength:3
 
-      },
+      }   
+      ,
       lname:{
         required:true,
         minlength:1,
@@ -392,20 +361,17 @@
       house_name:{
         required:true,
         minlength:3,
-        maxlength:20,
     
         
       },
       address1:{
         required:true,
-        minlength:3,
-        maxlength:20
+        minlength:3
         
       },
       address2:{
         required:true,
-        minlength:3,
-        maxlength:20
+        minlength:3
         
       },
       town_city:{
@@ -425,8 +391,11 @@
         required:true,
         minlength:10,
         maxlength:10
-      }
+      },
+      payment:{
+        required:true
 
+      }
     },
     messages:{
       fname:"Enter  Your FirstName",
@@ -437,8 +406,8 @@
       town_city:"Enter Your City",
       country_state:"Enter Your State",
       pincode_zip:"Enter pincode",
-      phone:"Enter Mobile number"
-      
+      phone:"Enter Mobile number",
+      payment:"Select anyone"
       
 
 
@@ -451,12 +420,4 @@
 })
 
       </script>
-
-
-
-
-
-
-
-
 

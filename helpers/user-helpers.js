@@ -824,13 +824,44 @@ module.exports={
     },
     
     
-    DeleteUserNewAddress:(userId)=>{
+    DeleteUserNewAddress:(addsId)=>{
         return new Promise((resolve,reject)=>{
-            db.get().collection(collection.ADDRESS_COLLECTION).deleteOne({userId:userId}).then(()=>{
+            db.get().collection(collection.ADDRESS_COLLECTION).deleteOne({_id:objectId(addsId)}).then(()=>{
                 resolve()
             })
         })
 
+    },
+    findaddresDetails:(addsId)=>{
+        return new Promise((resolve,reject)=>{
+            db.get().collection(collection.ADDRESS_COLLECTION).findOne({_id:objectId(addsId)}).then((details)=>{
+                
+                resolve(details)
+            })
+        })
+
+    },
+    Edit_address:(addsId,addressdetails)=>{
+        return new Promise((resolve,reject)=>{
+            console.log('www',addressdetails)
+
+            db.get().collection(collection.ADDRESS_COLLECTION).updateOne({_id:objectId(addsId)},{
+                $set:{
+                    fname:addressdetails.fname,
+                    lname:addressdetails.lname,
+                    house_name:addressdetails.house_name,
+                    address1:addressdetails.address1,
+                    address2:addressdetails.address2,
+                    town_city:addressdetails.town_city,
+                    country_state:addressdetails.country_state,
+                    pincode_zip:addressdetails.pincode_zip,
+                    phone:addressdetails.phone
+                }
+            }).then(()=>{
+                resolve()
+            })
+
+        })
     },
 
     addtoWishlist:(proId,userId)=>{
@@ -938,10 +969,18 @@ module.exports={
     AddCategory:(detail)=>{
 
         return new Promise(async(resolve,reject)=>{
+            var checkcategory=await db.get().collection(collection.CATEGORY_COLLECTION).findOne({category:detail.category})
 
-            let categoryadded=await db.get().collection(collection.CATEGORY_COLLECTION).insertOne(detail)
+            if(checkcategory == null){
+                let categoryadded=await db.get().collection(collection.CATEGORY_COLLECTION).insertOne(detail)
 
-            resolve(categoryadded)
+                resolve(categoryadded)
+
+            }else{
+                resolve(false)
+            }
+
+
 
         })
 

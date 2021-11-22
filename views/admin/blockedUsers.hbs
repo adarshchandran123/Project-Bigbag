@@ -36,11 +36,11 @@
     
       <td>
         {{#eq this.block 'true'}}
-        <a href="/admin/blockedUser/{{this._id}}" onclick="return confirm('Are you want to Block {{this.username}}')" class="btn btn-danger">Block</a>
+        <a href="/admin/blockedUser/{{this._id}}"  class="btn btn-danger">Block</a>
         
         
         {{else}}
-        <a href="/admin/unblockedUser/{{this._id}}" onclick="return confirm('Are you want to UnBlock {{this.username}}')" class="btn btn-success">UnBlock</a>
+        <a href="/admin/unblockedUser/{{this._id}}"  class="btn btn-success">UnBlock</a>
         {{/eq}}
       </td>
     </tr>   

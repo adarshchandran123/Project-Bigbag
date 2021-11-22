@@ -31,7 +31,7 @@
 
           <div class="mt-5">
             <select style="color: white; font-size: larger;"   class="form-select dark-edition"  name="category">
-              <option value="{{productdetail.category}}" selected="true" disabled>{{productdetail.category}}</option>
+              <option value="{{productdetail.category}}" selected="true" >{{productdetail.category}}</option>
               {{#each productCategory}}
               <option value="{{this.category}}">{{this.category}}</option>
               {{/each}}
@@ -43,7 +43,7 @@
             <label
               for="exampleInput2"
               class="form-label1"
-            >Discription</label>
+            >Short Discription</label>
             <input
               type="text"
                 name="discription"
@@ -53,8 +53,16 @@
             />
           </div>
 
+          <label class="form-label1 mt-5" for="floatingTextarea2">Full Discription</label>
 
-          <div class="mt-5">
+          <div class="form-floating">
+           
+          <textarea  class="form-control" name="Longdiscription" id="floatingTextarea2"  style="height: 100px">{{productdetail.Longdiscription}}</textarea>
+  
+          </div>
+
+
+          {{!-- <div class="mt-5">
             <label
               for="exampleInput2"
               class="form-label1"
@@ -66,7 +74,7 @@
               class="form-control"
               id="exampleInputPass"
             />
-          </div>
+          </div> --}}
 
 
           <div class="mt-5">
@@ -82,21 +90,6 @@
               id="exampleInputPas"
             />
           </div>
-
-
-          {{!-- <div class="mt-5">
-            <label
-              for="exampleInput2"
-              class="form-label1"
-            >Date</label>
-            <input
-              type="date"
-                name="date"
-                    value="{{productdetail.date}}"
-              class="form-control"
-              id="exampleInputPasswor"
-            />
-          </div> --}}
 
 
           <div class="mt-5">
@@ -214,10 +207,9 @@
         required:true,
         minlength:5,
       },
-      oldprice:{
+      Longdiscription:{
         required:true,
-        minlength:1
-        
+        minlength:20
       },
       newprice:{
         required:true,
@@ -237,7 +229,7 @@
     messages:{
       productName:"enter  product name",
       discription:"Enter Discription",
-      oldprice:"Enter Oldprice",
+      Longdiscription:"Enter Discription",
       newprice:"Enter Newprice",
       date:"Enter Date",
       qty:"Enter QTY"

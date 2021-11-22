@@ -4,22 +4,41 @@ const { response } = require("express");
 var objectId=require('mongodb').ObjectId
 
 module.exports = {
-  addProduct: async (product) => {
+  addProduct: (product) => {
+
+    return new Promise(async(resolve,reject)=>{
+
+      var checkproduct=await db.get().collection(collection.PRODUCT_COLLECTION).findOne({productName:product.productName})
+
+    if(checkproduct == null){
+
+      product.date= new Date()
+
+    
+
+      product.qty=parseInt(product.qty)
+  
+      product.newprice=parseInt(product.newprice)
+      product.MRP=product.newprice
+  
+      
+      const data = await db.get().collection(collection.PRODUCT_COLLECTION).insertOne(product);
+      
+       
+      resolve(data.insertedId)
+
+    }else{
+      resolve(false)
+    }
    
 
-    product.date= new Date()
+
+
+    })
 
     
 
-    product.qty=parseInt(product.qty)
 
-    product.newprice=parseInt(product.newprice)
-
-   
-    
-    const data = await db.get().collection(collection.PRODUCT_COLLECTION).insertOne(product);
-    
-    return data.insertedId
   },
 
 
@@ -32,9 +51,18 @@ module.exports = {
 
   },
   deleteProduct:(proId)=>{
-    return new Promise((resolve,reject)=>{
+    return new Promise(async(resolve,reject)=>{
+
+      var deleteFromWishlist=await db.get().collection(collection.WISH_LIST_COLLECTION).deleteMany({proId:objectId(proId)})
+      
+      var deleteFromCart=await db.get().collection(collection.CART_COLLECTION).update({},{
+        $pull:{products:{item:objectId(proId)}}
+      })
+      
       db.get().collection(collection.PRODUCT_COLLECTION).deleteOne({_id:objectId(proId)}).then((response)=>{
+
        
+
         resolve(response)
       })
     })
@@ -65,8 +93,8 @@ module.exports = {
         {$set:{productName:proDetails.productName,
               category:proDetails.category,
               discription:proDetails.discription,
-              oldprice:proDetails.oldprice,
               newprice:proDetails.newprice,
+              Longdiscription:proDetails.Longdiscription,
               date:new Date(),
               qty:proDetails.qty,
 
@@ -135,45 +163,49 @@ UserCancellProduct:(proId,orderId,quantity)=>{
 },
 
 AddCategoryOffer:(detail)=>{
-  detail.offer=parseInt(detail.offer)
+  // detail.offer=parseInt(detail.offer)
 
   detail.offerStartingDate=new Date().toISOString().slice(0,10)
 
   
-  
+  console.log('uuuuu',detail);
 
   return new Promise(async(resolve,reject)=>{
 
     let findCategoryOffer=await db.get().collection(collection.CATEGORY_OFFER_COLLECTION).findOne({category:detail.category})
+    let findOfferName=await db.get().collection(collection.CATEGORY_OFFER_COLLECTION).findOne({offerName:detail.offerName})
+    console.log('lllll',findCategoryOffer)
+    console.log('kkkk',findOfferName);
+    if(findCategoryOffer == null && findOfferName == null){
 
-    if(findCategoryOffer == null){
-
-      let offerUpdate=await db.get().collection(collection.PRODUCT_COLLECTION).updateMany({category:detail.category},{
-        $set:{
-          offer:detail.offer
-        }
-      })
+      // let offerUpdate=await db.get().collection(collection.PRODUCT_COLLECTION).updateMany({category:detail.category},{
+      //   $set:{
+      //     offer:detail.offer
+      //   }
+      // })
 
 
 
-      let che=await db.get().collection(collection.WISH_LIST_COLLECTION).updateMany({"wishlist.category":detail.category},{
-        $set:{
-          "wishlist.offer":detail.offer
-        }
-      })
+      // let che=await db.get().collection(collection.WISH_LIST_COLLECTION).updateMany({"wishlist.category":detail.category},{
+      //   $set:{
+      //     "wishlist.offer":detail.offer
+      //   }
+      // })
      
       let findAllCategoryOffers=await db.get().collection(collection.PRODUCT_COLLECTION).find({category:detail.category}).toArray()
 
+      let insertoffer=await db.get().collection(collection.CATEGORY_OFFER_COLLECTION).insertOne(detail)
       
     resolve(findAllCategoryOffers)
       
 
-      let insertoffer=await db.get().collection(collection.CATEGORY_OFFER_COLLECTION).insertOne(detail)
+      
 
       
       
      
     }else{
+      console.log('ithilaaanuuu kayariyathu');
       resolve(false)
     }
     
@@ -182,28 +214,46 @@ AddCategoryOffer:(detail)=>{
 },
 
 
-updateCategoryOfferPrice:(productdetail)=>{
+updateCategoryOfferPrice:(productdetail,offer,offerName)=>{
 
   return new Promise(async(resolve,reject)=>{
-    let percentage=productdetail.offer/100
+    let percentage=offer/100
    
+   
+   
+    var checkAnyOffer=await db.get().collection(collection.PRODUCT_COLLECTION).findOne({productName:productdetail.productName,offer:{$exists:true}})
+
+    if(checkAnyOffer ==null){
+      
+
+      let changeWishlistPrice=await db.get().collection(collection.WISH_LIST_COLLECTION).updateOne({proId:objectId(productdetail._id)},{
+        $set:{
+          "wishlist.offer":offer,
+          "wishlist.offerName":offerName,
+          "wishlist.MRP":productdetail.newprice,
+          "wishlist.newprice":productdetail.newprice-(productdetail.newprice * percentage)
+        }
+      })
+      
+  
+      db.get().collection(collection.PRODUCT_COLLECTION).updateOne({_id:objectId(productdetail._id)},
+      {$set:{
+        offer:offer,
+        offerName:offerName,
+        MRP:productdetail.newprice,
+        newprice:productdetail.newprice-(productdetail.newprice * percentage)
+      }}).then((response)=>{
+        resolve(response)
+      })
 
 
-    let changeWishlistPrice=await db.get().collection(collection.WISH_LIST_COLLECTION).updateOne({proId:objectId(productdetail._id)},{
-      $set:{
-        "wishlist.MRP":productdetail.newprice,
-        "wishlist.newprice":productdetail.newprice-(productdetail.newprice * percentage)
-      }
-    })
-    
+    }else{
+      
+      resolve(false)
+      
+    }
 
-    db.get().collection(collection.PRODUCT_COLLECTION).updateOne({_id:objectId(productdetail._id)},
-    {$set:{
-      MRP:productdetail.newprice,
-      newprice:productdetail.newprice-(productdetail.newprice * percentage)
-    }}).then((response)=>{
-      resolve(response)
-    })
+
 
     
   })
@@ -220,24 +270,15 @@ findCategoryOffers:()=>{
 
 },
 
-DeleteCategoryOffer:(categoryId,category)=>{
+DeleteCategoryOffer:(categoryId,category,offerName)=>{
+
   return new Promise((resolve,reject)=>{
     db.get().collection(collection.CATEGORY_OFFER_COLLECTION).deleteOne({_id:objectId(categoryId)}).then(async(response)=>{
 
-      let removeOffers=await db.get().collection(collection.PRODUCT_COLLECTION).updateMany({category:category},
-        {$unset:{
-          offer:1
-        }})
-
-        let removeOffersFromWishlist=await db.get().collection(collection.WISH_LIST_COLLECTION).updateMany({"wishlist.category":category},
-          {$unset:{
-            "wishlist.offer":1
-          }})
-
         let removeCategory_ADS=await db.get().collection(collection.ADS___COLLECTION).deleteOne({category:category})
 
-      let findprodetails=await db.get().collection(collection.PRODUCT_COLLECTION).find({category:category}).toArray()  
-
+      let findprodetails=await db.get().collection(collection.PRODUCT_COLLECTION).find({category:category,offerName:offerName}).toArray()  
+console.log('check product',findprodetails);
       resolve(findprodetails)
     })
   })
@@ -245,22 +286,42 @@ DeleteCategoryOffer:(categoryId,category)=>{
 },
 
 changeCategoryOfferpriceToMRP:(productdetail)=>{
+  
   return new Promise(async(resolve,reject)=>{
 
-    let changeWishlistPrice=await db.get().collection(collection.WISH_LIST_COLLECTION).updateOne({proId:objectId(productdetail._id)},{
-      $set:{
-        "wishlist.newprice":productdetail.MRP
-      }
-    })
+   
+  
 
-    db.get().collection(collection.PRODUCT_COLLECTION).updateOne({_id:objectId(productdetail._id)},
-    {$set:{
-      newprice:productdetail.MRP
-      
+      let removeOffers=await db.get().collection(collection.PRODUCT_COLLECTION).updateOne({_id:objectId(productdetail._id)},
+        {$unset:{
+          offer:1,
+          offerName:1
+        }})
 
-    }}).then((response)=>{
-      resolve(response)
-    })
+        let removeOffersFromWishlist=await db.get().collection(collection.WISH_LIST_COLLECTION).updateOne({proId:objectId(productdetail._id)},
+          {$unset:{
+            "wishlist.offer":1,
+            "wishlist.offerName":1
+          }})
+
+      let changeWishlistPrice=await db.get().collection(collection.WISH_LIST_COLLECTION).updateOne({proId:objectId(productdetail._id)},{
+        $set:{
+          "wishlist.newprice":productdetail.MRP
+        }
+      })
+  
+      db.get().collection(collection.PRODUCT_COLLECTION).updateOne({_id:objectId(productdetail._id)},
+      {$set:{
+        newprice:productdetail.MRP
+        
+  
+      }}).then((response)=>{
+        resolve(response)
+      })
+
+
+   
+
 
   })
 
@@ -384,7 +445,7 @@ checkCategoryOfferValidity:()=>{
 
     let CheckValidity=await db.get().collection(collection.CATEGORY_OFFER_COLLECTION).find({offerLimit:{$lte:currentDate}}).toArray()
 
-  
+  console.log('check validity',CheckValidity);
     resolve(CheckValidity)
 
   })

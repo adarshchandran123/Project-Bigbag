@@ -9,6 +9,11 @@
           <div style="width: 60%;">
 
         <form action="/admin/add-product" method="POST" id="valid2" enctype="multipart/form-data" >
+
+        {{#if Product_AllreadyUsed}}
+          <p style="color: red; font-size: large; font-weight: bolder;">Product Name Already Used</p>
+        {{/if}}
+
           <div class="mt-5">
             <label for="exampleInput2" class="form-label1">Product Name</label>
             <input
@@ -39,7 +44,7 @@
             <label
               for="exampleInput2"
               class="form-label1"
-            >Discription</label>
+            >Short Discription</label>
             <input
               type="text"
                 name="discription"
@@ -49,18 +54,16 @@
           </div>
 
 
-          <div class="mt-5">
-            <label
-              for="exampleInput2"
-              class="form-label1"
-            >Old Price</label>
-            <input
-              type="number"
-                name="oldprice"
-              class="form-control"
-              id="exampleInputPas"
-            />
+          <label class="form-label1 mt-5" for="floatingTextarea2">Full Discription</label>
+
+          <div class="form-floating">
+           
+          <textarea class="form-control" name="Longdiscription" id="floatingTextarea2" style="height: 100px"></textarea>
+  
           </div>
+
+
+      
 
 
           <div class="mt-5">
@@ -181,19 +184,16 @@
       category:{
         required:true
 
-      }
-      
-        
-      ,
+      },
       discription:{
         required:true,
         minlength:5,
         maxlength:25
       },
-      oldprice:{
+      Longdiscription:{
         required:true,
-        minlength:1
-        
+        minlength:20,
+          
       },
       newprice:{
         required:true,
@@ -222,7 +222,7 @@
       productName:"enter  product name",
       category:"select Category ",
       discription:"Enter Discription",
-      oldprice:"Enter Oldprice",
+      Longdiscription:"Enter Full Details",
       newprice:"Enter Newprice",
       date:"Enter Date",
       qty:"Enter QTY",

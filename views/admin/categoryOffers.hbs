@@ -17,6 +17,8 @@
                       {{/each}}
                       
                     </select><br>
+                    <label for=""> Offer Name</label><br>
+                    <input type="text" name="offerName"><br><br>
 
                     <label for=""> Percentage</label><br>
                     <input type="number" name="offer" placeholder="Offer"><br><br>
@@ -37,16 +39,17 @@
 
           {{#if allreadyUsed}}
 
-        <p style="color: rgb(231, 33, 33); font-weight: bolder; font-size: larger;">Category already used</p> 
+        <p style="color: rgb(231, 33, 33); font-weight: bolder; font-size: larger;">Category or Offer Name already used</p> 
 
           {{/if}}
 
 
-            <table class="table" style="background-color: #250000; width: 60%; ">
+            <table class="table " style="background-color: #250000; width: 60%; ">
   <thead>
     <tr style="border: #805c5c solid;  1px">
       <th style="color: white; font-size: large; font-weight: bolder;" scope="col">No</th>
       <th style="color: white; font-size: large; font-weight: bolder;" scope="col">Category</th>
+      <th style="color: white; font-size: large; font-weight: bolder;" scope="col">Offer Name</th>
       <th style="color: white; font-size: large; font-weight: bolder;" scope="col">Offer</th>
       <th style="color: white; font-size: large; font-weight: bolder;" scope="col">Offer Starting <br>Date</th>
       <th style="color: white; font-size: large; font-weight: bolder;" scope="col">Limit</th>
@@ -58,10 +61,41 @@
     <tr style=" border: #805c5c solid;  1px">
       <th style="color: white; font-size: large; font-weight: bolder;" scope="row">{{add @index '1'}}</th>
       <td style="color: white; font-weight: bolder;">{{this.category}}</td>
+      <td style="color: white; font-weight: bolder;">{{this.offerName}}</td>
       <td style="color: white; font-weight: bolder;">{{this.offer}}</td>
       <td style="color: white; font-weight: bolder;">{{this.offerStartingDate}}</td>
       <td style="color: white; font-weight: bolder;">{{this.offerLimit}}</td>
-      <td><a class="btn btn-outline-primary" style="font-weight: bolder; font-size: large;" href="/admin/DeleteCategoryOffer/{{this._id}}/{{this.category}}">Delete</a></td>
+      <td>
+        
+      
+
+
+        <!-- Button trigger modal -->
+<button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#{{this.offerName}}">
+  Delete
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="{{this.offerName}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" style="font-size: large; font-weight: bolder; color: black;" id="exampleModalLabel">Are You Sure</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+     
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-danger">
+          <a   href="/admin/DeleteCategoryOffer/{{this._id}}/{{this.category}}/{{this.offerName}}">Delete</a>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+      
+      
+      </td>
     </tr>
     {{/each}}
   </tbody>
@@ -95,10 +129,11 @@
         required:true,
         
 
-      }
-      
-        
-      ,
+      },
+      offerName:{
+        required:true,
+        maxlength:15
+      },
       offer:{
         required:true,
         minlength:1,
@@ -112,7 +147,8 @@
     messages:{
       category:"Select category name",
       offer:"Enter Percentage Under 100",
-      offerLimit:"Enter Date Limit"
+      offerLimit:"Enter Date Limit",
+      offerName:"Enter offer Name"
       
 
 

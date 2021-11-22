@@ -44,12 +44,14 @@
 
 <h2 class="title">{{productdetail.productName}}</h2>
 <br>
-<br>
-<p>{{productdetail.discription}}</p>
-<br><br>
 <p style="font-weight: bolder;">{{productdetail.category}}</p>
+<br>
+<p>{{productdetail.discription}}</p><br>
+<p>{{productdetail.Longdiscription}}</p>
+<br><br>
 
-<div class="price mt-1">₹ {{productdetail.newprice}} 
+
+<div style="font-weight: bolder; font-size: larger;" class="price mt-1">₹ {{productdetail.newprice}} 
           
           {{#eq productdetail.newprice productdetail.MRP}}
           
@@ -221,7 +223,7 @@
 
 
 <br>
-
+{{!-- 
 <div class="row">
 			<div class="col-md-9">
 
@@ -251,7 +253,7 @@
 	
 
 	</div> <!-- col.// -->
-</div> <!-- row.// -->
+</div> <!-- row.// --> --}}
 
 
 </div> <!-- container .//  -->

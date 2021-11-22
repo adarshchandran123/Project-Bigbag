@@ -30,7 +30,7 @@ router.get("/",async function (req, res, next) {
 
     checkCategoryOfferValidity.map((categoryDetails)=>{
      
-      productHelpers.DeleteCategoryOffer(categoryDetails._id,categoryDetails.category).then((findprodetails)=>{
+      productHelpers.DeleteCategoryOffer(categoryDetails._id,categoryDetails.category,categoryDetails.offerName).then((findprodetails)=>{
 
         findprodetails.map((productdetail)=>{
 
@@ -618,7 +618,7 @@ router.get('/resend_OTP_forgotOTP_verify',(req,res)=>{
     
   })
  
- res.redirect('OTP_VERIFY')
+ res.redirect('/OTP_VERIFY')
 
 
 
@@ -1135,6 +1135,8 @@ router.post('/EditProfile',(req,res)=>{
       
 
     })
+  }else{
+    res.redirect('/userlogin')
   }
  
 
@@ -1183,15 +1185,46 @@ router.post('/Addnewaddress',(req,res)=>{
 
 
 
-router.get('/DeleteUserNewAddress/:userId',(req,res)=>{
+router.get('/DeleteUserNewAddress/:id',(req,res)=>{
 
-  userHelpers.DeleteUserNewAddress(req.params.userId).then(()=>{
+  userHelpers.DeleteUserNewAddress(req.params.id).then(()=>{
 
     res.redirect('/addNewAddress')
   })
 
   
 })
+
+router.get('/EditAddress/:id',async(req,res)=>{
+
+  if(req.session.loggedIn){
+    let cartcount=null
+    cartcount=await userHelpers.getCartCount(req.session.user._id)
+
+    var addressdetails=await userHelpers.findaddresDetails(req.params.id)
+
+    req.session.addId=req.params.id
+
+    res.render('Edit_Address',{user:true,name: req.session.user.username,cartcount,addressdetails})
+  }else{
+    res.redirect('/userlogin')
+  }
+
+  
+})
+
+router.post('/edit_address',(req,res)=>{
+
+  userHelpers.Edit_address(req.session.addId,req.body).then(()=>{
+
+
+    res.redirect('/addNewAddress')
+  })
+
+  
+})
+
+
 
 
 
@@ -1304,7 +1337,7 @@ router.get('/wishlist',async(req,res)=>{
 
     let showwishlist=await userHelpers.showUserWishlist(req.session.user._id)
 
-    
+    console.log('wishlis',showwishlist);
 
     res.render('user_wishlist',{user:true,name: req.session.user.username,cart,cartcount,showwishlist,productCategory})
 

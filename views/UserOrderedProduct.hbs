@@ -10,6 +10,9 @@
 <p style="font-size: 40px; margin-top: 50px; font-weight: bolder; text-align: center; font-family: 'Acme', sans-serif;">ORDER LIST</p>
 	
 <div class="row">
+
+{{#if userOrderedProducts}}
+
   {{#each userOrderedProducts}}
     
     {{#eq this.mode 'cart'}}
@@ -77,6 +80,23 @@
     {{/eq}}
   
   {{/each }}
+
+  {{else}}
+
+  <center>
+<div style="">
+	<img width="30%" height="auto" src="https://static4.depositphotos.com/1005091/294/i/950/depositphotos_2942464-stock-photo-shoping-cart-sad.jpg" alt="">
+</div>
+</center>
+<h2 style="font-weight: bold; text-align: center; color:#4a5b92; font-size: 100%;">Your Order Product is Empty</h2>
+<div style="display: flex; justify-content: center;">
+<a href="/userAllProduct" style=" width: 200px; margin-top: 30px; margin-bottom: 30px; background-color: #4a5b92; color: white; font-weight: bolder; " class="btn">Continue Shopping</a>
+</div>
+
+
+
+
+  {{/if}}
   
  
 	

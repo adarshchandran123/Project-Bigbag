@@ -172,20 +172,36 @@ router.get("/add-product",adminLoginHelper, async(req, res) => {
 
   let productCategory=await userHelpers.findCategory()
 
-  res.render("admin/add-product", { admin: true,productCategory });
+  res.render("admin/add-product", { admin: true,productCategory,Product_AllreadyUsed:req.session.Product_AllreadyUsed });
+  req.session.Product_AllreadyUsed =false
 });
+
+
 
 router.post("/add-product", (req, res) => {
   
   
   productHelpers.addProduct(req.body).then((id) => {
-   const image1 = req.files.image1
-   const image2 = req.files.image2
-   const image3 = req.files.image3
-   image1.mv('./public/product-image/'+id+'__1.jpg')
-   image2.mv('./public/product-image/'+id+'__2.jpg')
-   image3.mv('./public/product-image/'+id+'__3.jpg')
-   res.redirect('/admin/view-product')
+
+    if(id){
+      console.log('ivide vannu');
+      const image1 = req.files.image1
+      const image2 = req.files.image2
+      const image3 = req.files.image3
+      image1.mv('./public/product-image/'+id+'__1.jpg')
+      image2.mv('./public/product-image/'+id+'__2.jpg')
+      image3.mv('./public/product-image/'+id+'__3.jpg')
+
+      res.redirect('/admin/view-product')
+
+    }else{
+      console.log('else il kayari');
+      req.session.Product_AllreadyUsed =true
+      res.redirect('/admin/add-product')
+    }
+
+
+   
   });
 });
 
@@ -195,6 +211,7 @@ router.get('/view-product',adminLoginHelper, (req,res)=>{
   productHelpers.getAllProduct().then((product)=>{
     
     res.render('admin/view-product',{admin:true,product})
+    
 
   })                       
 
@@ -208,6 +225,7 @@ router.get('/view-product',adminLoginHelper, (req,res)=>{
 router.get('/editProduct/',adminLoginHelper, async(req,res,next)=>{
 
   const productdetail=await productHelpers.getproductdetails(req.query.id)
+  console.log('mmmm',productdetail);
 
   let productCategory=await userHelpers.findCategory()
 
@@ -340,13 +358,20 @@ router.get('/add_category',adminLoginHelper, async(req,res)=>{
   let productCategory=await userHelpers.findCategory()
   
 
-  res.render('admin/Add_Category',{admin:true,productCategory})
+  res.render('admin/Add_Category',{admin:true,productCategory,alreadyUsedcategory:req.session.alreadyUsedcategory})
+  req.session.alreadyUsedcategory=false
 })
 
 router.post('/addCategory',(req,res)=>{
   
 
-  userHelpers.AddCategory(req.body).then(()=>{
+  userHelpers.AddCategory(req.body).then((response)=>{
+
+    if(response){
+
+    }else{
+      req.session.alreadyUsedcategory=true
+    }
 
     res.redirect('/admin/add_category')
   })
@@ -482,20 +507,25 @@ router.get('/CategoryOffer',adminLoginHelper,async(req,res)=>{
   let CategoryOffer=await productHelpers.findCategoryOffers()
   let currentDate=new Date().toISOString().slice(0,10)
 
+  console.log('category offer',CategoryOffer);
   res.render('admin/categoryOffers',{admin:true,productCategory,CategoryOffer,allreadyUsed:req.session.CategoryOfferAlreadyUsed,currentDate})
   req.session.CategoryOfferAlreadyUsed=false
 })
 
 
 router.post('/submitCategoryOffer',async(req,res)=>{
-  
 
+  req.body.offer=parseInt(req.body.offer)
+  
+  
+  console.log('category offer check ',req.body);
+  
  let addCategoryOffer=await productHelpers.AddCategoryOffer(req.body)
   
   if(addCategoryOffer){
 
     addCategoryOffer.map(async(productdetail)=>{
-      productHelpers.updateCategoryOfferPrice(productdetail).then(()=>{
+      productHelpers.updateCategoryOfferPrice(productdetail,req.body.offer,req.body.offerName).then(()=>{
   
       
       })
@@ -516,9 +546,14 @@ router.post('/submitCategoryOffer',async(req,res)=>{
 })
 
 
-router.get('/DeleteCategoryOffer/:id/:category',adminLoginHelper,async(req,res)=>{
+router.get('/DeleteCategoryOffer/:categoryId/:category/:offerName',adminLoginHelper,async(req,res)=>{
+  console.log('chhhhwwwhhhh',req.params);
 
-let DeleteCategoryOffer=await productHelpers.DeleteCategoryOffer(req.params.id,req.params.category)
+  var offerName=req.params.offerName
+  var categoryId=req.params.categoryId
+  var categoryName=req.params.category
+
+let DeleteCategoryOffer=await productHelpers.DeleteCategoryOffer(categoryId,categoryName,offerName)
 
 
 
