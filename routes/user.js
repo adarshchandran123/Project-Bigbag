@@ -68,6 +68,42 @@ router.get("/",async function (req, res, next) {
     let ADSCategory=await userHelpers.find_ADS_details()
 
     let productCategory=await userHelpers.findCategory()
+
+
+    let checkCategoryOfferValidity=await productHelpers.checkCategoryOfferValidity()
+
+    checkCategoryOfferValidity.map((categoryDetails)=>{
+     
+      productHelpers.DeleteCategoryOffer(categoryDetails._id,categoryDetails.category,categoryDetails.offerName).then((findprodetails)=>{
+
+        findprodetails.map((productdetail)=>{
+
+          productHelpers.changeCategoryOfferpriceToMRP(productdetail).then(()=>{
+
+          })
+
+        })
+
+      })
+
+    })
+
+
+    let productOfferValidity=await productHelpers.productOfferValidity()
+
+    productOfferValidity.map((productdetail)=>{
+      productHelpers.DeleteProductOffer(productdetail._id,productdetail.productName).then(()=>{
+
+      })
+    })
+    let checkCouponValidity=await userHelpers.checkCouponValidity()
+    
+    checkCouponValidity.map((CouponOfferDetails)=>{
+      userHelpers.DeleteCoupon(CouponOfferDetails._id).then(()=>{
+        
+      })
+    })
+
     
       
       res.render("user-home", { withoutLogin: true, arrival,ADSCategory,productCategory })
@@ -1523,6 +1559,32 @@ router.post('/currencycoverterCart/:amount',(req,res)=>{
   })
 
 
+})
+
+
+
+
+router.get('/about_us',async(req,res)=>{
+
+  var productCategory=await userHelpers.findCategory()
+
+ 
+
+  if(req.session.loggedIn){
+
+    let cartcount=null
+    cartcount=await userHelpers.getCartCount(req.session.user._id)
+
+
+
+
+
+    res.render('About_us',{user:true,cartcount,name: req.session.user.username,productCategory})
+  }else{
+    res.render('About_us',{ withoutLogin: true,productCategory})
+  }
+
+  
 })
 
 
