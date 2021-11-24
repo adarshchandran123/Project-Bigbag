@@ -64,7 +64,7 @@ module.exports={
 
         return new Promise(async(resolve,reject)=>{
 
-            userdetail.password=await bcrypt.hash(userdetail.password,10)
+           userdetail.password=await bcrypt.hash(userdetail.password,10)
            var details = await db.get().collection(collection.USER_COLLECTION).insertOne(userdetail)
            var data = await db.get().collection(collection.USER_COLLECTION).findOne({_id:details.insertedId})
           
@@ -743,13 +743,10 @@ module.exports={
             }
 
            await db.get().collection(collection.ORDER_COLLECTION).insertOne(orderObject).then((response)=>{
-                // db.get().collection(collection.CART_COLLECTION).deleteOne({user:objectId(order.userId)})
-
+                
                 resolve(response.insertedId)
                
             })
-
- 
 
 
         })
@@ -764,7 +761,6 @@ module.exports={
 
  
                 resolve(detail[0])
-
 
         })
 
@@ -843,7 +839,7 @@ module.exports={
     },
     Edit_address:(addsId,addressdetails)=>{
         return new Promise((resolve,reject)=>{
-            console.log('www',addressdetails)
+           
 
             db.get().collection(collection.ADDRESS_COLLECTION).updateOne({_id:objectId(addsId)},{
                 $set:{
@@ -876,13 +872,12 @@ module.exports={
 
                 let productdetail=await db.get().collection(collection.PRODUCT_COLLECTION).findOne({_id:objectId(proId)})
 
-            
-                // resolve(productdetail)
+        
                 let wishlistObj={
                     userId:objectId(userId),
                     proId:productdetail._id,
                     wishlist:productdetail,
-                   // productIn:true
+                   
                     
 
                     
@@ -1196,12 +1191,11 @@ module.exports={
             }
     ]).toArray()
     if(cartCancell[0]){
-        //resolve(cartCancell)
         var totalcartcancel=cartCancell[0].quantity
         
     }else{
         totalcartcancel = 0
-        //resolve(false)
+        
     }
 
 
@@ -1319,8 +1313,6 @@ module.exports={
 
         let totalPlaced=buynowPlaced+totalcartPlaced
 
-
-       
 
         let buynowShipped=await db.get().collection(collection.ORDER_COLLECTION).count({mode:'buyNow',status:'Shipped'})
 

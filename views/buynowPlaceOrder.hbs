@@ -32,7 +32,7 @@
 
                                         {{#each userAddress}}
                     <div style="float: left; width:auto;  margin-left: 20px;" class="col-sm-12 col-md-2 pt-2  text-center">
-                        <button class="btn btn-outline-success" onclick="a('{{this.fname}}','{{this.lname}}','{{this.house_name}}','{{this.address1}}','{{this.address2}}','{{this.town_city}}','{{this.country_state}}','{{this.pincode_zip}}','{{this.phone}}')" id="{{this._id}}" name="address" value="{{this._id}}">Choose </button>
+                        <button class="btn btn-outline-success" onclick="selectAddress('{{this.fname}}','{{this.lname}}','{{this.house_name}}','{{this.address1}}','{{this.address2}}','{{this.town_city}}','{{this.country_state}}','{{this.pincode_zip}}','{{this.phone}}')" id="{{this._id}}" name="address" value="{{this._id}}">Choose </button>
                         <div style="text-align: left;">
                         <label for="">
                             <h4>Address</h4>
@@ -504,7 +504,7 @@ label.error{
 
 
 <script>
-        function a(fname,lname,house_name,address1,address2,town_city,country_state,pincode_zip,phone){
+        function selectAddress(fname,lname,house_name,address1,address2,town_city,country_state,pincode_zip,phone){
             document.getElementById('fname').value = fname
             document.getElementById('lname').value = lname
             document.getElementById('house_name').value = house_name

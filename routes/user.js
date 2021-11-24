@@ -204,7 +204,7 @@ router.post("/signupsubmit", (req, res) => {
              
               res.redirect('/usersignup')
              })
-            //  res.render('usersignupOTP_Verify',{mobileNum})
+           
              res.redirect('/signupOTP_Verify')
     }else{
       
@@ -477,7 +477,7 @@ router.get('/resend_OTP_Login_with_OTP',(req,res)=>{
 
 
 
-router.post("/userloginsubmit",(req,res)=>{     //its just for trial without otp verification
+router.post("/userloginsubmit",(req,res)=>{     
   
   userHelpers.doLogin(req.body).then((response)=>{
 
@@ -902,20 +902,11 @@ userHelpers.placeOrder(req.body,cartProduct,GrandTotal).then((orderId)=>{
         })
       }
 
-
-
-
-
 }) 
 
 
-
- 
- 
   }
-  
     
-  
 })
 
 
@@ -1037,22 +1028,12 @@ var productCategory=await userHelpers.findCategory()
       
       let buyproduct=await userHelpers.BuynowProductDetails(orderId)
 
-     
-
-     
 
       res.render('viewOrderProducts',{user:true,name: req.session.user.username,user:req.session.user,cartcount,buyproduct,buyNowpro:true,productCategory})
  
 
     } 
      
-  
-
-
-    
-   
-    
-  
 
   }else{
     res.redirect("/userlogin")
@@ -1091,8 +1072,7 @@ router.get('/UserOrderInvoice/:id',async(req,res)=>{
 
     let orderId=req.params.id
 
-    
-    
+
     let orderInvoice=await userHelpers.orderInvoiceDetails(orderId)
 
     if(orderInvoice.mode == 'cart'){
@@ -1335,11 +1315,6 @@ userHelpers.BuynowPlaceOrder(req.body,orderproduct,productprice).then((orderId)=
     }
     
 
-
-
-  
-
-
 })  
 
 
@@ -1351,10 +1326,7 @@ productHelpers.buynowProductQuantityupdate(req.body.proId).then(()=>{
 }) 
 
 
-
   }
-  
-    
   
 })
 
@@ -1543,8 +1515,6 @@ router.post('/searchResult',async(req,res)=>{
 
 
 
-
-
 })
 
 
@@ -1574,8 +1544,6 @@ router.get('/about_us',async(req,res)=>{
 
     let cartcount=null
     cartcount=await userHelpers.getCartCount(req.session.user._id)
-
-
 
 
 
@@ -1619,24 +1587,6 @@ router.get("/logout", (req, res) => {
 
 
 // --------------------------ent---------------------------------------
-
-
-
-
-
-
-
-
-
-
-
-            
-
-
-
-
-
-
 
 
 

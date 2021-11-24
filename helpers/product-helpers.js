@@ -36,8 +36,6 @@ module.exports = {
 
     })
 
-    
-
 
   },
 
@@ -163,34 +161,17 @@ UserCancellProduct:(proId,orderId,quantity)=>{
 },
 
 AddCategoryOffer:(detail)=>{
-  // detail.offer=parseInt(detail.offer)
+  
 
   detail.offerStartingDate=new Date().toISOString().slice(0,10)
-
-  
-  console.log('uuuuu',detail);
 
   return new Promise(async(resolve,reject)=>{
 
     let findCategoryOffer=await db.get().collection(collection.CATEGORY_OFFER_COLLECTION).findOne({category:detail.category})
     let findOfferName=await db.get().collection(collection.CATEGORY_OFFER_COLLECTION).findOne({offerName:detail.offerName})
-    console.log('lllll',findCategoryOffer)
-    console.log('kkkk',findOfferName);
+    
     if(findCategoryOffer == null && findOfferName == null){
 
-      // let offerUpdate=await db.get().collection(collection.PRODUCT_COLLECTION).updateMany({category:detail.category},{
-      //   $set:{
-      //     offer:detail.offer
-      //   }
-      // })
-
-
-
-      // let che=await db.get().collection(collection.WISH_LIST_COLLECTION).updateMany({"wishlist.category":detail.category},{
-      //   $set:{
-      //     "wishlist.offer":detail.offer
-      //   }
-      // })
      
       let findAllCategoryOffers=await db.get().collection(collection.PRODUCT_COLLECTION).find({category:detail.category}).toArray()
 
@@ -199,11 +180,6 @@ AddCategoryOffer:(detail)=>{
     resolve(findAllCategoryOffers)
       
 
-      
-
-      
-      
-     
     }else{
       console.log('ithilaaanuuu kayariyathu');
       resolve(false)
@@ -218,8 +194,6 @@ updateCategoryOfferPrice:(productdetail,offer,offerName)=>{
 
   return new Promise(async(resolve,reject)=>{
     let percentage=offer/100
-   
-   
    
     var checkAnyOffer=await db.get().collection(collection.PRODUCT_COLLECTION).findOne({productName:productdetail.productName,offer:{$exists:true}})
 
@@ -253,8 +227,6 @@ updateCategoryOfferPrice:(productdetail,offer,offerName)=>{
       
     }
 
-
-
     
   })
 
@@ -278,7 +250,6 @@ DeleteCategoryOffer:(categoryId,category,offerName)=>{
         let removeCategory_ADS=await db.get().collection(collection.ADS___COLLECTION).deleteOne({category:category})
 
       let findprodetails=await db.get().collection(collection.PRODUCT_COLLECTION).find({category:category,offerName:offerName}).toArray()  
-console.log('check product',findprodetails);
       resolve(findprodetails)
     })
   })
@@ -288,9 +259,6 @@ console.log('check product',findprodetails);
 changeCategoryOfferpriceToMRP:(productdetail)=>{
   
   return new Promise(async(resolve,reject)=>{
-
-   
-  
 
       let removeOffers=await db.get().collection(collection.PRODUCT_COLLECTION).updateOne({_id:objectId(productdetail._id)},
         {$unset:{
@@ -318,9 +286,6 @@ changeCategoryOfferpriceToMRP:(productdetail)=>{
       }}).then((response)=>{
         resolve(response)
       })
-
-
-   
 
 
   })
@@ -365,9 +330,6 @@ AddProductOffer:(detail)=>{
           }
         })
 
-
-
-  
         let insertoffer=await db.get().collection(collection.PRODUCT_OFFER_COLLECTION).insertOne(detail)
         resolve(response)
 
@@ -445,7 +407,6 @@ checkCategoryOfferValidity:()=>{
 
     let CheckValidity=await db.get().collection(collection.CATEGORY_OFFER_COLLECTION).find({offerLimit:{$lte:currentDate}}).toArray()
 
-  console.log('check validity',CheckValidity);
     resolve(CheckValidity)
 
   })

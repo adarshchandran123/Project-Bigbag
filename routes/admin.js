@@ -243,9 +243,20 @@ router.post('/edit-product/:id',(req,res)=>{
         const image1 = req.files.image1;
         const image2 = req.files.image2;
         const image3 = req.files.image3;
-        image1.mv('./public/product-image/'+id+'__1.jpg')
-        image2.mv('./public/product-image/'+id+'__2.jpg')
-        image3.mv('./public/product-image/'+id+'__3.jpg')
+        if(image1){
+          image1.mv('./public/product-image/'+id+'__1.jpg')
+        }
+        
+        if(image2){
+          image2.mv('./public/product-image/'+id+'__2.jpg')
+        }
+        
+        if(image3){
+          image3.mv('./public/product-image/'+id+'__3.jpg')
+        }
+        
+        
+        
        
       }
      
