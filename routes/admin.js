@@ -7,8 +7,8 @@ var router = express.Router();
 
 
 let admin={
-  email:"admin@gmail.com",
-  password:123
+  email: process.env.ADMIN_EMAIL,
+  password: process.env.ADMIN_PASSWORD
 }
 
 
@@ -225,7 +225,7 @@ router.get('/view-product',adminLoginHelper, (req,res)=>{
 router.get('/editProduct/',adminLoginHelper, async(req,res,next)=>{
 
   const productdetail=await productHelpers.getproductdetails(req.query.id)
-  console.log('mmmm',productdetail);
+  
 
   let productCategory=await userHelpers.findCategory()
 
@@ -314,7 +314,7 @@ router.get('/unblockedUser/:id',adminLoginHelper, (req,res)=>{
 
 router.get('/OrderList',adminLoginHelper, async(req,res)=>{
 
-  let allOrders=await userHelpers.getAllOrders()
+  var allOrders=await userHelpers.getAllOrders()
 
   
   
@@ -323,8 +323,8 @@ router.get('/OrderList',adminLoginHelper, async(req,res)=>{
 })
 
 router.get('/viewOrderProduct/:id',adminLoginHelper, async(req,res)=>{
-  let orderId=req.params.id
-  let orderproduct=await productHelpers.orderProductDetails(orderId)
+  var orderId=req.params.id
+  var orderproduct=await productHelpers.orderProductDetails(orderId)
   
   
   if(orderproduct.mode == 'cart'){

@@ -6,7 +6,8 @@ var userHelpers = require("../helpers/user-helpers");
 const productHelpers = require("../helpers/product-helpers");
 const { getAllProduct } = require("../helpers/product-helpers");
 const OTP = require("../config/OTP");
-const twilio = require("twilio")(OTP.accountsID, OTP.authToken);
+
+const twilio = require("twilio")(OTP.accountsID,OTP.authToken)
 
 
 /* GET home page. */
@@ -108,10 +109,6 @@ router.get("/",async function (req, res, next) {
       
       res.render("user-home", { withoutLogin: true, arrival,ADSCategory,productCategory })
     
-    
-       
-
-   
   }
 });
 

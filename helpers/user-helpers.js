@@ -9,21 +9,21 @@ var Razorpay=require('razorpay')
 const { resolve } = require('path')
 var paypal = require('paypal-rest-sdk');
 const axios = require('axios')
-const ACCESS_KEY=('42e763d0bc1e54bb799ff9b2a7b8a611')
+const ACCESS_KEY=(process.env.CORRENCY_CONVERTER_ACCESS_KEY)
 
 
 var instance = new Razorpay({
-    key_id: 'rzp_test_PjwJi1AI0OquKP',
-    key_secret: 'RCMpSKRqXWYqNNjr0GJL7KSE',
+    key_id: process.env.Razorpay_key_id,
+    key_secret: process.env.Razorpay_key_secret,
   })
 
 	
 
   paypal.configure({
     'mode': 'sandbox', //sandbox or live
-    'client_id': 'AW34zrBBw_s5jM8eqYRaKtT4GtWMhIx00AqnARrDYhX7kjC0mkQdil-P0B_voSm4Yg1VV9GDOQ2rWM0R',
-    'client_secret': 'EMf1rybJY3I9JFDZyrTyeKsK8MNxO1vovuBgpMMvtxBHJ3vBvSI5-1Td3lDnFTzuALcSSb_paXudncp2'
-});
+    'client_id': process.env.PAYPAL_CLIENT_ID,
+    'client_secret': process.env.PAYPAL_CLIENT_SECRET
+})
 
 
 
@@ -1572,6 +1572,7 @@ module.exports={
             let currentDate=new Date().toISOString().slice(0,10)
             let couponValidity=await db.get().collection(collection.COUPON_COLLECTION).find({offerlimit:{$lte:currentDate}}).toArray()
 
+            console.log('lllllllsss',couponValidity);
             resolve(couponValidity)
         })
     },

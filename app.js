@@ -1,6 +1,7 @@
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
+var dotenv=require('dotenv').config()
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var exhbs=require('express-handlebars')
@@ -9,6 +10,7 @@ var helper = require('handlebars-helpers')()
 var userRouter = require('./routes/user');
 var adminRouter = require('./routes/admin');
 var Handlebars=require('handlebars')
+
  
 var hbs = exhbs.create({extname:'hbs',defaultLayout:'layout',layoutsDir:__dirname+'/views/layout/',partialsDir:__dirname+'/views/partials/',
 helpers : helper
@@ -91,7 +93,7 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
+  res.render('error')
 });
 
 module.exports = app;
