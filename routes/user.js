@@ -342,14 +342,17 @@ router.post("/loginwithOTP", (req, res) => {   ///original login router
       req.session.userRegnumber=mobileNum
      
      
+     
       twilio.verify.services(OTP.serviceID)
              .verifications
              .create({to:'+'+mobileNum , channel: 'sms'})
-             .then(verification => console.log(verification.sid)).catch((err)=>{
-
+             .then(verification => console.log(verification.sid) ).catch((err)=>{
+            
               res.render('404')
            
              })
+
+            
              res.redirect('/LoginOTP_Verify')
             
     }else{
@@ -1342,7 +1345,7 @@ router.get('/wishlist',async(req,res)=>{
 
     let showwishlist=await userHelpers.showUserWishlist(req.session.user._id)
 
-    console.log('wishlis',showwishlist);
+   
 
     res.render('user_wishlist',{user:true,name: req.session.user.username,cart,cartcount,showwishlist,productCategory})
 

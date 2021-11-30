@@ -184,7 +184,7 @@ router.post("/add-product", (req, res) => {
   productHelpers.addProduct(req.body).then((id) => {
 
     if(id){
-      console.log('ivide vannu');
+     
       const image1 = req.files.image1
       const image2 = req.files.image2
       const image3 = req.files.image3
@@ -195,7 +195,7 @@ router.post("/add-product", (req, res) => {
       res.redirect('/admin/view-product')
 
     }else{
-      console.log('else il kayari');
+     
       req.session.Product_AllreadyUsed =true
       res.redirect('/admin/add-product')
     }
@@ -518,7 +518,7 @@ router.get('/CategoryOffer',adminLoginHelper,async(req,res)=>{
   let CategoryOffer=await productHelpers.findCategoryOffers()
   let currentDate=new Date().toISOString().slice(0,10)
 
-  console.log('category offer',CategoryOffer);
+ 
   res.render('admin/categoryOffers',{admin:true,productCategory,CategoryOffer,allreadyUsed:req.session.CategoryOfferAlreadyUsed,currentDate})
   req.session.CategoryOfferAlreadyUsed=false
 })
@@ -529,7 +529,7 @@ router.post('/submitCategoryOffer',async(req,res)=>{
   req.body.offer=parseInt(req.body.offer)
   
   
-  console.log('category offer check ',req.body);
+ 
   
  let addCategoryOffer=await productHelpers.AddCategoryOffer(req.body)
   
@@ -558,7 +558,7 @@ router.post('/submitCategoryOffer',async(req,res)=>{
 
 
 router.get('/DeleteCategoryOffer/:categoryId/:category/:offerName',adminLoginHelper,async(req,res)=>{
-  console.log('chhhhwwwhhhh',req.params);
+ 
 
   var offerName=req.params.offerName
   var categoryId=req.params.categoryId

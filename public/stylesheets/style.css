@@ -58,14 +58,14 @@
     background-size: cover;
     background-position: center;
     height: 100vh;
-    margin: 50px auto
+    margin:  auto
     
     
 }
 
 .wrapper .card {
     max-width: 400px;
-    min-height: 450px;
+    min-height: 200px;
     margin: auto;
     background: rgba(255, 255, 255, 0.1);
     overflow: hidden;
@@ -156,7 +156,7 @@
 
 #card {
     position: relative;
-    width: 320px;
+    width: 100%;
     height: auto;
     display: block;
     margin: 40px auto;
