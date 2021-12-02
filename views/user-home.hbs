@@ -16,11 +16,12 @@
   <div class="carousel-inner">
     <div class="carousel-item active" data-bs-interval="10000">
       <img style="height: auto;" src="http://cdn.shopify.com/s/files/1/0068/8481/9003/files/travel-bag-slider-3_2000x.jpg?v=1534585027" class="d-block w-100" alt="...">
+       
     </div>
 
     {{#each ADSCategory}}
     <div class="carousel-item" data-bs-interval="2000">
-      <a href="/categoryDisplay/{{this.category}}"><img style="height: auto;" src="/ADS_IMAGES/{{this.category}}__1.jpg" class="d-block w-100" alt="..."></a>
+      <a href="/categoryDisplay/{{this.category}}"><img style="height: auto; width: 100%;" src="/ADS_IMAGES/{{this.category}}__1.jpg" class="img-fluid" alt="..."></a>
     </div>
     {{/each}}
 
@@ -37,14 +38,15 @@
 
 
 </div><br><br>
+<div style="width: 100%;"></div>
 
 
 
-<div class="container">
+{{!-- <div class="container">
 	<div class="row">
 
 		<div class="divpic col-sm-12 col-md-6 col-lg-3">
-			<img style="width: 100%; height: 250px ;" src="http://cdn.shopify.com/s/files/1/0068/8481/9003/files/img-1_1920X.jpg?v=1533894605" alt="">
+			<img style="width: 100%; height: auto ;" src="http://cdn.shopify.com/s/files/1/0068/8481/9003/files/img-1_1920X.jpg?v=1533894605" alt="">
 
 		</div>
 		<div class="divpic col-sm-12 col-md-6 col-lg-3">
@@ -52,7 +54,7 @@
 
 		</div>
 		<div class="divpic col-sm-12 col-md-6 col-lg-3">
-			<img style="width: 100%; height: 250px ;"  src="http://cdn.shopify.com/s/files/1/0068/8481/9003/files/img-2_1920X.jpg?v=1533894620" alt="">
+			<img style="width: 100%; height: auto ;"  src="http://cdn.shopify.com/s/files/1/0068/8481/9003/files/img-2_1920X.jpg?v=1533894620" alt="">
 
 		</div>
 		<div class="divpic col-sm-12 col-md-6 col-lg-3">
@@ -67,7 +69,7 @@
 	<div class="row">
 
 		<div class="divpic col-sm-12 col-md-6 col-lg-3">
-			<img style="width: 100%; height: 250px ;" src="http://cdn.shopify.com/s/files/1/0068/8481/9003/files/img-3_1920X.jpg?v=1533894631" alt="">
+			<img style="width: 100%; height: auto ;" src="http://cdn.shopify.com/s/files/1/0068/8481/9003/files/img-3_1920X.jpg?v=1533894631" alt="">
 
 		</div>
 		<div class="divpic col-sm-12 col-md-6 col-lg-3">
@@ -75,7 +77,7 @@
 
 		</div>
 		<div class="divpic col-sm-12 col-md-6 col-lg-3">
-			<img style="width: 100%; height: 250px ;" src="http://cdn.shopify.com/s/files/1/0068/8481/9003/files/img-4_1920X.jpg?v=1533894645" alt="">
+			<img style="width: 100%; height: auto ;" src="http://cdn.shopify.com/s/files/1/0068/8481/9003/files/img-4_1920X.jpg?v=1533894645" alt="">
 
 		</div>
 		<div class="divpic col-sm-12 col-md-6 col-lg-3">
@@ -87,7 +89,7 @@
 	</div>
 
 
-</div>
+</div> --}}
 	
 
 
@@ -102,13 +104,61 @@
 </section>
 <!-- ========================= SECTION MAIN END// ========================= -->
 
+
+
+<div class="container">
+  <div class="row">
+    <h2 style="margin-top: 30px; margin-bottom: 30px; font-size: xx-large; font-weight: bolder; font-style: oblique; text-align: center;">Trending Products</h2>
+     {{#each TrendingProduct}}
+    <div style="" class="box col-md-6 col-lg-3">
+  <a href="/product-detail?id={{this.proId}}"><img src="/product-image/{{this.proId}}__1.jpg" alt="Snow" style="width:80%; height: auto; margin-left: 10%; border-radius: 20px; border: 1px solid black; box-shadow: 7px 3px 10px #5d3030;"></a>
+
+  <div class="centered">{{this.productName}}</div>
+    </div>
+    {{/each}}
+
+  </div>
+</div>
+
+
+
+<style>
+
+.box{
+  border: none !important;
+}  
+
+.centered{
+    position: absolute; 
+  bottom: 0; 
+  background: rgb(0, 0, 0);
+  background: rgba(0, 0, 0, 0.5); /* Black see-through */
+  color: #f1f1f1; 
+  width: 90%;
+  transition: .5s ease;
+  opacity:0;
+  color: white;
+  font-size: 20px;
+  padding: 20px;
+  text-align: center;
+}
+
+.box:hover .centered {
+  opacity: 1;
+}
+
+</style>
+
+
+
+
 <!-- ========================= SECTION  ========================= -->
 <section class="section-name padding-y-sm">
 <div class="container">
 
 <header class="section-heading">
 	<a href="/userAllProduct" class="btn btn-outline-primary float-right">See all</a>
-	<h3 class="section-title">New arrival</h3>
+	<h3 style="font-size: xx-large;" class="section-title">New arrival</h3>
 </header><!-- sect-heading -->
 
 	

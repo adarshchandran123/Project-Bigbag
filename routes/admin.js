@@ -71,7 +71,7 @@ for(var i=7; i>0; i--){
 }
 sevendays.reverse()
 
-console.log('rrrr',sevendays);
+
 
 
 var sevendaysReport=[]
@@ -84,6 +84,32 @@ for(key in sevendays){
 }
 
 
+
+
+
+
+var product=await productHelpers.getAllProduct()
+
+var allproduct=[]
+
+
+
+for(key in product){
+  var details =await userHelpers.FindTrendingProduct(product[key].productName,product[key]._id)
+  allproduct.push(details)
+}
+
+
+
+allproduct.sort((a,b)=>{
+  var products = a.TrendingProduct,
+   products2=b.TrendingProduct
+  return products2 - products
+})
+
+
+
+var TrendingProduct=allproduct.slice(0,5)
 
  
 
@@ -109,7 +135,7 @@ for(key in sevendays){
 
   const arrival=await productHelpers.getnewArrival()
 
-  res.render("admin/dashboard", { admin: true,totalUser,totalproduct,totalCategory,totalRevenue,allorderStatus,order,lineorder,payment,arrival,totalOrder,categoryReport,sevendays,sevendaysReport,limitedStock })
+  res.render("admin/dashboard", { admin: true,totalUser,totalproduct,totalCategory,totalRevenue,allorderStatus,order,lineorder,payment,arrival,totalOrder,categoryReport,sevendays,sevendaysReport,limitedStock,TrendingProduct })
 });
  
 

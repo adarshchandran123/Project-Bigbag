@@ -58,9 +58,36 @@ router.get("/",async function (req, res, next) {
           
         })
       })
+
+
+      var product=await productHelpers.getAllProduct()
+
+      var allproduct=[]
+
+
+
+      for(key in product){
+        var details =await userHelpers.FindTrendingProduct(product[key].productName,product[key]._id)
+        allproduct.push(details)
+      }
+
+      
+
+      allproduct.sort((a,b)=>{
+        var products = a.TrendingProduct,
+         products2=b.TrendingProduct
+        return products2 - products
+      })
+
+      
+
+      var TrendingProduct=allproduct.slice(0,4)
+
+      
+
       const arrival=await productHelpers.getnewArrival()
 
-      res.render("user-home", {  user: true, name: req.session.user.username,arrival,cartcount ,cart,showwishlist,ADSCategory,productCategory});
+      res.render("user-home", {  user: true, name: req.session.user.username,arrival,cartcount ,cart,showwishlist,ADSCategory,productCategory,TrendingProduct});
 
     
   } else {
@@ -105,9 +132,37 @@ router.get("/",async function (req, res, next) {
       })
     })
 
+
+
+    var product=await productHelpers.getAllProduct()
+
+    var allproduct=[]
+
+
+
+    for(key in product){
+      var details =await userHelpers.FindTrendingProduct(product[key].productName,product[key]._id)
+      allproduct.push(details)
+    }
+
+    
+
+    allproduct.sort((a,b)=>{
+      var products = a.TrendingProduct,
+       products2=b.TrendingProduct
+      return products2 - products
+    })
+
+    
+
+    var TrendingProduct=allproduct.slice(0,4)
+
+
+
+
     
       
-      res.render("user-home", { withoutLogin: true, arrival,ADSCategory,productCategory })
+      res.render("user-home", { withoutLogin: true, arrival,ADSCategory,productCategory,TrendingProduct })
     
   }
 });
@@ -192,7 +247,7 @@ router.post("/signupsubmit", (req, res) => {
       req.session.newUser=req.body
       
       req.session.userRegnumber=mobileNum
-      
+     
       
       twilio.verify.services(OTP.serviceID)
              .verifications

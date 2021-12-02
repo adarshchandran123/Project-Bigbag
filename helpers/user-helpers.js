@@ -1572,7 +1572,7 @@ module.exports={
             let currentDate=new Date().toISOString().slice(0,10)
             let couponValidity=await db.get().collection(collection.COUPON_COLLECTION).find({offerlimit:{$lte:currentDate}}).toArray()
 
-            console.log('lllllllsss',couponValidity);
+            
             resolve(couponValidity)
         })
     },
@@ -1743,6 +1743,64 @@ find7daysSalesReport:(day)=>{
         resolve(totalsales)
 
     })
+
+},
+
+FindTrendingProduct:(productName,proId)=>{
+    
+    return new Promise(async(resolve,reject)=>{
+
+        let buynowTrendingProduct=await db.get().collection(collection.ORDER_COLLECTION).count({mode:'buyNow',productName:productName,status:'Delivered'})
+        let cartTrendingProduct=await db.get().collection(collection.ORDER_COLLECTION).aggregate([{$match:{mode:"cart"}},
+            { 
+                $unwind:"$products"
+            },
+            {
+                $match:{"products.productName":productName}
+            },
+            
+            {
+                $match:{"products.status":"Delivered"}
+            },
+            {             
+                $project:{
+                    
+                    quantity:'$products.quantity'
+                    
+                    
+                }
+            },
+            {
+                $group:{
+                    _id:null,
+                    quantity:{$sum:"$quantity"}
+                }
+            }
+        ]).toArray()
+        if(cartTrendingProduct[0]){
+          
+            var totalcartTrendingProduct=cartTrendingProduct[0].quantity
+            
+        }else{
+            totalcartTrendingProduct = 0
+          
+        }
+           
+        var details={}
+        var totalTrendingProduct=buynowTrendingProduct+totalcartTrendingProduct
+       
+        
+
+        details.productName=productName
+        details.TrendingProduct=totalTrendingProduct
+        details.proId=proId
+
+        
+
+        resolve(details)
+
+    })
+
 
 }
   

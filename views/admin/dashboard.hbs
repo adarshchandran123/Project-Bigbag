@@ -228,6 +228,41 @@
       </div>
     </div>
 
+
+
+      <div class="col-md-6">
+      <div>
+        <p style="font-size: 40px; color: white; font-family: 'Acme', sans-serif;">Trending Products</p>
+
+  <table style="color: white; background-color:#0a1229; border: #840405 solid; 1px ;" class="table table-hover">
+  <thead >
+    <tr style="border: #840405 solid 2px;">
+      <th style="color: white; font-weight: bolder;" scope="col">No</th>
+      <th style="color: white; font-weight: bolder;" scope="col">Image</th>
+      <th style="color: white; font-weight: bolder;" scope="col">Name</th>
+      <th style="color: white; font-weight: bolder;" scope="col">Total sale</th>
+    </tr>
+  </thead>
+  <tbody>
+      {{#each TrendingProduct}}
+    <tr style="border: #840405 solid 2px;">
+      <th style="color: white;" scope="row">{{add @index '1'}}</th>
+      <td style="color: white;"><img width="70px" height="70px" src="/product-image/{{this.proId}}__1.jpg"></td>
+      <td style="color: white;">{{this.productName}}</td>
+      <td style="color: white;">{{this.TrendingProduct}}</td>
+    </tr>
+   {{/each}}
+  </tbody>
+</table>
+
+      </div>
+    </div>
+
+
+
+
+
+
     
   </div>
 </div>
