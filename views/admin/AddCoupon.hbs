@@ -1,152 +1,117 @@
-
-
-
 <body class="dark-edition">
-  
 
+  <div class="container">
+    <div class="row">
 
-<div class="container ">
-        <div class="row">
+      <div style="margin-top: 100px;">
+        <form action="/admin/addcoupon" id="valid11" method="POST">
+          <div class="col-sm-12 col-md-6">
+            {{#if couponAlreadyUsed}}
+              <div
+                style="color: red; font-weight: bolder; font-size: larger;"
+              ><p>Coupon Already Used</p></div>
+            {{/if}}
 
-            <div style="margin-top: 100px;">
-                <form action="/admin/addcoupon" id="valid11" method="POST">
-                    <div class="col-sm-12 col-md-6">
-                      {{#if couponAlreadyUsed}}
-                        <div style="color: red; font-weight: bolder; font-size: larger;"><p>Coupon Already Used</p></div>
-                      {{/if}}
+            <label for="#coupon">Coupon</label><br />
+            <input name="couponName" id="coupon" type="text" />
+          </div>
+          <div class="col-sm-12 col-md-6">
+            <label for="offer">Percentage</label><br />
+            <input name="couponOffer" id="offer" type="number" />
+          </div>
 
-                        <label for="#coupon">Coupon</label><br>
-                        <input name="couponName" id="coupon" type="text">
-                    </div>
-                    <div class="col-sm-12 col-md-6">
-                         <label for="offer">Percentage</label><br>
-                        <input name="couponOffer" id="offer" type="number">
-                    </div>
-                    
-                    <div class="col-sm-12 col-md-6">
-                         <label for="date">Date Limit</label><br>
-                        <input min="{{currentDate}}"  name="offerlimit" id="date" type="date">
-                    </div>
+          <div class="col-sm-12 col-md-6">
+            <label for="date">Date Limit</label><br />
+            <input
+              min="{{currentDate}}"
+              name="offerlimit"
+              id="date"
+              type="date"
+            />
+          </div>
 
+          <div class="col-12">
+            <button class="btn btn-primary" type="submit">Add Coupon</button>
+          </div>
+        </form>
+      </div>
 
-                <div class="col-12">    
-                <button class="btn btn-primary" type="submit">Add Coupon</button>   
-                </div>
-                </form>
-            </div>            
+      <div style="margin-top: 30px;">
 
-            <div style="margin-top: 30px;">
+        <p
+          style="margin-bottom: 40px; color: white; font-size: 40px; font-family: 'Acme', sans-serif;"
+        >COUPONS</p>
 
-                <p style="margin-bottom: 40px; color: white; font-size: 40px; font-family: 'Acme', sans-serif;">COUPONS</p>
+        <div class="table-responsive">
+          <table
+            class="table"
+            cellspacing="0"
+            id="tblSearch"
+            style="width: 50%; border-style: solid;3 px ;"
+          >
+            <thead>
+              <tr>
+                <th>No</th>
 
-<div class="table-responsive">
-                <table class="table " cellspacing="0" id="tblSearch"  style="width: 50%; border-style: solid;3 px ;">
-  <thead >
-    <tr>
-      <th >No</th>
-     
-      <th>Name</th>
-      <th>Offer %</th>
-      <th>Offer Limit</th>
-      
-     
-      
-      <th>Action</th>
-    </tr>
-  </thead>
-  <tbody>
-      {{#each allcoupon}}
-    <tr>
-      <th scope="row">{{add @index '1'}}</th>
-      
-      <td>{{this.couponName}}</td>
-      
-      
-      <td>{{this.couponOffer}}</td>
-      <td>{{this.offerlimit}}</td>
-      
-      
-      <td>
-        
-        <button onclick="DeleteCoupon('{{this._id}}')" class="btn btn-danger">Delete</button>
-        
-      </td>
-    </tr>
-    {{/each}}
-    
-  </tbody>
-</table>
-</div>
+                <th>Name</th>
+                <th>Offer %</th>
+                <th>Offer Limit</th>
 
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {{#each allcoupon}}
+                <tr>
+                  <th scope="row">{{add @index "1"}}</th>
 
-            </div>
+                  <td>{{this.couponName}}</td>
 
+                  <td>{{this.couponOffer}}</td>
+                  <td>{{this.offerlimit}}</td>
+
+                  <td>
+
+                    <button
+                      onclick="DeleteCoupon('{{this._id}}')"
+                      class="btn btn-danger"
+                    >Delete</button>
+
+                  </td>
+                </tr>
+              {{/each}}
+
+            </tbody>
+          </table>
         </div>
+
+      </div>
+
     </div>
+  </div>
 
+</body>
 
-    </body>
+<script
+  src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.js"
+></script>
 
-<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.js"></script>
+<script>
+  function DeleteCoupon(couponId){ $.ajax({ url:'/admin/deletecoupon/'+couponId,
+  method:'get', success:(response)=>{ location.reload() } }) }
 
+</script>
 
- <script>
-     function DeleteCoupon(couponId){
-         $.ajax({
-             url:'/admin/deletecoupon/'+couponId,
-             method:'get',
-             success:(response)=>{
-                 
-                location.reload()
-             }
-         })
-     }
+<script>
 
- </script>
+  $(document).ready(function(){ let currentDate=new Date()
+  $("#valid11").validate({ rules:{ couponName:{ required:true, minlength:3 } ,
+  couponOffer:{ required:true, minlength:1, maxlength:2 }, offerlimit:{
+  required:true, } }, messages:{ couponName:"enter Coupon name",
+  couponOffer:"Enter Percentage Under 100", offerlimit:"Enter Date" } }) })
 
-
- <script>
-
-       $(document).ready(function(){
-         let currentDate=new Date()
-       
-  $("#valid11").validate({
-    rules:{
-      couponName:{
-        required:true,
-        minlength:3
-
-      }
-      
-        
-      ,
-      couponOffer:{
-        required:true,
-        minlength:1,
-        maxlength:2
-      },
-      offerlimit:{
-        required:true,
-        
-
-      }
-      
-    },
-    messages:{
-      couponName:"enter  Coupon name",
-      couponOffer:"Enter Percentage Under 100",
-      offerlimit:"Enter Date"
-
-
-    }
-  })
-})
-
-      </script>
+</script>
 
 <style>
-    label.error{
-        color: rgb(170, 33, 33);
-        font-size: large;
-    }
+  label.error{ color: rgb(170, 33, 33); font-size: large; }
 </style>

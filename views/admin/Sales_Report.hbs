@@ -1,191 +1,156 @@
-
-
-
-
-
-
 <body class="dark-edition">
 
+  <div style="margin-left: 50px; margin-bottom: 20px; margin-top: 70px;">
+    <form action="/admin/filterReport" id="form" method="POST">
+      <label for="">From</label><br />
+      <input
+        oninput="DateChecking()"
+        max="{{currentDate}}"
+        id="date1"
+        name="date1"
+        type="date"
+      /><br />
+      <label for="">To</label><br />
+      <input
+        oninput="DateChecking()"
+        max="{{currentDate}}"
+        id="date2"
+        name="date2"
+        type="date"
+      />
+      <br />
+      <br />
+      <input type="text" hidden name="salesReport" value="true" />
 
-        <div style="margin-left: 50px; margin-bottom: 20px; margin-top: 70px;">
-      <form action="/admin/filterReport" id="form" method="POST">
-      <label for="">From</label><br>
-      <input oninput="DateChecking()" max="{{currentDate}}" id="date1" name="date1" type="date"><br>
-      <label for="">To</label><br>
-      <input oninput="DateChecking()" max="{{currentDate}}" id="date2" name="date2" type="date"> <br> <br>
-      <input type="text" hidden name="salesReport" value="true">
+      <button class="btn btn-success" type="submit">Submit</button>
 
-      <button class="btn btn-success" type="submit" >Submit</button>
+    </form>
 
-      </form>
+  </div>
 
-    </div>
+  <div style="margin-left: 40%;">
+    <button
+      style="margin-top: 50px;"
+      onclick="getspreadSheet()"
+      class="btn btn-danger"
+    >Download Xls</button>
+    <button
+      style="margin-top: 50px;"
+      onclick="getReport()"
+      class="btn btn-danger"
+    >Download Pdf</button>
+  </div>
 
-
-
-    <div style="margin-left: 40%;">
-        <button style="margin-top: 50px;" onclick="getspreadSheet()" class="btn btn-danger">Download Xls</button>
-        <button style="margin-top: 50px;" onclick="getReport()"  class="btn btn-danger">Download Pdf</button>
-    </div>
-
-
-
-    
-    
-  <div id="allOrders">  
+  <div id="allOrders">
     <div class="container dark-edition">
-        <div class="row">
+      <div class="row">
 
-            <div style="">
-                <p style="margin-bottom: 40px; color: white; font-size: 40px; font-family: 'Acme', sans-serif;">Sales Report</p>
+        <div style="">
+          <p
+            style="margin-bottom: 40px; color: white; font-size: 40px; font-family: 'Acme', sans-serif;"
+          >Sales Report</p>
 
-<div class="table">
-                <table class="table " cellspacing="0" id="tbSearch"  style=" border-style: solid;3 px ;">
-  <thead >
-    <tr>
-      <th >No</th>
-     <th>Date</th>
-      <th>Name</th>
-      <th>Order ID</th>
-      <th>payment</th>
-      <th>State</th>
-      <th>City</th>
-     <th>Quantity</th>
-      <th>Total Amount</th>
-      
-    </tr>
-  </thead>
-  <tbody>
-      {{#each array}}
-    <tr>
-      <th scope="row">{{add @index '1'}}</th>
-      
-      <td>{{this.date}}</td>
-      <td>{{this.deliveryDetails.fname}} &nbsp; {{this.deliveryDetails.lname}} </td>
-      <td>{{this._id}}</td>
-      {{!-- <td>{{this.newprice}}</td> --}}
-      <td>{{this.paymentMethod}}</td>
-      <td>{{this.deliveryDetails.country_state}}</td>
-      <td>{{this.deliveryDetails.town_city}}</td>
-      <td>
-        {{#eq this.mode 'buyNow'}}
-        &nbsp;&nbsp; 1
-        {{else}}
-        &nbsp;&nbsp;{{this.products.quantity}}
-        {{/eq}}
-      </td>
-      
-      <td>{{this.products.totalprice}} {{this.productprice}}</td>
-     
-    </tr>
-    {{/each}}
-    
-  </tbody>
-</table>
-</div>
+          <div class="table">
+            <table
+              class="table"
+              cellspacing="0"
+              id="tbSearch"
+              style=" border-style: solid;3 px ;"
+            >
+              <thead>
+                <tr>
+                  <th>No</th>
+                  <th>Date</th>
+                  <th>Name</th>
+                  <th>Order ID</th>
+                  <th>payment</th>
+                  <th>State</th>
+                  <th>City</th>
+                  <th>Quantity</th>
+                  <th>Total Amount</th>
 
+                </tr>
+              </thead>
+              <tbody>
+                {{#each array}}
+                  <tr>
+                    <th scope="row">{{add @index "1"}}</th>
 
-            </div>
+                    <td>{{this.date}}</td>
+                    <td>{{this.deliveryDetails.fname}}
+                      &nbsp;
+                      {{this.deliveryDetails.lname}}
+                    </td>
+                    <td>{{this._id}}</td>
+
+                    <td>{{this.paymentMethod}}</td>
+                    <td>{{this.deliveryDetails.country_state}}</td>
+                    <td>{{this.deliveryDetails.town_city}}</td>
+                    <td>
+                      {{#eq this.mode "buyNow"}}
+                        &nbsp;&nbsp; 1
+                      {{else}}
+                        &nbsp;&nbsp;{{this.products.quantity}}
+                      {{/eq}}
+                    </td>
+
+                    <td>{{this.products.totalprice}} {{this.productprice}}</td>
+
+                  </tr>
+                {{/each}}
+
+              </tbody>
+            </table>
+          </div>
 
         </div>
+
+      </div>
     </div>
 
-    </div>
+  </div>
 
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.8.0/html2pdf.bundle.min.js"
+  ></script>
+  <script
+    src="//cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"
+  ></script>
 
+  <script>
 
+    $(document).ready( function () { $('#tbSearch').DataTable(); } );
 
+  </script>
 
+  <script>
+    var element = document.getElementById('allOrders'); function getReport(){
+    html2pdf(element); } function getspreadSheet() { $(document).ready(function
+    () { $("#allOrders").table2excel({ filename: "Order Report.xls" }); }); }
 
+  </script>
 
+  <script>
 
-
-
-
-
-
-
-
-
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.8.0/html2pdf.bundle.min.js"></script>
-<script src="//cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"></script>
-
-<script>
-
-    $(document).ready( function () {
-    $('#tbSearch').DataTable();
-} );
-
-
- </script>
-
-
- <script>
-    var element = document.getElementById('allOrders');
-    function getReport(){  
-    html2pdf(element);
-    }
-    
-     function getspreadSheet() {
-        $(document).ready(function () {
-            $("#allOrders").table2excel({
-                filename: "Order Report.xls"
-            });
-        });
-
-    }
-    
-</script>
-
-
-
-<script>
-
-</script>
-
-
-
-
-
+  </script>
 
 </body>
 
+<script>
+  function DateChecking(){
+  document.getElementById('date1').max=document.getElementById('date2').value
+  document.getElementById('date2').min=document.getElementById('date1').value }
 
-    <script>
-      function DateChecking(){
-        document.getElementById('date1').max=document.getElementById('date2').value
-        document.getElementById('date2').min=document.getElementById('date1').value
-      
-      }
+</script>
 
-    </script>
+<script
+  src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.js"
+></script>
 
+<script>
 
-<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.js"></script>
+  $(document).ready(function(){ $("#form").validate({ rules:{ date1:{
+  required:true }, date2:{ required:true, } }, messages:{ date1:" ", date2:" " }
+  }) })
 
-
-
-      <script>
-
-       $(document).ready(function(){
-  $("#form").validate({
-    rules:{
-      date1:{
-        required:true
-      },
-      date2:{
-        required:true,
-        
-      }
-      
-    },
-    messages:{
-      date1:" ",
-      date2:" "
-    }
-
-  })
-})
-
-      </script>
+</script>

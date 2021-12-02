@@ -106,7 +106,7 @@
                 <div id="invalid1"> </div>
                                 <label for="">IMAGE 1</label>
                                 <img src="" alt="" style="width: 100px; height:auto" id="imgview1">
-                                {{!-- <div id="preview1"></div> --}}
+                               
                                 <input  type="file" name="image1" id="file1" class="form-control"
                                     onchange="return fileValidation1()">
                                     
@@ -117,7 +117,7 @@
                       <div id="invalid2"> </div>
                                 <label for="">IMAGE 2</label>
                                 <img src="" alt="" style="width: 100px; height:auto" id="imgview2">
-                                {{!-- <div id="preview1"></div> --}}
+                               
                                 <input  type="file" name="image2" id="file2" class="form-control"
                                     onchange="return fileValidation2()">
                                    
@@ -127,7 +127,7 @@
                       <div id="invalid3"> </div>
                                 <label for="">IMAGE 3</label>
                                 <img src="" alt="" style="width: 100px; height:auto" id="imgview3">
-                                {{!-- <div id="preview1"></div> --}}
+                                
                                 <input  type="file" name="image3" id="file3" class="form-control"
                                     onchange="return fileValidation3()">
                                     
@@ -286,7 +286,7 @@
                 zoomable: false,
                 movable: false,
                 aspectRatio: 16 / 19,
-              //  preview: '.preview',
+              
                 minCropBoxWidth: 180,
                 minCropBoxHeight: 240,
             })
@@ -332,7 +332,7 @@
             return false;
         } else {
           document.getElementById('invalid2').innerHTML=''
-            //Image preview
+            
             const img_data = fileInput.files[0]
             const url = URL.createObjectURL(img_data)
             imagebox.innerHTML = `<img src="${url}" id="image" style="width:100%">`
@@ -348,7 +348,7 @@
                 zoomable: false,
                 movable: false,
                 aspectRatio: 16 / 19,
-              //  preview: '.preview',
+              
                 minCropBoxWidth: 180,
                 minCropBoxHeight: 240,
             })
@@ -392,7 +392,7 @@
             return false;
         } else {
           document.getElementById('invalid3').innerHTML=''
-            //Image preview
+            
             const img_data = fileInput.files[0]
             const url = URL.createObjectURL(img_data)
             imagebox.innerHTML = `<img src="${url}" id="image" style="width:100%">`
@@ -408,7 +408,7 @@
                 zoomable: false,
                 movable: false,
                 aspectRatio: 16 / 19,
-              //  preview: '.preview',
+              
                 minCropBoxWidth: 180,
                 minCropBoxHeight: 240,
             })

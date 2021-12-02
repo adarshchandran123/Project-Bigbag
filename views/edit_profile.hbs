@@ -37,7 +37,7 @@
 
 
       
-            {{!-- <div><a class="btn btn-primary" type="" href="/EditProfile">Edite Profile</a></div> --}}
+            
                     <div class="col-md-12"><label class="labels">Name</label><input type="text" class="form-control" placeholder="enter your name" value="{{userdetail.username}}" name="username"></div>
                     <div class="col-md-12"><label class="labels">Mobile Number1</label><input type="tel" class="form-control" placeholder="enter phone number" value="{{userdetail.mobile}}" name="mobile"></div>
                     <div class="col-md-12"><label class="labels">Mobile Number2</label><input type="tel" class="form-control" placeholder="enter phone number" value="{{userdetail.mobile1}}" name="mobile1" ></div>
@@ -91,7 +91,7 @@
             fileInput.value = '';
             return false;
         } else {
-            //Image preview
+            
             const img_data = fileInput.files[0]
             const url = URL.createObjectURL(img_data)
             imagebox.innerHTML = `<img src="${url}" id="image" style="width:100%">`
@@ -107,7 +107,7 @@
                 zoomable: false,
                 movable: false,
                 aspectRatio: 16 / 19,
-              //  preview: '.preview',
+              
                 minCropBoxWidth: 180,
                 minCropBoxHeight: 240,
             })

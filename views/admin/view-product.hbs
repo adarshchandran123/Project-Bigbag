@@ -1,110 +1,117 @@
-
-
-
-
- 
-
-
 <body class="dark-edition">
 
-    
-    
-    <div class="container">
-        <div class="row">
+  <div class="container">
+    <div class="row">
 
-            <div style="margin-top: 100px;">
-                <p style="margin-bottom: 40px; color: white; font-size: 40px; font-family: 'Acme', sans-serif;">PRODUCT MANAGMENT</p>
+      <div style="margin-top: 100px;">
+        <p
+          style="margin-bottom: 40px; color: white; font-size: 40px; font-family: 'Acme', sans-serif;"
+        >PRODUCT MANAGMENT</p>
 
-<div  class="table-responsive  ">
-                <table  class="table table-hover" cellspacing="0" id="tableSearch"  style=" border-style: solid;3 px ; background-color: rgb(3 12 35); border: solid 2px rgb(20, 88, 90);">
-  <thead >
-    <tr>
-      <th >No</th>
-      <th>Images</th>
-      <th>Product Name</th>
-      <th>Category</th>
-      <th>Offer %</th>
-      <th>New Price</th>
-      <th>MRP</th>
-      <th>Stock QTY</th>
-      <th>Action</th>
-    </tr>
-  </thead>
-  <tbody >
-      {{#each product}}
-    <tr>
-      <th scope="row">{{add @index '1'}}</th>
-      <td>  <img style="width: 70px; height: 60px;" src="/product-image/{{this._id}}__1.jpg" alt=""></td>
-      <td>{{this.productName}}</td>
-      <td>{{this.category}}</td>
-      <td>{{this.offer}}</td>
-      <td>{{this.newprice}}</td>
-      <td>{{this.MRP}}</td>
-      <td>{{this.qty}}</td>
-      <td>
-        <a href="/admin/editProduct?id={{this._id}}" class="btn btn-primary">Edit</a>
+        <div class="table">
+          <table
+            class="table table-hover"
+            cellspacing="0"
+            id="tableSearch"
+            style=" border-style: solid;3 px ; background-color: rgb(3 12 35); border: solid 2px rgb(20, 88, 90);"
+          >
+            <thead>
+              <tr>
+                <th>No</th>
+                <th>Images</th>
+                <th>Product Name</th>
+                <th>Category</th>
+                <th>Offer %</th>
+                <th>New Price</th>
+                <th>MRP</th>
+                <th>Stock QTY</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {{#each product}}
+                <tr>
+                  <th scope="row">{{add @index "1"}}</th>
+                  <td>
+                    <img
+                      style="width: 70px; height: 60px;"
+                      src="/product-image/{{this._id}}__1.jpg"
+                      alt=""
+                    /></td>
+                  <td>{{this.productName}}</td>
+                  <td>{{this.category}}</td>
+                  <td>{{this.offer}}</td>
+                  <td>{{this.newprice}}</td>
+                  <td>{{this.MRP}}</td>
+                  <td>{{this.qty}}</td>
+                  <td>
+                    <a
+                      href="/admin/editProduct?id={{this._id}}"
+                      class="btn btn-primary"
+                    >Edit</a>
 
-        {{!-- <a href="/admin/deleteProduct/{{this._id}}"  class="btn btn-danger">Delete</a> --}}
+                    <!-- Button trigger modal -->
+                    <button
+                      type="button"
+                      class="btn btn-danger"
+                      data-bs-toggle="modal"
+                      data-bs-target="#{{this.productName}}"
+                    >
+                      Delete
+                    </button>
 
+                    <!-- Modal -->
+                    <div
+                      class="modal fade"
+                      id="{{this.productName}}"
+                      tabindex="-1"
+                      aria-labelledby="exampleModalLabel"
+                      aria-hidden="true"
+                    >
+                      <div class="modal-dialog">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Do
+                              you want to Delete</h5>
+                            <button
+                              type="button"
+                              class="btn-close"
+                              data-bs-dismiss="modal"
+                              aria-label="Close"
+                            ></button>
+                          </div>
 
+                          <div class="modal-footer">
+                            <button
+                              type="button"
+                              class="btn btn-success"
+                              data-bs-dismiss="modal"
+                            >Close</button>
+                            <button type="button" class="btn btn-danger"><a
+                                href="/admin/deleteProduct/{{this._id}}"
+                              >Delete</a></button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
 
-          <!-- Button trigger modal -->
-<button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#{{this.productName}}">
-  Delete
-</button>
+                  </td>
+                </tr>
+              {{/each}}
 
-<!-- Modal -->
-<div class="modal fade" id="{{this.productName}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Do you want to Delete</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </tbody>
+          </table>
+        </div>
+
       </div>
-      
-      <div class="modal-footer">
-        <button type="button" class="btn btn-success" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-danger"><a href="/admin/deleteProduct/{{this._id}}"  >Delete</a></button>
-      </div>
+
     </div>
   </div>
-</div>
-
-      </td>
-    </tr>
-    {{/each}}
-    
-  </tbody>
-</table>
-</div>
-
-
-            </div>
-
-        </div>
-    </div>
 
 </body>
 
-
 <script>
 
-  $(document).ready( function () {
-    $('#tableSearch').DataTable();
-} );
+  $(document).ready( function () { $('#tableSearch').DataTable(); } );
 
 </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-

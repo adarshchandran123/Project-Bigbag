@@ -1,141 +1,150 @@
-
-
 <body class="dark-edition">
-    
-    <div class="container">
-        <div class="row">
-            <p style="margin-top: 100px; color: white; font-size: 40px; font-family: 'Acme', sans-serif;">ADD CATEGORY</p>
 
+  <div class="container">
+    <div class="row">
+      <p
+        style="margin-top: 100px; color: white; font-size: 40px; font-family: 'Acme', sans-serif;"
+      >ADD CATEGORY</p>
 
-<div style="border: solid 1px;margin-top: 80px; width: 50%;">
+      <div style="border: solid 1px;margin-top: 80px; width: 50%;">
 
         <form method="POST" id="valid8" action="/admin/addCategory">
-  <div style="" class="mb-3">
-    <label for="exampleInputEmail1" style="font-size: x-large;" class="form-label">Category</label>
-    <input type="text" name="category" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-  </div>
+          <div style="" class="mb-3">
+            <label
+              for="exampleInputEmail1"
+              style="font-size: x-large;"
+              class="form-label"
+            >Category</label>
+            <input
+              type="text"
+              name="category"
+              class="form-control"
+              id="exampleInputEmail1"
+              aria-describedby="emailHelp"
+            />
+          </div>
 
-  {{#if alreadyUsedcategory}}
-  <p style="color: red; font-size: large; font-weight: bolder;">Category Already Used</p>
-  {{/if}}
+          {{#if alreadyUsedcategory}}
+            <p
+              style="color: red; font-size: large; font-weight: bolder;"
+            >Category Already Used</p>
+          {{/if}}
 
+          <button type="submit" class="btn btn-primary">Add Category</button>
+        </form>
 
-  <button type="submit" class="btn btn-primary">Add Category</button>
-</form>
+        <div>
 
-<div>
-  
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">No</th>
+                <th scope="col">All Category</th>
+                <th scope="col">Action</th>
 
-    <table class="table">
-  <thead>
-    <tr>
-      <th scope="col">No</th>
-      <th scope="col">All Category</th>
-      <th scope="col">Action</th>
-      
-    </tr>
-  </thead>
-  <tbody>
-      {{#each productCategory}}
-    <tr>
-      <th scope="row">{{add @index '1'}}</th>
-      <td>{{this.category}}</td>
-      <td>
+              </tr>
+            </thead>
+            <tbody>
+              {{#each productCategory}}
+                <tr>
+                  <th scope="row">{{add @index "1"}}</th>
+                  <td>{{this.category}}</td>
+                  <td>
 
-         {{!-- <a href="/admin/DeleteCategory/{{this._id}}/{{this.category}}"> <svg xmlns="http://www.w3.org/2000/svg" style="color: red;" width="20" height="20" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
-  <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
-</svg></a> --}}
+                    <!-- Button trigger modal -->
+                    <button
+                      type="button"
+                      class="btn-link"
+                      data-bs-toggle="modal"
+                      data-bs-target="#{{this.category}}"
+                    >
 
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        style="color: red;"
+                        width="20"
+                        height="20"
+                        fill="currentColor"
+                        class="bi bi-trash-fill"
+                        viewBox="0 0 16 16"
+                      >
+                        <path
+                          d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"
+                        ></path>
+                      </svg>
 
+                    </button>
 
-          <!-- Button trigger modal -->
-<button type="button"  class=" btn-link" data-bs-toggle="modal" data-bs-target="#{{this.category}}">
- 
-<svg xmlns="http://www.w3.org/2000/svg" style="color: red;" width="20" height="20" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
-  <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
-</svg>
+                    <!-- Modal -->
+                    <div
+                      class="modal fade"
+                      id="{{this.category}}"
+                      tabindex="-1"
+                      aria-labelledby="exampleModalLabel"
+                      aria-hidden="true"
+                    >
+                      <div class="modal-dialog">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5
+                              class="modal-title"
+                              style="font-size: large; font-weight: bolder;"
+                              id="exampleModalLabel"
+                            >Are You Sure</h5>
+                            <button
+                              type="button"
+                              class="btn-close"
+                              data-bs-dismiss="modal"
+                              aria-label="Close"
+                            ></button>
+                          </div>
 
-</button>
+                          <div class="modal-footer">
+                            <button
+                              type="button"
+                              class="btn btn-secondary"
+                              data-bs-dismiss="modal"
+                            >Close</button>
+                            <button type="button" class="btn btn-primary">
 
-<!-- Modal -->
-<div class="modal fade" id="{{this.category}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" style="font-size: large; font-weight: bolder;" id="exampleModalLabel">Are You Sure</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">  
+                              <a
+                                href="/admin/DeleteCategory/{{this._id}}/{{this.category}}"
+                              > Delete</a>
 
-      <a href="/admin/DeleteCategory/{{this._id}}/{{this.category}}"> Delete</a>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
 
-        </button>
-      </div>
-    </div>
-  </div>
-</div>
-          
+                  </td>
 
-      </td>
-      
-    </tr>
-    {{/each}}
+                </tr>
+              {{/each}}
 
-  </tbody>
-</table><br><br><br>
-
-
-
-</div>
-
-
-
-</div>
-
-
-
+            </tbody>
+          </table><br /><br /><br />
 
         </div>
+
+      </div>
+
     </div>
-    
+  </div>
+
 </body>
 
-
-
-<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.js"></script>
-
-
-
+<script
+  src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.js"
+></script>
 
 <script>
 
-       $(document).ready(function(){
-  $("#valid8").validate({
-    rules:{
-      category:{
-        required:true,
-        minlength:2
+  $(document).ready(function(){ $("#valid8").validate({ rules:{ category:{
+  required:true, minlength:2 } }, messages:{ category:"enter category", } }) })
 
-      }
-
-    },
-    messages:{
-      category:"enter  category",
-      
-    }
-  })
-})
-
-      </script>
-
+</script>
 
 <style>
-    label.error{
-        color: rgb(170, 33, 33);
-        font-size: large;
-    }
+  label.error{ color: rgb(170, 33, 33); font-size: large; }
 </style>
-
