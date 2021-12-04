@@ -54,7 +54,7 @@
 
 <div class="container">
   <div class="row">
-    <h2 style="margin-top: 30px; margin-bottom: 30px; font-size: xx-large; font-weight: bolder; font-style: oblique; text-align: center;">Trending Products</h2>
+    <h2 style="margin-top: 30px; margin-bottom: 30px; font-size: xx-large; font-weight: bolder; font-style: oblique; text-align: center;">Top Selling Products</h2>
      {{#each TrendingProduct}}
     <div style="" class="box col-md-6 col-lg-3">
   <a href="/product-detail?id={{this.proId}}"><img src="/product-image/{{this.proId}}__1.jpg" alt="Snow" style="width:80%; height: auto; margin-left: 10%; border-radius: 20px; border: 1px solid black; box-shadow: 7px 3px 10px #5d3030;"></a>
@@ -68,32 +68,7 @@
 
 
 
-<style>
 
-.box{
-  border: none !important;
-}  
-
-.centered{
-    position: absolute; 
-  bottom: 0; 
-  background: rgb(0, 0, 0);
-  background: rgba(0, 0, 0, 0.5); /* Black see-through */
-  color: #f1f1f1; 
-  width: 90%;
-  transition: .5s ease;
-  opacity:0;
-  color: white;
-  font-size: 20px;
-  padding: 20px;
-  text-align: center;
-}
-
-.box:hover .centered {
-  opacity: 1;
-}
-
-</style>
 
 
 
@@ -299,6 +274,34 @@
 </div><!-- container // -->
 </section>
 <!-- ========================= SECTION  END// ========================= -->
+
+
+<style>
+
+.box{
+  border: none !important;
+}  
+
+.centered{
+    position: absolute; 
+  bottom: 0; 
+  background: rgb(0, 0, 0);
+  background: rgba(0, 0, 0, 0.5); /* Black see-through */
+  color: #f1f1f1; 
+  width: 90%;
+  transition: .5s ease;
+  opacity:0;
+  color: white;
+  font-size: 20px;
+  padding: 20px;
+  text-align: center;
+}
+
+.box:hover .centered {
+  opacity: 1;
+}
+
+</style>
 
 
 
