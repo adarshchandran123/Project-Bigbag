@@ -1,72 +1,57 @@
 <div class="container">
-    <div class="row">
+  <div class="row">
 
-        <div class="row mt-3">
-            <div style="float: left; ">
-                <button class="btn btn-primary mt-3" type="button" style="display: none; margin-bottom: 30px;" id="crop-btn">Crop</button>
-<div id="image-box"  style="width: 180px; height: 180px; display: none; float: left;" ></div>
+    <div class="row mt-3">
+      <div style="float: left; ">
+        <button class="btn btn-primary mt-3" type="button" style="display: none; margin-bottom: 30px;"
+          id="crop-btn">Crop</button>
+        <div id="image-box" style="width: 180px; height: 180px; display: none; float: left;"></div>
 
-   </div>
-            <form action="/EditProfile" id="provalid" method="POST" enctype="multipart/form-data">
-            <div style="margin-bottom: 30px;">
-                <div >
-                <input type="submit" id="confirm-btn" class="btn btn-primary" value="Submit" ><br><br>
+      </div>
+      <form action="/EditProfile" id="provalid" method="POST" enctype="multipart/form-data">
+        <div style="margin-bottom: 30px;">
+          <div>
+            <input type="submit" id="confirm-btn" class="btn btn-primary" value="Submit"><br><br>
 
-                <label class="btn btn-outline-primary"  for="file1">  Edit Photo   </label>
-<input   type="file" style="visibility: hidden; width: 0px; height: 0px;"  name="image1" id="file1" class="form-control "
-                                    onchange="return fileValidation1()">
+            <label class="btn btn-outline-primary" for="file1"> Edit Photo </label>
+            <input type="file" style="visibility: hidden; width: 0px; height: 0px;" name="image1" id="file1"
+              class="form-control " onchange="return fileValidation1()">
 
-                                    <img style="display: none;"  id="imgview1" width="50px" height="50px" src="" alt="">
+            <img style="display: none;" id="imgview1" width="50px" height="50px" src="" alt="">
 
-                                    </div>
+          </div>
+        </div>
+        <div class="col-md-12"><label class="labels">Name</label><input type="text" class="form-control"
+            placeholder="enter your name" value="{{userdetail.username}}" name="username"></div>
+        <div class="col-md-12"><label class="labels">Mobile Number1</label><input type="tel" class="form-control"
+            placeholder="enter phone number" value="{{userdetail.mobile}}" name="mobile"></div>
+        <div class="col-md-12"><label class="labels">Mobile Number2</label><input type="tel" class="form-control"
+            placeholder="enter phone number" value="{{userdetail.mobile1}}" name="mobile1"></div>
+        <div class="col-md-12"><label class="labels">Hose Name</label><input type="text" class="form-control"
+            placeholder="enter House Name" value="{{userdetail.houseName1}}" name="houseName1"></div>
+        <div class="col-md-12"><label class="labels">Place</label><input type="text" class="form-control"
+            placeholder="enter your place" value="{{userdetail.place1}}" name="place1"></div>
+        <div class="col-md-12"><label class="labels">city</label><input type="text" class="form-control"
+            placeholder="enter your city" value="{{userdetail.city1}}" name="city1"></div>
+        <div class="col-md-12"><label class="labels">State</label><input type="text" class="form-control"
+            placeholder="enter your state" value="{{userdetail.state1}}" name="state1"></div>
+        <div class="col-md-12"><label class="labels">Country</label><input type="text" class="form-control"
+            placeholder="enter your country" value="{{userdetail.country1}}" name="country1"></div>
 
-            
-
-
-
-            </div>
-
-                
-
-                
-
- 
-
-   
-
-
-
-      
-            
-                    <div class="col-md-12"><label class="labels">Name</label><input type="text" class="form-control" placeholder="enter your name" value="{{userdetail.username}}" name="username"></div>
-                    <div class="col-md-12"><label class="labels">Mobile Number1</label><input type="tel" class="form-control" placeholder="enter phone number" value="{{userdetail.mobile}}" name="mobile"></div>
-                    <div class="col-md-12"><label class="labels">Mobile Number2</label><input type="tel" class="form-control" placeholder="enter phone number" value="{{userdetail.mobile1}}" name="mobile1" ></div>
-                    <div class="col-md-12"><label class="labels">Hose Name</label><input type="text" class="form-control" placeholder="enter House Name" value="{{userdetail.houseName1}}" name="houseName1"></div>
-                    <div class="col-md-12"><label class="labels">Place</label><input type="text" class="form-control" placeholder="enter your place" value="{{userdetail.place1}}" name="place1"></div>
-                    <div class="col-md-12"><label class="labels">city</label><input type="text" class="form-control" placeholder="enter your city" value="{{userdetail.city1}}" name="city1"></div>
-                    <div class="col-md-12"><label class="labels">State</label><input type="text" class="form-control" placeholder="enter your state" value="{{userdetail.state1}}" name="state1"></div>
-                    <div class="col-md-12"><label class="labels">Country</label><input type="text" class="form-control" placeholder="enter your country" value="{{userdetail.country1}}" name="country1"></div>
-                    
-                    <div class="col-md-12"><label class="labels">Pincode</label><input type="number" class="form-control" placeholder="enter your pin code" value="{{userdetail.pincode1}}" name="pincode1"></div><br><br><br>
-                    
-                    
-                    
-                   
-                </div>
-                </form>
-
-                
+        <div class="col-md-12"><label class="labels">Pincode</label><input type="number" class="form-control"
+            placeholder="enter your pin code" value="{{userdetail.pincode1}}" name="pincode1"></div><br><br><br>
 
     </div>
-
+    </form>
+  </div>
 
 </div>
 
 
 <style>
-    .error{
-        color: red;
-    }
+  .error {
+    color: red;
+  }
 </style>
 
 
@@ -77,58 +62,58 @@
 
 
 
-    <script>
+<script>
 
-     function fileValidation1() {
-        const imagebox = document.getElementById('image-box')
-        const crop_btn = document.getElementById('crop-btn')
-        var fileInput = document.getElementById('file1');
-        
-        var filePath = fileInput.value;
-        var allowedExtensions = /(\.jpg)$/i;
-        if (!allowedExtensions.exec(filePath)) {
-            alert('Please upload file having extensions .jpeg only.');
-            fileInput.value = '';
-            return false;
-        } else {
-            
-            const img_data = fileInput.files[0]
-            const url = URL.createObjectURL(img_data)
-            imagebox.innerHTML = `<img src="${url}" id="image" style="width:100%">`
-            const image = document.getElementById('image')
-            document.getElementById('image-box').style.display = 'block'
-            document.getElementById('crop-btn').style.display = 'block'
-            document.getElementById('confirm-btn').style.display = 'none'
-           
-            const cropper = new Cropper(image, {
-                autoCropArea: 1,
-                viewMode: 1,
-                scalable: false,
-                zoomable: false,
-                movable: false,
-                aspectRatio: 16 / 19,
-              
-                minCropBoxWidth: 180,
-                minCropBoxHeight: 240,
-            })
-            crop_btn.addEventListener('click', () => {
-                cropper.getCroppedCanvas().toBlob((blob) => {
-                    let fileInputElement = document.getElementById('file1');
-                    let file = new File([blob], img_data.name, { type: "image/*", lastModified: new Date().getTime() });
-                    let container = new DataTransfer();
-                   
-                    container.items.add(file);
-                     const img = container.files[0]
-                     var url =URL.createObjectURL(img)                    
-                     fileInputElement.files = container.files;
-                     document.getElementById('imgview1').src=url
-                    document.getElementById('image-box').style.display = 'none'
-                    document.getElementById('crop-btn').style.display = 'none'
-                    document.getElementById('confirm-btn').style.display = 'block'
-                });
-            });
-        }
+  function fileValidation1() {
+    const imagebox = document.getElementById('image-box')
+    const crop_btn = document.getElementById('crop-btn')
+    var fileInput = document.getElementById('file1');
+
+    var filePath = fileInput.value;
+    var allowedExtensions = /(\.jpg)$/i;
+    if (!allowedExtensions.exec(filePath)) {
+      alert('Please upload file having extensions .jpeg only.');
+      fileInput.value = '';
+      return false;
+    } else {
+
+      const img_data = fileInput.files[0]
+      const url = URL.createObjectURL(img_data)
+      imagebox.innerHTML = `<img src="${url}" id="image" style="width:100%">`
+      const image = document.getElementById('image')
+      document.getElementById('image-box').style.display = 'block'
+      document.getElementById('crop-btn').style.display = 'block'
+      document.getElementById('confirm-btn').style.display = 'none'
+
+      const cropper = new Cropper(image, {
+        autoCropArea: 1,
+        viewMode: 1,
+        scalable: false,
+        zoomable: false,
+        movable: false,
+        aspectRatio: 16 / 19,
+
+        minCropBoxWidth: 180,
+        minCropBoxHeight: 240,
+      })
+      crop_btn.addEventListener('click', () => {
+        cropper.getCroppedCanvas().toBlob((blob) => {
+          let fileInputElement = document.getElementById('file1');
+          let file = new File([blob], img_data.name, { type: "image/*", lastModified: new Date().getTime() });
+          let container = new DataTransfer();
+
+          container.items.add(file);
+          const img = container.files[0]
+          var url = URL.createObjectURL(img)
+          fileInputElement.files = container.files;
+          document.getElementById('imgview1').src = url
+          document.getElementById('image-box').style.display = 'none'
+          document.getElementById('crop-btn').style.display = 'none'
+          document.getElementById('confirm-btn').style.display = 'block'
+        });
+      });
     }
+  }
 
 
 </script>
@@ -137,71 +122,71 @@
 
 <script>
 
-       $(document).ready(function(){
-  $("#provalid").validate({
-    rules:{
-      username:{
-        required:true,
-        minlength:3
+  $(document).ready(function () {
+    $("#provalid").validate({
+      rules: {
+        username: {
+          required: true,
+          minlength: 3
+
+        }
+
+
+        ,
+        mobile: {
+          required: true,
+          minlength: 10,
+          maxlength: 10
+        },
+        mobile1: {
+          required: true,
+          minlength: 10,
+          maxlength: 10
+
+        },
+        houseName1: {
+          required: true,
+          minlength: 3
+
+        },
+        place1: {
+          required: true,
+          minlength: 3
+
+        },
+        city1: {
+          required: true,
+          minlength: 3
+        },
+        state1: {
+          required: true,
+          minlength: 3
+        },
+        country1: {
+          required: true,
+          minlength: 3
+        },
+        pincode1: {
+          required: true,
+          minlength: 6,
+          maxlength: 6
+        }
+      },
+      messages: {
+        username: "Enter  Your Name",
+        mobile: "Enter Your Mobile number ",
+        mobile1: "Enter Your Mobile number ",
+        houseName1: "Enter House name",
+        city1: "Enter Your city",
+        state1: "Enter Your state",
+        country1: "Enter Your country",
+        pincode1: "Enter pincode",
+
+
+
 
       }
-      
-        
-      ,
-      mobile:{
-        required:true,
-        minlength:10,
-        maxlength:10
-      },
-      mobile1:{
-        required:true,
-        minlength:10,
-        maxlength:10
-        
-      },
-      houseName1:{
-        required:true,
-        minlength:3
-        
-      },
-      place1:{
-        required:true,
-        minlength:3
-        
-      },
-      city1:{
-        required:true,
-        minlength:3
-      },
-      state1:{
-        required:true,
-        minlength:3
-      },
-      country1:{
-        required:true,
-        minlength:3
-      },
-      pincode1:{
-        required:true,
-        minlength:6,
-        maxlength:6
-      }
-    },
-    messages:{
-      username:"Enter  Your Name",
-      mobile:"Enter Your Mobile number ",
-      mobile1:"Enter Your Mobile number ",
-      houseName1:"Enter House name",
-      city1:"Enter Your city",
-      state1:"Enter Your state",
-      country1:"Enter Your country",
-      pincode1:"Enter pincode",
-      
-
-
-
-    }
+    })
   })
-})
 
-      </script>
+</script>

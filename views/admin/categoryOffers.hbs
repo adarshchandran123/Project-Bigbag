@@ -1,166 +1,181 @@
-
 <body class="dark-edition">
 
-    <div class="container">
-        <div class="row">
-            
-            <div style="margin-top: 100px; width: 50%;">
-                <p style="font-size: 40px; color: white; font-family: 'Acme', sans-serif;">CATEGORY OFFER</p>
+  <div class="container">
+    <div class="row">
 
-                <form action="/admin/submitCategoryOffer" method="POST" id="valid18">
+      <div style="margin-top: 100px; width: 50%;">
+        <p
+          style="font-size: 40px; color: white; font-family: 'Acme', sans-serif;"
+        >CATEGORY OFFER</p>
 
-                    <label for=""> Category Name</label> <br>
-                    <select class="form-select" name="category" aria-label="Default select example">
-                      <option value="" selected>Select Category</option>
-                      {{#each productCategory}}
-                      <option value="{{this.category}}">{{this.category}}</option>
-                      {{/each}}
-                      
-                    </select><br>
-                    <label for=""> Offer Name</label><br>
-                    <input type="text" name="offerName"><br><br>
+        <form action="/admin/submitCategoryOffer" method="POST" id="valid18">
 
-                    <label for=""> Percentage</label><br>
-                    <input type="number" name="offer" placeholder="Offer"><br><br>
+          <label for=""> Category Name</label>
+          <br />
+          <select
+            class="form-select"
+            name="category"
+            aria-label="Default select example"
+          >
+            <option value="" selected>Select Category</option>
+            {{#each productCategory}}
+              <option value="{{this.category}}">{{this.category}}</option>
+            {{/each}}
 
-                    <label for="">Limit</label><br>
-                    <input name="offerLimit" min="{{currentDate}}"  type="date"> <br><br>
+          </select><br />
+          <label for=""> Offer Name</label><br />
+          <input type="text" name="offerName" /><br /><br />
 
-                    <input type="submit" value="Submit" class="btn btn-success">
+          <label for=""> Percentage</label><br />
+          <input type="number" name="offer" placeholder="Offer" /><br /><br />
 
+          <label for="">Limit</label><br />
+          <input name="offerLimit" min="{{currentDate}}" type="date" />
+          <br /><br />
 
+          <input type="submit" value="Submit" class="btn btn-success" />
 
-
-                </form>
-            </div>
-
-
-
-
-          {{#if allreadyUsed}}
-
-        <p style="color: rgb(231, 33, 33); font-weight: bolder; font-size: larger;">Category or Offer Name already used</p> 
-
-          {{/if}}
-
-
-            <table class="table " style="background-color: #250000; width: 60%; ">
-  <thead>
-    <tr style="border: #805c5c solid;  1px">
-      <th style="color: white; font-size: large; font-weight: bolder;" scope="col">No</th>
-      <th style="color: white; font-size: large; font-weight: bolder;" scope="col">Category</th>
-      <th style="color: white; font-size: large; font-weight: bolder;" scope="col">Offer Name</th>
-      <th style="color: white; font-size: large; font-weight: bolder;" scope="col">Offer</th>
-      <th style="color: white; font-size: large; font-weight: bolder;" scope="col">Offer Starting <br>Date</th>
-      <th style="color: white; font-size: large; font-weight: bolder;" scope="col">Limit</th>
-      <th style="color: white; font-size: large; font-weight: bolder;" scope="col"></th>
-    </tr>
-  </thead>
-  <tbody>
-    {{#each CategoryOffer}}
-    <tr style=" border: #805c5c solid;  1px">
-      <th style="color: white; font-size: large; font-weight: bolder;" scope="row">{{add @index '1'}}</th>
-      <td style="color: white; font-weight: bolder;">{{this.category}}</td>
-      <td style="color: white; font-weight: bolder;">{{this.offerName}}</td>
-      <td style="color: white; font-weight: bolder;">{{this.offer}}</td>
-      <td style="color: white; font-weight: bolder;">{{this.offerStartingDate}}</td>
-      <td style="color: white; font-weight: bolder;">{{this.offerLimit}}</td>
-      <td>
-        
-      
-
-
-        <!-- Button trigger modal -->
-<button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#{{this.offerName}}">
-  Delete
-</button>
-
-<!-- Modal -->
-<div class="modal fade" id="{{this.offerName}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" style="font-size: large; font-weight: bolder; color: black;" id="exampleModalLabel">Are You Sure</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </form>
       </div>
-     
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-danger">
-          <a   href="/admin/DeleteCategoryOffer/{{this._id}}/{{this.category}}/{{this.offerName}}">Delete</a>
-        </button>
-      </div>
+
+      {{#if allreadyUsed}}
+
+        <p
+          style="color: rgb(231, 33, 33); font-weight: bolder; font-size: larger;"
+        >Category or Offer Name already used</p>
+
+      {{/if}}
+
+      <table class="table" style="background-color: #250000; width: 60%; ">
+        <thead>
+          <tr style="border: #805c5c solid;  1px">
+            <th
+              style="color: white; font-size: large; font-weight: bolder;"
+              scope="col"
+            >No</th>
+            <th
+              style="color: white; font-size: large; font-weight: bolder;"
+              scope="col"
+            >Category</th>
+            <th
+              style="color: white; font-size: large; font-weight: bolder;"
+              scope="col"
+            >Offer Name</th>
+            <th
+              style="color: white; font-size: large; font-weight: bolder;"
+              scope="col"
+            >Offer</th>
+            <th
+              style="color: white; font-size: large; font-weight: bolder;"
+              scope="col"
+            >Offer Starting <br />Date</th>
+            <th
+              style="color: white; font-size: large; font-weight: bolder;"
+              scope="col"
+            >Limit</th>
+            <th
+              style="color: white; font-size: large; font-weight: bolder;"
+              scope="col"
+            ></th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each CategoryOffer}}
+            <tr style=" border: #805c5c solid;  1px">
+              <th
+                style="color: white; font-size: large; font-weight: bolder;"
+                scope="row"
+              >{{add @index "1"}}</th>
+              <td
+                style="color: white; font-weight: bolder;"
+              >{{this.category}}</td>
+              <td
+                style="color: white; font-weight: bolder;"
+              >{{this.offerName}}</td>
+              <td style="color: white; font-weight: bolder;">{{this.offer}}</td>
+              <td
+                style="color: white; font-weight: bolder;"
+              >{{this.offerStartingDate}}</td>
+              <td
+                style="color: white; font-weight: bolder;"
+              >{{this.offerLimit}}</td>
+              <td>
+
+                <!-- Button trigger modal -->
+                <button
+                  type="button"
+                  class="btn btn-outline-primary"
+                  data-bs-toggle="modal"
+                  data-bs-target="#{{this.offerName}}"
+                >
+                  Delete
+                </button>
+
+                <!-- Modal -->
+                <div
+                  class="modal fade"
+                  id="{{this.offerName}}"
+                  tabindex="-1"
+                  aria-labelledby="exampleModalLabel"
+                  aria-hidden="true"
+                >
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5
+                          class="modal-title"
+                          style="font-size: large; font-weight: bolder; color: black;"
+                          id="exampleModalLabel"
+                        >Are You Sure</h5>
+                        <button
+                          type="button"
+                          class="btn-close"
+                          data-bs-dismiss="modal"
+                          aria-label="Close"
+                        ></button>
+                      </div>
+
+                      <div class="modal-footer">
+                        <button
+                          type="button"
+                          class="btn btn-secondary"
+                          data-bs-dismiss="modal"
+                        >Close</button>
+                        <button type="button" class="btn btn-danger">
+                          <a
+                            href="/admin/DeleteCategoryOffer/{{this._id}}/{{this.category}}/{{this.offerName}}"
+                          >Delete</a>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </td>
+            </tr>
+          {{/each}}
+        </tbody>
+      </table>
+
     </div>
   </div>
-</div>
-      
-      
-      </td>
-    </tr>
-    {{/each}}
-  </tbody>
-</table>
-
-
-
-
-
-
-
-        </div>
-    </div>
-
 
 </body>
 
+<script
+  src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.js"
+></script>
 
+<script>
 
+  $(document).ready(function(){ $("#valid18").validate({ rules:{ category:{
+  required:true, }, offerName:{ required:true, maxlength:15 }, offer:{
+  required:true, minlength:1, maxlength:2 }, offerLimit:{ required:true } },
+  messages:{ category:"Select category name", offer:"Enter Percentage Under
+  100", offerLimit:"Enter Date Limit", offerName:"Enter offer Name" } }) })
 
-
-
-<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.js"></script>
-
- <script>
-
-       $(document).ready(function(){
-  $("#valid18").validate({
-    rules:{
-      category:{
-        required:true,
-        
-
-      },
-      offerName:{
-        required:true,
-        maxlength:15
-      },
-      offer:{
-        required:true,
-        minlength:1,
-        maxlength:2
-      },
-      offerLimit:{
-          required:true
-      }
-      
-    },
-    messages:{
-      category:"Select category name",
-      offer:"Enter Percentage Under 100",
-      offerLimit:"Enter Date Limit",
-      offerName:"Enter offer Name"
-      
-
-
-    }
-  })
-})
-
-      </script>
+</script>
 
 <style>
-    label.error{
-        color: rgb(170, 33, 33);
-        font-size: large;
-    }
+  label.error{ color: rgb(170, 33, 33); font-size: large; }
 </style>

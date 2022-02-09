@@ -1,135 +1,131 @@
-
 <body>
 
+  <section>
 
+    <div class="col-12 col-sm-12" style="width: 100%;height: auto; float: left; background-color: aliceblue;">
+      <div style="float: left; ">
+        <a href="./" class="brand-wrap">
+          <img class="logo1" src="../images/logo.svg">
+        </a>
+      </div>
 
+    </div>
+    <div class="col-12 col-sm-12"
+      style="width: 100%;height: auto; float: left; display: flex; justify-content: flex-end; background-color: aliceblue;">
 
+      <div style="float: left; height: auto; ;">
 
+        <div style="margin-bottom: 5px;" class="dropdown">
 
-<section>
+          <button style="font-size: larger; background-color: #961010;color: white;" class="btn  dropdown-toggle"
+            type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+            My Account
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+            <li><a class="dropdown-item" href="/userlogin">Login</a></li>
+            <li><a class="dropdown-item" href="/usersignup">Create Account</a></li>
 
-	<div class="col-12 col-sm-12" style="width: 100%;height: auto; float: left; background-color: aliceblue;">
-		<div style="float: left; ">
-		<a href="./" class="brand-wrap">
-			<img class="logo1" src="../images/logo.svg">
-		</a>
-	</div>
+          </ul>
 
-	</div>
-	<div class="col-12 col-sm-12" style="width: 100%;height: auto; float: left; display: flex; justify-content: flex-end; background-color: aliceblue;">
+          <a class="btn btn-outline-danger" href="/userlogin?token=gustViewWishlist"><svg
+              xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
+              class="bi bi-suit-heart-fill" viewBox="0 0 16 16">
+              <path
+                d="M4 1c2.21 0 4 1.755 4 3.92C8 2.755 9.79 1 12 1s4 1.755 4 3.92c0 3.263-3.234 4.414-7.608 9.608a.513.513 0 0 1-.784 0C3.234 9.334 0 8.183 0 4.92 0 2.755 1.79 1 4 1z" />
+            </svg></a>
 
+          <a class="btn btn-outline-primary" href="/userlogin?token=gustViewAddToCart"><i
+              class="fas fa-shopping-cart"></i>Cart</a>
 
-		<div style="float: left; height: auto; ;">
-		
-		
+        </div>
 
-
-	<div style="margin-bottom: 5px;" class="dropdown">
-
-		
-
-  <button style="font-size: larger; background-color: #961010;color: white;" class="btn  dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-    My Account
-  </button>
-  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-    <li><a class="dropdown-item" href="/userlogin">Login</a></li>
-    <li><a class="dropdown-item" href="/usersignup">Create Account</a></li>
-    
-  </ul>
-
-
-  	<a  class="btn btn-outline-danger" href="/userlogin?token=gustViewWishlist"><svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-suit-heart-fill" viewBox="0 0 16 16">
-  <path d="M4 1c2.21 0 4 1.755 4 3.92C8 2.755 9.79 1 12 1s4 1.755 4 3.92c0 3.263-3.234 4.414-7.608 9.608a.513.513 0 0 1-.784 0C3.234 9.334 0 8.183 0 4.92 0 2.755 1.79 1 4 1z"/>
-</svg></a>
-
-	<a class="btn btn-outline-primary" href="/userlogin?token=gustViewAddToCart"><i class="fas fa-shopping-cart"></i>Cart</a>
-
-</div>
-	
-
-
-	 
-
-		</div>
-
-	</div>
-
-</section>
-
-<section>
-
-	<nav class="navbar navbar-expand-lg navbar-light ">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="#"></a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link active text-white" style="font-weight: bolder;" aria-current="page" href="/">Home</a>
-        </li>
-		<li class="nav-item">
-          <a class="nav-link active text-white" style="font-weight: bolder;" aria-current="page" href="/userAllProduct">Shop</a>
-        </li>
-
-    <div class="dropdown">
-      <button style="background-color:#961010; padding-left: 0%;  color: white; font-weight: bolder; text-decoration: none;" class="btn btn-link dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-        Category  
-      </button>
-
-      <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-        <li><a class="dropdown-item" href="/userAllProduct">All</a></li>
-    	  {{#each productCategory}}
-
-        <li><a class="dropdown-item" href="/categoryDisplay/{{this.category}}">{{this.category}}</a></li>
-
-       {{/each}}
-      </ul>
+      </div>
 
     </div>
 
+  </section>
 
-		<li class="nav-item">
-          <a class="nav-link active text-white" style="font-weight: bolder;" aria-current="page" href="/about_us">About Us</a>
-        </li>
-       
-        
-        
-      </ul>
-      <form class="d-flex" action="/searchResult" id="valid23" method="POST">
-      
-        <input name="searchdata" class="form-control me-2" type="text" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success" type="submit">Search</button>
-      
-      </form>
-    </div>
+  <section>
+
+    <nav class="navbar navbar-expand-lg navbar-light ">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#"></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link active text-white" style="font-weight: bolder;" aria-current="page" href="/">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active text-white" style="font-weight: bolder;" aria-current="page"
+                href="/userAllProduct">Shop</a>
+            </li>
+
+            <div class="dropdown">
+              <button
+                style="background-color:#961010; padding-left: 0%;  color: white; font-weight: bolder; text-decoration: none;"
+                class="btn btn-link dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
+                aria-expanded="false">
+                Category
+              </button>
+
+              <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                <li><a class="dropdown-item" href="/userAllProduct">All</a></li>
+                {{#each productCategory}}
+
+                <li><a class="dropdown-item" href="/categoryDisplay/{{this.category}}">{{this.category}}</a></li>
+
+                {{/each}}
+              </ul>
+
+            </div>
 
 
-  </div>
-</nav>
-
-</section>
-
-
+            <li class="nav-item">
+              <a class="nav-link active text-white" style="font-weight: bolder;" aria-current="page"
+                href="/about_us">About Us</a>
+            </li>
 
 
 
-      <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.js"></script>
+          </ul>
+          <form class="d-flex" action="/searchResult" id="valid23" method="POST">
+
+            <input name="searchdata" class="form-control me-2" type="text" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success" type="submit">Search</button>
+
+          </form>
+        </div>
 
 
-<script>
-  $(document).ready(function(){
-    $('#valid23').validate({
-      rules:{
-        searchdata:{
-          required:true
+      </div>
+    </nav>
+
+  </section>
+
+
+
+
+
+  <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.js"></script>
+
+
+  <script>
+    $(document).ready(function () {
+      $('#valid23').validate({
+        rules: {
+          searchdata: {
+            required: true
+          }
+        },
+        messages: {
+          searchdata: ""
         }
-      },
-      messages:{
-        searchdata:""
-      }
+      })
     })
-  })
-</script>
+  </script>
